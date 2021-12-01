@@ -1,0 +1,44 @@
+.gridroot {    
+    -fx-vgap: 30px;
+}
+
+#helproot {
+	-fx-background-color: black;
+}
+
+.vbox {
+	-fx-alignment: center;
+	-fx-spacing: 13px;
+}
+
+.hbox {
+	-fx-alignment: bottom-left;
+}
+
+.title {
+	-fx-fill: white;
+	-fx-font-family: "Noto Mono";
+	-fx-font-size: 32pt;
+	-fx-font-weight: bold;
+	-fx-font-smoothing-type: lcd;
+}
+
+.paragraph {	
+	-fx-fill: white;
+	-fx-font-family: sans-serif;
+	-fx-font-size: 12pt;
+	-fx-font-smoothing-type: lcd;
+}
+
+.button {
+	-fx-background-color: #C3C4C4, linear-gradient(#D6D6D6 50%, white 100%), radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
+    -fx-background-insets: 0, 1, 1;
+    -fx-text-fill: black;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+}
+
+.button:hover, .button:focused {
+    -fx-font-size: 16pt;
+}
