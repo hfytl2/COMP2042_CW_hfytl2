@@ -49,7 +49,7 @@ public abstract class Brick extends Entity implements Collidable {
 		hitbox = new BoundingBox(posX, posY, width, height);
 		this.maxdurability = maxdurability;
 		durability = maxdurability;
-	}	
+	}
 	
 	public BoundingBox getHitBox() {
 		return hitbox;
