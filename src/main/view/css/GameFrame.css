@@ -1,0 +1,13 @@
+.gameroot {
+    -fx-background-color: white;
+}
+
+.hbox {
+	-fx-alignment: center;
+	-fx-spacing: 50px;
+}
+
+.text {
+	-fx-fill: black;
+	-fx-font-size: 14px;
+}

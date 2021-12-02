@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="gameroot" prefHeight="450" prefWidth="600" styleClass="gameroot" stylesheets="@../css/GameFrame.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.GameFrameController">
+   	<HBox prefHeight="15" prefWidth="600" styleClass="hbox">
+   		<Text fx:id="txtbricks" styleClass="text" text="Bricks: 30"/>
+   		<Text fx:id="txtballs" styleClass="text" text="Balls: 3"/>
+   		<Text fx:id="txtlevel" styleClass="text" text="Level: 1"/>
+   		<Text fx:id="txtscore" styleClass="text" text="Score: 0"/>			   		
+   	</HBox>
+	<Canvas fx:id="gamecanvas" height="435" width="600"/>
+</VBox>
