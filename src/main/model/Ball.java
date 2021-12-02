@@ -7,27 +7,31 @@ import javafx.scene.paint.Color;
 
 public abstract class Ball extends Entity implements Collidable, Movable {
 	
-	BoundingBox hitbox;
-	Point2D velocity;
+	private BoundingBox hitbox;
+	private Point2D velocity;
 	
 	public Ball(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor) {
 		super(position, size, bordercolor, fillcolor);
 		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+		velocity = new Point2D(0, 0);
 	}
 	
 	public Ball(double posX, double posY, Dimension2D size, Color bordercolor, Color fillcolor) {
 		super(posX, posY, size, bordercolor, fillcolor);
 		hitbox = new BoundingBox(posX, posY, size.getWidth(), size.getHeight());
+		velocity = new Point2D(0, 0);
 	}
 	
 	public Ball(Point2D position, double width, double height, Color bordercolor, Color fillcolor) {
 		super(position, width, height, bordercolor, fillcolor);
 		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+		velocity = new Point2D(0, 0);
 	}	
 	
 	public Ball(double posX, double posY, double width, double height, Color bordercolor, Color fillcolor) {
 		super(posX, posY, width, height, bordercolor, fillcolor);
 		hitbox = new BoundingBox(posX, posY, width, height);
+		velocity = new Point2D(0, 0);
 	}
 	
 	@Override
@@ -69,8 +73,8 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	}
 	
 	@Override
-	public void move() {
-		setPosition(getPosition().add(velocity));
+	public void move(double time) {
+		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
 	}
 }

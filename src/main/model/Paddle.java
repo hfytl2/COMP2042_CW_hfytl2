@@ -12,27 +12,31 @@ public class Paddle extends Entity implements Collidable, Movable {
     private static final Color FILL_COLOR = Color.LIME;
     public static final double PADDLE_SPEED = 5;
 	
-	BoundingBox hitbox;
-	Point2D velocity;
+	private BoundingBox hitbox;
+	private Point2D velocity;
 		
 	public Paddle(Point2D position, Dimension2D size) {
 		super(position, size, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+		velocity = new Point2D(0, 0);
 	}
 	
 	public Paddle(double posX, double posY, Dimension2D size) {
 		super(posX, posY, size, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(posX, posY, size.getWidth(), size.getHeight());
+		velocity = new Point2D(0, 0);
 	}
 	
 	public Paddle(Point2D position, double width, double height) {
 		super(position, width, height, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+		velocity = new Point2D(0, 0);
 	}	
 	
 	public Paddle(double posX, double posY, double width, double height) {
 		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(posX, posY, width, height);
+		velocity = new Point2D(0, 0);
 	}
 	
 	public Paddle(Dimension2D size) {
@@ -82,8 +86,8 @@ public class Paddle extends Entity implements Collidable, Movable {
 	}
 
 	@Override
-	public void move() {
-		setPosition(getPosition().add(velocity));
+	public void move(double time) {
+		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
 	}	
 }
