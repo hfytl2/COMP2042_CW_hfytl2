@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 
 public class Paddle extends Entity implements Collidable, Movable {
 	
-	private static final Color BORDER_COLOR = Color.GREEN.darker().darker();
-    private static final Color FILL_COLOR = Color.GREEN;
+	private static final Color BORDER_COLOR = Color.LIME.darker().darker();
+    private static final Color FILL_COLOR = Color.LIME;
     public static final double PADDLE_SPEED = 5;
 	
 	BoundingBox hitbox;

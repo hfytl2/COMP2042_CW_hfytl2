@@ -76,18 +76,6 @@ public class Game {
 		}
 	}
 	
-	private void initializeGame() {
-		player = new Player();
-		paddle = new Paddle(150, 10);
-		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight());
-		paddle.moveTo(paddlestart);
-		ball = new RubberBall();
-		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());
-		ball.moveTo(ballstart);
-		generateLevels();
-		started = paused = gameover = false;
-	}
-	
 	private void initializeGame(int lives) {
 		player = new Player(lives);
 		paddle = new Paddle(150, 10);
@@ -97,7 +85,12 @@ public class Game {
 		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());
 		ball.moveTo(ballstart);
 		generateLevels();
+		level = levels.get(0);
 	}
+	
+	private void initializeGame() {
+		initializeGame(3);
+	}	
 	
 	private void generateLevels() {
 		levels = new ArrayList<Level>();		
