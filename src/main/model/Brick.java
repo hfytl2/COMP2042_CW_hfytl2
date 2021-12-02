@@ -12,40 +12,28 @@ public abstract class Brick extends Entity implements Collidable {
 	private boolean broken;	
 	
 	public Brick(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor, int maxdurability) {
-		setPosition(position);
-		setSize(size);
-		setBorderColor(bordercolor);
-		setFillColor(fillcolor);
+		super(position, size, bordercolor, fillcolor);
 		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 		this.maxdurability = maxdurability;
 		durability = maxdurability;
 	}
 	
-	public Brick(Point2D position, double width, double height, Color bordercolor, Color fillcolor, int maxdurability) {
-		setPosition(position);
-		setSize(width, height);
-		setBorderColor(bordercolor);
-		setFillColor(fillcolor);
-		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
-		this.maxdurability = maxdurability;
-		durability = maxdurability;
-	}
-	
 	public Brick(double posX, double posY, Dimension2D size, Color bordercolor, Color fillcolor, int maxdurability) {
-		setPosition(posX, posY);
-		setSize(size);
-		setBorderColor(bordercolor);
-		setFillColor(fillcolor);
+		super(posX, posY, size, bordercolor, fillcolor);
 		hitbox = new BoundingBox(posX, posY, size.getWidth(), size.getHeight());
 		this.maxdurability = maxdurability;
 		durability = maxdurability;
 	}
 	
+	public Brick(Point2D position, double width, double height, Color bordercolor, Color fillcolor, int maxdurability) {
+		super(position, width, height, bordercolor, fillcolor);
+		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+		this.maxdurability = maxdurability;
+		durability = maxdurability;
+	}	
+	
 	public Brick(double posX, double posY, double width, double height, Color bordercolor, Color fillcolor, int maxdurability) {
-		setPosition(posX, posY);
-		setSize(width, height);
-		setBorderColor(bordercolor);
-		setFillColor(fillcolor);
+		super(posX, posY, width, height, bordercolor, fillcolor);
 		hitbox = new BoundingBox(posX, posY, width, height);
 		this.maxdurability = maxdurability;
 		durability = maxdurability;

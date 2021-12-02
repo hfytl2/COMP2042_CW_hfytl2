@@ -6,32 +6,36 @@ import javafx.scene.paint.Color;
 
 public abstract class Entity {
 	
-	private Point2D center, position;
+	private Point2D position;
 	private Color bordercolor, fillcolor;
-	private Dimension2D radii, size;
+	private Dimension2D size;
 	
-	public Point2D getCenter() {
-		return center;
+	public Entity(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor) {
+		this.position = position;
+		this.size = size;
+		this.bordercolor = bordercolor;
+		this.fillcolor = fillcolor;
 	}
 	
-	public void setCenter(Point2D point) {
-		center = point;
+	public Entity(double posX, double posY, Dimension2D size, Color bordercolor, Color fillcolor) {
+		setPosition(posX, posY);
+		this.size = size;
+		this.bordercolor = bordercolor;
+		this.fillcolor = fillcolor;
 	}
 	
-	public void setCenter(double centerX, double centerY) {
-		center = new Point2D(centerX, centerY);
+	public Entity(Point2D position, double width, double height, Color bordercolor, Color fillcolor) {
+		this.position = position;
+		setSize(width, height);
+		this.bordercolor = bordercolor;
+		this.fillcolor = fillcolor;
 	}
 	
-	public Dimension2D getRadii() {
-		return radii;
-	}
-	
-	public void setRadii(Dimension2D radii) {
-		this.radii = radii;
-	}
-	
-	public void setRadii(double radiusX, double radiusY) {
-		this.radii = new Dimension2D(radiusX, radiusY);
+	public Entity(double posX, double posY, double width, double height, Color bordercolor, Color fillcolor) {
+		setPosition(posX, posY);
+		setSize(width, height);
+		this.bordercolor = bordercolor;
+		this.fillcolor = fillcolor;
 	}
 	
 	public Point2D getPosition() {

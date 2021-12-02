@@ -18,13 +18,13 @@ public class SteelBrick extends Brick {
     	super(position, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
     }
     
-    public SteelBrick(Point2D position, double width, double height) {
-		super(position, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
-	}
-	
-	public SteelBrick(double posX, double posY, Dimension2D size) {
+    public SteelBrick(double posX, double posY, Dimension2D size) {
 		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
 	}
+    
+    public SteelBrick(Point2D position, double width, double height) {
+		super(position, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
+	}	
 	
 	public SteelBrick(double posX, double posY, double width, double height) {
 		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);

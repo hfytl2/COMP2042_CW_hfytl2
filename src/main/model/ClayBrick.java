@@ -13,13 +13,13 @@ public class ClayBrick extends Brick {
     public ClayBrick(Point2D position, Dimension2D size) {
     	super(position, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
     }
+        
+    public ClayBrick(double posX, double posY, Dimension2D size) {
+		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
+	}
     
     public ClayBrick(Point2D position, double width, double height) {
 		super(position, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
-	}
-	
-	public ClayBrick(double posX, double posY, Dimension2D size) {
-		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
 	}
 	
 	public ClayBrick(double posX, double posY, double width, double height) {
