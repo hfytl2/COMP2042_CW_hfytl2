@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 public class RubberBall extends Ball {
 	
 	private static final Dimension2D SIZE = new Dimension2D(10, 10);
-	private static final Color FILL_COLOR = Color.rgb(255, 219, 88);
-    private static final Color BORDER_COLOR = FILL_COLOR.darker().darker();     
+	private static final Color BORDER_COLOR = Color.TRANSPARENT;
+	private static final Color FILL_COLOR = Color.WHITE;    
     
     public RubberBall(Point2D position) {
 		super(position, SIZE, BORDER_COLOR, FILL_COLOR);

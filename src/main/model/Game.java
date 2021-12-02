@@ -8,7 +8,7 @@ public class Game {
 	
 	private static final int MAX_LEVELS = 4;
 	
-	private boolean paused, gameover;
+	private boolean started, paused, gameover;
 	private Canvas gamecanvas;
 	private Player player;
 	private Ball ball;
@@ -25,6 +25,14 @@ public class Game {
 		this(gamecanvas, 3);
 	}
 	
+	public boolean isStarted() {
+		return started;
+	}
+	
+	public void start() {
+		started = true;		
+	}
+	
 	public boolean isPaused() {
 		return paused;
 	}
@@ -33,11 +41,12 @@ public class Game {
 		paused = true;
 	}
 	
-	public boolean isGameOver() {
+	public boolean isOver() {
 		return gameover;
 	}
 	
-	public void endGame() {
+	public void end() {
+		started = false;
 		paused = false;
 		gameover = true;
 	}

@@ -1,8 +1,8 @@
 package main.model;
 
-import javafx.geometry.Bounds;
+import javafx.geometry.BoundingBox;
 
 interface Collidable {
-	public Bounds getHitBox();
+	public BoundingBox getHitBox();
 	public void updateHitBox();
 }

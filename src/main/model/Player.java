@@ -1,17 +1,19 @@
 package main.model;
 
 import java.util.ArrayList;
+import javafx.scene.input.KeyCode;
 
 public class Player {
 	
 	private String name;
 	private int lives, score;
-	private ArrayList<String> input;	
+	private ArrayList<KeyCode> input;	
 	
 	public Player(String name, int lives) {
 		this.name = name;
 		this.lives = lives;
 		this.score = 0;
+		input = new ArrayList<KeyCode>();
 	}
 	
 	public Player(String name) {
@@ -58,17 +60,17 @@ public class Player {
 		score += increment;
 	}
 	
-	public ArrayList<String> getInput() {
+	public ArrayList<KeyCode> getInput() {
 		return input;
 	}
 	
-	public void addInput(String code) {
+	public void addInput(KeyCode code) {
 		if (!input.contains(code)) {
 			input.add(code);
 		}
 	}
 	
-	public void removeInput(String code) {
+	public void removeInput(KeyCode code) {
 		if (input.contains(code)) {
 			input.remove(code);
 		}

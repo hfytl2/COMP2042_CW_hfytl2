@@ -1,5 +1,5 @@
 .gameroot {
-    -fx-background-color: white;
+    -fx-background-color: black;
 }
 
 .hbox {
@@ -8,6 +8,6 @@
 }
 
 .text {
-	-fx-fill: black;
+	-fx-fill: white;
 	-fx-font-size: 14px;
 }

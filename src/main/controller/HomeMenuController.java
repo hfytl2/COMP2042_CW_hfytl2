@@ -13,7 +13,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 //import main.GameFrame;
-import javafx.scene.Scene;
 
 public class HomeMenuController {
 	
@@ -51,13 +50,12 @@ public class HomeMenuController {
     		exit.setFocusTraversable(false);
     		fadeGame.play();
     	});
-    	parentcontainer.requestFocus();
+    	gameroot.requestFocus();
     	fadeHome.play();
     }
     
     @FXML
     private void helpButtonPressed() throws IOException {
-    	Scene scene = parentcontainer.getScene();
     	Parent helproot = FXMLLoader.load(getClass().getResource(helpFXML));
     	Button back = (Button)helproot.lookup("#back");
     	FadeTransition fadeHelp = new FadeTransition(Duration.millis(fadetime), helproot);
@@ -69,7 +67,7 @@ public class HomeMenuController {
     	fadeHelp.setToValue(1);
     	fadeHelp.setOnFinished(e -> {
     		back.requestFocus();
-    		scene.setOnKeyPressed(key -> {
+    		helproot.setOnKeyPressed(key -> {
         		if (key.getCode() == KeyCode.BACK_SPACE) {
         			if (parentcontainer.getChildren().contains(helproot)) {
 	    		    	fadeHome.setFromValue(0);
@@ -99,7 +97,7 @@ public class HomeMenuController {
     		exit.setFocusTraversable(false);
     		fadeHelp.play();
     	});
-    	parentcontainer.requestFocus();
+    	helproot.requestFocus();
     	fadeHome.play();
     }   
     
