@@ -77,4 +77,12 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
 	}
+	
+	public void inverseVelocityX() {
+		this.velocity = new Point2D(-velocity.getX(), velocity.getY());
+	}
+	
+	public void inverseVelocityY() {
+		this.velocity = new Point2D(velocity.getX(), -velocity.getY());
+	}
 }

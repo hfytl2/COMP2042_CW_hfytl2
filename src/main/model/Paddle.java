@@ -89,5 +89,5 @@ public class Paddle extends Entity implements Collidable, Movable {
 	public void move(double time) {
 		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
-	}	
+	}
 }

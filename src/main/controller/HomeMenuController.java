@@ -70,22 +70,24 @@ public class HomeMenuController {
     	fadeHelp.setOnFinished(e -> {
     		back.requestFocus();
     		scene.setOnKeyPressed(key -> {
-        		if (key.getCode() == KeyCode.BACK_SPACE && parentcontainer.getChildren().contains(helproot)) {
-    		    	fadeHome.setFromValue(0);
-    		    	fadeHome.setToValue(1);
-    		    	fadeHome.setOnFinished(e1 -> {
-    		    		play.setFocusTraversable(true);
-    		    		help.setFocusTraversable(true);
-    		    		exit.setFocusTraversable(true);
-    		    		play.requestFocus();
-    		    	});
-    		    	fadeHelp.setFromValue(1);
-    		    	fadeHelp.setToValue(0);
-    		    	fadeHelp.setOnFinished(e1 -> {
-    		    		fadeHome.play();
-    		    		parentcontainer.getChildren().remove(helproot);
-    		    	});
-    		    	fadeHelp.play();
+        		if (key.getCode() == KeyCode.BACK_SPACE) {
+        			if (parentcontainer.getChildren().contains(helproot)) {
+	    		    	fadeHome.setFromValue(0);
+	    		    	fadeHome.setToValue(1);
+	    		    	fadeHome.setOnFinished(e1 -> {
+	    		    		play.setFocusTraversable(true);
+	    		    		help.setFocusTraversable(true);
+	    		    		exit.setFocusTraversable(true);
+	    		    		play.requestFocus();
+	    		    	});
+	    		    	fadeHelp.setFromValue(1);
+	    		    	fadeHelp.setToValue(0);
+	    		    	fadeHelp.setOnFinished(e1 -> {
+	    		    		fadeHome.play();
+	    		    		parentcontainer.getChildren().remove(helproot);
+	    		    	});
+	    		    	fadeHelp.play();
+        			}
         	    }
         	});
     	});

@@ -42,7 +42,7 @@ public class Level {
 		return bricks;
 	}
 	
-	public ArrayList<Brick> generateSingleTypeLevel(String bricktype) {
+	private ArrayList<Brick> generateSingleTypeLevel(String bricktype) {
 		int brickcount = BRICK_COUNT;
 		brickcount -= BRICK_COUNT % LINES;
 		int linebricks = brickcount / LINES;
@@ -77,7 +77,7 @@ public class Level {
 		return bricks;
 	}
 	
-	public ArrayList<Brick> generateChessboardLevel(String bricktype1, String bricktype2) {
+	private ArrayList<Brick> generateChessboardLevel(String bricktype1, String bricktype2) {
 		int brickcount = BRICK_COUNT;
 		brickcount -= BRICK_COUNT % LINES;
 		int linebricks = brickcount / LINES;

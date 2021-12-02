@@ -42,8 +42,8 @@ public class Player {
 		this.lives = lives;
 	}
 	
-	public void decreaseLives(int decrement) {
-		lives -= decrement;
+	public void loseLife() {
+		lives -= 1;
 	}
 	
 	public int getScore() {

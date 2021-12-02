@@ -8,30 +8,21 @@ public class Game {
 	
 	private static final int MAX_LEVELS = 4;
 	
-	private boolean started, paused, gameover;
+	private boolean paused, gameover;
 	private Canvas gamecanvas;
 	private Player player;
 	private Ball ball;
 	private Paddle paddle;
 	private ArrayList<Level> levels;
 	private Level level;
-	
-	public Game(Canvas gamecanvas) {
-		this.gamecanvas = gamecanvas;
-		initializeGame();
-	}
-	
+			
 	public Game(Canvas gamecanvas, int lives) {
 		this.gamecanvas = gamecanvas;
 		initializeGame(lives);
 	}
 	
-	public boolean isGameStarted() {
-		return started;
-	}
-	
-	public void startGame() {
-		started = true;
+	public Game(Canvas gamecanvas) {
+		this(gamecanvas, 3);
 	}
 	
 	public boolean isPaused() {
@@ -47,7 +38,6 @@ public class Game {
 	}
 	
 	public void endGame() {
-		started = false;
 		paused = false;
 		gameover = true;
 	}
@@ -76,21 +66,32 @@ public class Game {
 		}
 	}
 	
-	private void initializeGame(int lives) {
-		player = new Player(lives);
+	public void nextLevel() {
+		int nextlevel = level.getLevel() + 1;
+		
+		if (nextlevel <= MAX_LEVELS) {
+			level = levels.get(nextlevel - 1);
+			initializePaddleBall();
+		} else {
+			// game over
+		}
+	}
+	
+	public void initializePaddleBall() {
 		paddle = new Paddle(150, 10);
 		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight());
 		paddle.moveTo(paddlestart);
 		ball = new RubberBall();
 		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());
 		ball.moveTo(ballstart);
+	}
+	
+	private void initializeGame(int lives) {
+		player = new Player(lives);
+		initializePaddleBall();
 		generateLevels();
 		level = levels.get(0);
 	}
-	
-	private void initializeGame() {
-		initializeGame(3);
-	}	
 	
 	private void generateLevels() {
 		levels = new ArrayList<Level>();		
