@@ -56,6 +56,14 @@ public class Game {
 		return player;
 	}
 	
+	public Paddle getPaddle() {
+		return paddle;
+	}
+	
+	public Ball getBall() {
+		return ball;
+	}
+	
 	public Level getCurrentLevel() {
 		return level;
 	}
@@ -92,6 +100,7 @@ public class Game {
 	}
 	
 	private void generateLevels() {
+		levels = new ArrayList<Level>();		
 		Level level1 = new Level(gamecanvas, 1, "Clay");
 		Level level2 = new Level(gamecanvas, 2, "Clay", "Cement");
 		Level level3 = new Level(gamecanvas, 3, "Clay", "Steel");

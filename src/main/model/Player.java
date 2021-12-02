@@ -6,30 +6,24 @@ public class Player {
 	
 	private String name;
 	private int lives, score;
-	private ArrayList<String> input;
-	
-	public Player() {
-		this.name = "Player";
-		this.lives = 3;
-		this.score = 0;
-	}
-	
-	public Player(String name) {
-		this.name = name;
-		this.lives = 3;
-		this.score = 0;
-	}
-	
-	public Player(int lives) {
-		this.name = "Player";
-		this.lives = lives;
-		this.score = 0;
-	}
+	private ArrayList<String> input;	
 	
 	public Player(String name, int lives) {
 		this.name = name;
 		this.lives = lives;
 		this.score = 0;
+	}
+	
+	public Player(String name) {
+		this(name, 3);
+	}
+	
+	public Player(int lives) {
+		this("Player", lives);
+	}	
+	
+	public Player() {
+		this("Player", 3);
 	}
 	
 	public String getName() {

@@ -18,24 +18,15 @@ public abstract class Entity {
 	}
 	
 	public Entity(double posX, double posY, Dimension2D size, Color bordercolor, Color fillcolor) {
-		setPosition(posX, posY);
-		this.size = size;
-		this.bordercolor = bordercolor;
-		this.fillcolor = fillcolor;
+		this(new Point2D(posX, posY), size, bordercolor, fillcolor);
 	}
 	
 	public Entity(Point2D position, double width, double height, Color bordercolor, Color fillcolor) {
-		this.position = position;
-		setSize(width, height);
-		this.bordercolor = bordercolor;
-		this.fillcolor = fillcolor;
+		this(position, new Dimension2D(width, height), bordercolor, fillcolor);
 	}
 	
 	public Entity(double posX, double posY, double width, double height, Color bordercolor, Color fillcolor) {
-		setPosition(posX, posY);
-		setSize(width, height);
-		this.bordercolor = bordercolor;
-		this.fillcolor = fillcolor;
+		this(new Point2D(posX, posY), new Dimension2D(width, height), bordercolor, fillcolor);
 	}
 	
 	public Point2D getPosition() {

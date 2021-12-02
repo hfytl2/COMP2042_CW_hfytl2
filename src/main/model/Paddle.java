@@ -14,15 +14,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	
 	BoundingBox hitbox;
 	Point2D velocity;
-	
-	public Paddle(Dimension2D size) {
-		super(0, 0, size, BORDER_COLOR, FILL_COLOR);
-	}
-	
-	public Paddle(double width, double height) {
-		super(0, 0, width, height, BORDER_COLOR, FILL_COLOR);
-	}
-	
+		
 	public Paddle(Point2D position, Dimension2D size) {
 		super(position, size, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
@@ -41,6 +33,14 @@ public class Paddle extends Entity implements Collidable, Movable {
 	public Paddle(double posX, double posY, double width, double height) {
 		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(posX, posY, width, height);
+	}
+	
+	public Paddle(Dimension2D size) {
+		this(0, 0, size);
+	}
+	
+	public Paddle(double width, double height) {
+		this(0, 0, width, height);
 	}
 	
 	@Override

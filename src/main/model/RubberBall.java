@@ -9,11 +9,7 @@ public class RubberBall extends Ball {
 	
 	private static final Dimension2D SIZE = new Dimension2D(10, 10);
 	private static final Color FILL_COLOR = Color.rgb(255, 219, 88);
-    private static final Color BORDER_COLOR = FILL_COLOR.darker().darker();
-    
-    public RubberBall() {
-    	super(0, 0, SIZE, BORDER_COLOR, FILL_COLOR);
-    }
+    private static final Color BORDER_COLOR = FILL_COLOR.darker().darker();     
     
     public RubberBall(Point2D position) {
 		super(position, SIZE, BORDER_COLOR, FILL_COLOR);
@@ -24,4 +20,8 @@ public class RubberBall extends Ball {
 		super(posX, posY, SIZE, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(posX, posY, SIZE.getWidth(), SIZE.getHeight());
 	}
+	
+	public RubberBall() {
+    	this(0, 0);
+    }
 }
