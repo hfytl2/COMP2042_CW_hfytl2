@@ -37,7 +37,7 @@ public class Game {
 		return paused;
 	}
 	
-	public void pauseGame() {
+	public void pause() {
 		paused = true;
 	}
 	
@@ -75,6 +75,10 @@ public class Game {
 		}
 	}
 	
+	public void resetLevel() {		
+		level = generateLevels().get(level.getLevel());;
+	}
+	
 	public void nextLevel() {
 		int nextlevel = level.getLevel() + 1;
 		
@@ -82,11 +86,12 @@ public class Game {
 			level = levels.get(nextlevel - 1);
 			initializePaddleBall();
 		} else {
-			// game over
+			 end(); // game over
 		}
 	}
 	
 	public void initializePaddleBall() {
+		started = false;
 		paddle = new Paddle(150, 10);
 		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight());
 		paddle.moveTo(paddlestart);
@@ -98,11 +103,11 @@ public class Game {
 	private void initializeGame(int lives) {
 		player = new Player(lives);
 		initializePaddleBall();
-		generateLevels();
+		levels = generateLevels();
 		level = levels.get(0);
 	}
 	
-	private void generateLevels() {
+	private ArrayList<Level> generateLevels() {
 		levels = new ArrayList<Level>();		
 		Level level1 = new Level(gamecanvas, 1, "Clay");
 		Level level2 = new Level(gamecanvas, 2, "Clay", "Cement");
@@ -113,5 +118,6 @@ public class Game {
 		levels.add(level2);
 		levels.add(level3);
 		levels.add(level4);
+		return levels;
 	}
 }

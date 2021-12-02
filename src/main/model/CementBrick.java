@@ -9,24 +9,25 @@ public class CementBrick extends Brick implements Crackable {
 	
 	private static final Color FILL_COLOR = Color.rgb(147, 147, 147);
     private static final Color BORDER_COLOR = Color.rgb(217, 199, 175);
+    private static final int SCORE = 2;
     private static final int DURABILITY = 2;
     
     private ArrayList<Crack> cracks;
     
     public CementBrick(Point2D position, Dimension2D size) {
-    	super(position, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
+    	super(position, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
     }
     
     public CementBrick(double posX, double posY, Dimension2D size) {
-		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
     
     public CementBrick(Point2D position, double width, double height) {
-		super(position, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(position, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}	
 	
 	public CementBrick(double posX, double posY, double width, double height) {
-		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
 	
 	@Override

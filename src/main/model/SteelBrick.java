@@ -9,28 +9,29 @@ public class SteelBrick extends Brick {
 	
 	private static final Color FILL_COLOR = Color.rgb(203, 203, 201);
     private static final Color BORDER_COLOR = Color.BLACK;
+    private static final int SCORE = 3;
     private static final int DURABILITY = 1;
     private static final double PROBABILITY = 0.4;
     
     private Random rng;
     
     public SteelBrick(Point2D position, Dimension2D size) {
-    	super(position, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
+    	super(position, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
     }
     
     public SteelBrick(double posX, double posY, Dimension2D size) {
-		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(posX, posY, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
     
     public SteelBrick(Point2D position, double width, double height) {
-		super(position, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(position, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}	
 	
 	public SteelBrick(double posX, double posY, double width, double height) {
-		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR, DURABILITY);
+		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
 	
-	public boolean isImpacted() {
+	public boolean isDamaged() {
 		return rng.nextDouble() < PROBABILITY;
 	}
 }
