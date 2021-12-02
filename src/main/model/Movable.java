@@ -6,5 +6,5 @@ interface Movable {
 	public Point2D getVelocity();
 	public void setVelocity(Point2D velocity);
 	public void moveTo(Point2D point);
-	public void move();
+	public void move();	
 }
