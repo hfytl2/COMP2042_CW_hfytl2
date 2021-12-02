@@ -77,4 +77,12 @@ public abstract class Entity {
 	public void setSize(double width, double height) {
 		this.size = new Dimension2D(width, height);
 	}
+	
+	public double getWidth() {
+		return size.getWidth();
+	}
+	
+	public double getHeight() {
+		return size.getHeight();
+	}
 }

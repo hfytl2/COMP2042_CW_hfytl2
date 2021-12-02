@@ -49,7 +49,7 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	
 	@Override 
 	public void updateHitBox() {
-		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
+		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}
 	
 	@Override

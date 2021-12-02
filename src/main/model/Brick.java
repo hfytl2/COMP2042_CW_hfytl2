@@ -44,7 +44,7 @@ public abstract class Brick extends Entity implements Collidable {
 	}
 	
 	public void updateHitBox() {
-		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
+		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}
 	
 	public int getDurability() {
