@@ -221,10 +221,10 @@ public class GameFrameController {
     private void handleBrickCollision() {    	
     	Ball ball = game.getBall();
     	BoundingBox ballhitbox = ball.getHitBox();
-    	Point2D up = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMinY() - BOTTOM_MARGIN);
-		Point2D right = new Point2D(ballhitbox.getMaxX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2) - BOTTOM_MARGIN);
-		Point2D down = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMaxY() - BOTTOM_MARGIN);
-		Point2D left = new Point2D(ballhitbox.getMinX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2) - BOTTOM_MARGIN);
+    	Point2D up = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMinY());
+		Point2D right = new Point2D(ballhitbox.getMaxX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2));
+		Point2D down = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMaxY());
+		Point2D left = new Point2D(ballhitbox.getMinX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2));
 		ArrayList<Brick> bricks = game.getCurrentLevel().getBricks();
     	Iterator<Brick> brickiterator = bricks.iterator();
     	
