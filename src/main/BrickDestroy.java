@@ -17,7 +17,7 @@ public class BrickDestroy extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/icon.jpg")));
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
 		primaryStage.setTitle("Brick Destroy");
 		primaryStage.setScene(new Scene(root, 600, 450));
 		primaryStage.setResizable(false);

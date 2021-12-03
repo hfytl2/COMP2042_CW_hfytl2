@@ -8,7 +8,7 @@
 }
 
 #homeroot {
-	-fx-background-image: url("../../resources/homebg.jpg");
+	-fx-background-image: url("../../assets/homebg.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-size: 600 450;
