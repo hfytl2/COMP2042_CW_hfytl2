@@ -180,10 +180,12 @@ public class GameFrameController {
     	double width = ball.getWidth();
     	double height = ball.getHeight();
     	
-    	gc.setFill(ball.getFillColor());
-    	gc.setStroke(ball.getBorderColor());
-    	gc.fillOval(posX, posY, width, height);
-    	gc.strokeOval(posX, posY, width, height);
+    	if (!game.isOver()) {
+    		gc.setFill(ball.getFillColor());
+    		gc.setStroke(ball.getBorderColor());
+    		gc.fillOval(posX, posY, width, height);
+    		gc.strokeOval(posX, posY, width, height);
+    	}
     }
     
     /**
@@ -287,7 +289,7 @@ public class GameFrameController {
     		
     		if (bricks.size() == 0) {
     			game.nextLevel();
-    			game.initializePaddleBall();
+    			game.restartGame();
     		}
     	}
     }
@@ -336,7 +338,7 @@ public class GameFrameController {
     		updateGameInfo();
     		
     		if (player.getLives() != 0) {
-    			game.initializePaddleBall();
+    			game.restartGame();
     		} else {
     			game.end();
     		}
