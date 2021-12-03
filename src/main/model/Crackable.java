@@ -21,11 +21,30 @@ package main.model;
 import java.util.ArrayList;
 import javafx.geometry.Point2D;
 
+/**
+ * The {@code Crackable} interface provides definitions for common methods for bricks that are crackable.
+ * 
+ * @author Lim Tze Yang
+ */
 public interface Crackable {
 	public static final int CRACK_DEPTH = 1;
     public static final int CRACK_STEPS = 35;
 	
+    /**
+     * Gets a list containing all the cracks of the brick.
+     * @return cracks A list containing all the cracks of the brick.
+     */
 	public ArrayList<Crack> getCracks();
+	
+	/**
+	 * Add a crack to the brick with the given impact and direction.
+	 * @param impact The coordinates of the point of impact with a ball entity.
+	 * @param direction The direction in which the crack spreads.
+	 */
 	public void addCrack(Point2D impact, String direction);
+	
+	/**
+	 * Removes all the cracks of the brick.
+	 */
 	public void removeCracks();
 }

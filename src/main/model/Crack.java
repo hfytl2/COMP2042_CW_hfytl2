@@ -26,6 +26,11 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
+/**
+ * The {@code Crack} class represents a crack of a brick entity.
+ * 
+ * @author Lim Tze Yang
+ */
 public class Crack {
 	
 	private static final int CRACK_SECTIONS = 3;
@@ -36,24 +41,44 @@ public class Crack {
 	private Path path;
 	private int depth, steps;
 	
-	public Crack(Entity parent, int depth, int steps, Point2D impact, String direction) {
+	/**
+	 * Creates a new instance of Crack with the given parent, depth, steps, impact and direction
+	 * @param parent The parent brick entity of the crack.
+	 * @param depth The depth of the crack.
+	 * @param steps The number of steps it takes to get from start to end of the crack.
+	 * @param origin The coordinates of the origin of the crack. 
+	 * @param direction The direction in which the crack spreads.
+	 */
+	public Crack(Brick parent, int depth, int steps, Point2D origin, String direction) {
 		this.parent = parent;
 		this.depth = depth;
 		this.steps = steps;
-		generateCrack(impact, direction);
+		generateCrack(origin, direction);
 	}
 	
+	/**
+	 * Gets the value of the property path.
+	 * @return path The {@link javafx.scene.shape.Path Path} which contains the elements of the crack.
+	 */
 	public Path getPath() {
 		return path;
 	}
 	
+	/**
+	 * Resets the crack.
+	 */
 	public void reset() {
 		path.getElements().clear();
 	}
 	
-	private void generateCrack(Point2D point, String direction) {
+	/**
+	 * Generates the crack on the brick with the given origin and direction.
+	 * @param origin The coordinates of the origin of the crack.
+	 * @param direction The direction in which the crack spreads.
+	 */
+	private void generateCrack(Point2D origin, String direction) {
 		BoundingBox bounds = new BoundingBox(parent.getPosition().getX(), parent.getPosition().getY(), parent.getSize().getWidth(), parent.getSize().getHeight());
-		Point2D impact = point;
+		Point2D impact = origin;
 		Point2D start, end, random;
 		
 		switch (direction) {
@@ -84,6 +109,12 @@ public class Crack {
 		}
 	}
 	
+	
+	/**
+	 * Creates a crack with the given start and end.
+	 * @param start The coordinates of the start of the crack.
+	 * @param end The coordinates of the end of the crack.
+	 */
 	private void createCrack(Point2D start, Point2D end) {
     	double x, y;
     	double w = (end.getX() - start.getX()) / (double)steps;
@@ -105,6 +136,13 @@ public class Crack {
     	
     }
 	
+	/**
+	 * Gets a random point with the given from, to and direction.
+	 * @param from The coordinates of the origin.
+	 * @param to The coordinates of the destination.
+	 * @param direction The direction from which the point is taken.
+	 * @return
+	 */
 	private Point2D getRandomPoint(Point2D from, Point2D to, String direction) {
     	Point2D point = to;
     	int pos;
@@ -124,11 +162,16 @@ public class Crack {
     	return point;
     }
     
+	/**
+	 * Gets a random integer with the given bound.
+	 * @param bound The maximum bound of the random integer.
+	 * @return random The random integer.
+	 */
     private int getRandomInBounds(int bound) {
         int n = (bound * 2) + 1;
         return rng.nextInt(n) - bound;
     }
-    
+        
     private boolean inMiddle(int i, int steps, int divisions) {
         int low = (steps / divisions);
         int up = low * (divisions - 1);

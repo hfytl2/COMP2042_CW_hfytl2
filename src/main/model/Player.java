@@ -131,7 +131,7 @@ public class Player {
 	}
 	
 	/**
-	 * Gets the list of inputs from the player.
+	 * Gets the list containing all inputs from the player.
 	 * @return input The list of inputs of the player.
 	 */
 	public ArrayList<KeyCode> getInput() {
