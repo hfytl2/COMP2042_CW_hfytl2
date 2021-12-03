@@ -32,6 +32,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
 import main.model.Game;
@@ -43,6 +45,11 @@ import main.model.Brick;
 import main.model.Crack;
 import main.model.Crackable;
 
+/**
+ * A controller that handles events in the GameFrame.
+ * 
+ * @author Lim Tze Yang
+ */
 public class GameFrameController {
 	
 	private static final double BOTTOM_MARGIN = 10;
@@ -92,7 +99,8 @@ public class GameFrameController {
     	gameroot.setOnKeyReleased(key -> {
     		player.removeInput(key.getCode());
     	});
-    	gc = gamecanvas.getGraphicsContext2D();    	
+    	gc = gamecanvas.getGraphicsContext2D();
+    	gc.setLineWidth(2);
     	renderLevel();
     	renderBall();
     	renderPaddle();
@@ -105,7 +113,7 @@ public class GameFrameController {
 				lastnanotime = currentnanotime;
 				Paddle paddle = game.getPaddle();
 				Ball ball = game.getBall();						    	
-		    	handleInput();		    	
+		    	handlePaddleMovement();		    	
 				ball.move(elapsedtime);				
 				paddle.move(elapsedtime);
 				handleBrickCollision();
@@ -121,6 +129,9 @@ public class GameFrameController {
     	timer.start();
     }
     
+    /**
+     * Renders the current level onto the game canvas.
+     */
     private void renderLevel() {
     	Level level = game.getCurrentLevel();
     	ArrayList<Brick> bricks = level.getBricks();
@@ -140,39 +151,58 @@ public class GameFrameController {
     			if (!cracks.isEmpty()) {
     				cracks.forEach(crack -> {
         				Path path = crack.getPath();
-        				gameroot.getChildren().add(path);
+        				gc.setFill(brick.getBorderColor());
+        				gc.beginPath();
+        				path.getElements().forEach(element -> {
+        					if (element instanceof MoveTo) {
+        						gc.moveTo(((MoveTo) element).getX(), ((MoveTo) element).getY());
+        					} else if (element instanceof LineTo) {
+        						gc.lineTo(((LineTo) element).getX(), ((LineTo) element).getY());
+        						gc.fill();
+        					}
+        				});        				
+        				gc.closePath();
         			});
     			}    			
     		}
     	});
     }
     
+    /**
+     * Renders the ball onto the game canvas.
+     */
     private void renderBall() {
     	Ball ball = game.getBall();
     	double posX = ball.getPosition().getX();
-    	double posY = ball.getPosition().getY();
+    	double posY = ball.getPosition().getY() - BOTTOM_MARGIN;
     	double width = ball.getWidth();
     	double height = ball.getHeight();
     	
     	gc.setFill(ball.getFillColor());
     	gc.setStroke(ball.getBorderColor());
-    	gc.fillOval(posX, posY-BOTTOM_MARGIN, width, height);
-    	gc.strokeOval(posX, posY-BOTTOM_MARGIN, width, height);
+    	gc.fillOval(posX, posY, width, height);
+    	gc.strokeOval(posX, posY, width, height);
     }
     
+    /**
+     * Renders the paddle onto the game canvas.
+     */
     private void renderPaddle() {
     	Paddle paddle = game.getPaddle();
     	double posX = paddle.getPosition().getX();
-    	double posY = paddle.getPosition().getY();
+    	double posY = paddle.getPosition().getY() - BOTTOM_MARGIN;
     	double width = paddle.getWidth();
     	double height = paddle.getHeight();
     	
     	gc.setFill(paddle.getFillColor());
     	gc.setStroke(paddle.getBorderColor());
-    	gc.fillRect(posX, posY-BOTTOM_MARGIN, width, height);
-    	gc.strokeRect(posX, posY-BOTTOM_MARGIN, width, height);
+    	gc.fillRect(posX, posY, width, height);
+    	gc.strokeRect(posX, posY, width, height);
     }
     
+    /**
+     * Checks for and handles the collision of the paddle with the game boundary.
+     */
     private void handlePaddleBoundaryCollision() {
     	Bounds boundary = gamecanvas.getBoundsInLocal();
     	Paddle paddle = game.getPaddle();
@@ -185,13 +215,16 @@ public class GameFrameController {
     	}
     }
     
+    /**
+     * Checks for and handles the collision of the ball with bricks.
+     */
     private void handleBrickCollision() {    	
     	Ball ball = game.getBall();
     	BoundingBox ballhitbox = ball.getHitBox();
-    	Point2D up = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMinY());
-		Point2D right = new Point2D(ballhitbox.getMaxX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2));
-		Point2D down = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMaxY());
-		Point2D left = new Point2D(ballhitbox.getMinX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2));
+    	Point2D up = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMinY() - BOTTOM_MARGIN);
+		Point2D right = new Point2D(ballhitbox.getMaxX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2) - BOTTOM_MARGIN);
+		Point2D down = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMaxY() - BOTTOM_MARGIN);
+		Point2D left = new Point2D(ballhitbox.getMinX(), ballhitbox.getMinY() + (ballhitbox.getHeight() / 2) - BOTTOM_MARGIN);
 		ArrayList<Brick> bricks = game.getCurrentLevel().getBricks();
     	Iterator<Brick> brickiterator = bricks.iterator();
     	
@@ -203,9 +236,9 @@ public class GameFrameController {
     			brick.damage();
     			
     			if (brickhitbox.contains(up)) {
-    				ball.inverseVelocityY();
+    				ball.inverseVerticalVelocity();
     				
-    				if (brick.isBroken()) {
+    				if (brick.isDestroyed()) {
     					game.getPlayer().increaseScore(brick.getScore());
     					brickiterator.remove();
     					updateGameInfo();
@@ -215,9 +248,9 @@ public class GameFrameController {
         				}
     				}
     			} else if (brickhitbox.contains(right)) {
-    				ball.inverseVelocityX();
+    				ball.inverseHorizontalVelocity();
     				
-    				if (brick.isBroken()) {
+    				if (brick.isDestroyed()) {
     					brickiterator.remove();
     					updateGameInfo();
     				} else {
@@ -226,9 +259,9 @@ public class GameFrameController {
         				}
     				}
     			} else if (brickhitbox.contains(down)) {
-    				ball.inverseVelocityY();
+    				ball.inverseVerticalVelocity();
     				
-    				if (brick.isBroken()) {
+    				if (brick.isDestroyed()) {
     					brickiterator.remove();
     					updateGameInfo();
     				} else {
@@ -237,9 +270,9 @@ public class GameFrameController {
         				}
     				}
     			} else if (brickhitbox.contains(left)) {
-    				ball.inverseVelocityX();
+    				ball.inverseHorizontalVelocity();
     				
-    				if (brick.isBroken()) {
+    				if (brick.isDestroyed()) {
     					brickiterator.remove();
     					updateGameInfo();
     				} else {
@@ -248,10 +281,17 @@ public class GameFrameController {
         				}
     				}
     			}    			    			
-    		}    		    		
+    		}
+    		
+    		if (bricks.size() == 0) {
+    			game.nextLevel();
+    		}
     	}
     }
     
+    /**
+     * Checks for and handles the collision of the paddle with the ball.
+     */
     private void handlePaddleCollision() {
     	Ball ball = game.getBall();
     	Paddle paddle = game.getPaddle();
@@ -261,10 +301,13 @@ public class GameFrameController {
     	boolean impact = paddlehitbox.intersects(ballhitbox) && paddlehitbox.contains(down);
     	
     	if (impact) {
-    		ball.inverseVelocityY();
+    		ball.inverseVerticalVelocity();
     	}
     }
     
+    /**
+     * Checks for and handles the collision of the ball with the game boundary.
+     */
     private void handleBallBoundaryCollision() {    	
     	Player player = game.getPlayer();
     	Bounds boundary = gamecanvas.getBoundsInLocal();
@@ -276,9 +319,9 @@ public class GameFrameController {
     	boolean leftboundary = hitbox.getMinX() <= boundary.getMinX();
     	
     	if (topboundary) {
-    		ball.inverseVelocityY();
+    		ball.inverseVerticalVelocity();
     	} else if (rightboundary || leftboundary) {
-    		ball.inverseVelocityX();
+    		ball.inverseHorizontalVelocity();
     	} else if (bottomboundary) {
     		player.loseLife();    		
     		updateGameInfo();
@@ -291,7 +334,10 @@ public class GameFrameController {
     	}
     }
     
-    private void handleInput() {
+    /**
+     * Handles paddle movement based on user input.
+     */
+    private void handlePaddleMovement() {
     	Player player = game.getPlayer();
     	Paddle paddle = game.getPaddle();
     	Ball ball = game.getBall();
@@ -324,6 +370,9 @@ public class GameFrameController {
     	}						
     }
     
+    /**
+     * Updates game information text.
+     */
     private void updateGameInfo() {
     	txtbricks.setText("Bricks: " + game.getCurrentLevel().getBricks().size());
     	txtballs.setText("Balls: " + game.getPlayer().getLives());

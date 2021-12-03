@@ -8,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.Parent;
 
+/**
+ * Entry point for the game.
+ * 
+ * @author Lim Tze Yang
+ */
 public class BrickDestroy extends Application {	
 	
 	public static void main(String[] args) {

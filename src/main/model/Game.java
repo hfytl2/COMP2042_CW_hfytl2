@@ -104,7 +104,7 @@ public class Game {
 			level = levels.get(nextlevel - 1);
 			initializePaddleBall();
 		} else {
-			 end(); // game over
+			 end();
 		}
 	}
 	

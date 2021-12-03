@@ -22,22 +22,39 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
+/**
+ * The {@code RubberBall} represents the default type of ball entity that can collide with and destroy bricks.
+ * 
+ * @author Lim Tze Yang
+ */
 public class RubberBall extends Ball {
 	
 	private static final Dimension2D SIZE = new Dimension2D(10, 10);
 	private static final Color BORDER_COLOR = Color.TRANSPARENT;
 	private static final Color FILL_COLOR = Color.WHITE;    
     
+	/**
+	 * Creates a new instance of RubberBall with the given position.
+	 * @param position The position of the upper-left corner of the ball.
+	 */
     public RubberBall(Point2D position) {
 		super(position, SIZE, BORDER_COLOR, FILL_COLOR);
 		updateHitBox();
 	}
 	
-	public RubberBall(double posX, double posY) {
-		super(posX, posY, SIZE, BORDER_COLOR, FILL_COLOR);
+    /**
+     * Creates a new instance of RubberBall with the given position.
+     * @param x The x-coordinate of the upper-left corner of the ball.
+     * @param y The y-coordinate of the upper-left corner of the ball.
+     */
+	public RubberBall(double x, double y) {
+		super(x, y, SIZE, BORDER_COLOR, FILL_COLOR);
 		updateHitBox();
 	}
 	
+	/**
+	 * Creates a new instance of RubberBall at the position {@code (0,0)}
+	 */
 	public RubberBall() {
     	this(0, 0);
     }

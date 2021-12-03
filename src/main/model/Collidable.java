@@ -20,7 +20,20 @@ package main.model;
 
 import javafx.geometry.BoundingBox;
 
+/**
+ * The {@code Collidable} interface provides definitions for common methods for entities that are collidable.
+ * 
+ * @author Lim Tze Yang
+ */
 interface Collidable {
+	/**
+	 * Gets the value of the property hitbox.
+	 * @return hitbox The bounding box of the entity.
+	 */
 	public BoundingBox getHitBox();
+	
+	/**
+	 * Updates the value of the property hitbox based on the position and size of the entity.
+	 */
 	public void updateHitBox();
 }

@@ -29,6 +29,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+/**
+ * A controller class that handles events in the HelpMenu.
+ * 
+ * @author Lim Tze Yang
+ */
 public class HelpMenuController {
 	
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
@@ -44,6 +49,11 @@ public class HelpMenuController {
     @FXML
     private void initialize() {}
 	
+    /**
+     * Switches to the HomeMenu when back button is pressed.
+     * 
+     * @throws IOException
+     */
 	@FXML
     private void backButtonPressed() throws IOException {
     	Scene scene = back.getScene();

@@ -23,6 +23,11 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
+/**
+ * The {@code Paddle} class represents a paddle entity that can collide with and change the direction of a ball entity.
+ * 
+ * @author Lim Tze Yang
+ */
 public class Paddle extends Entity implements Collidable, Movable {
 	
 	private static final Color BORDER_COLOR = Color.TRANSPARENT;
@@ -31,35 +36,68 @@ public class Paddle extends Entity implements Collidable, Movable {
 	
 	private BoundingBox hitbox;
 	private Point2D velocity;
-		
+	
+	/**
+	 * Creates a new instance of Paddle with the given position and size.
+	 * @param position The coordinates of the upper-left corner of the paddle.
+	 * @param size The size of the paddle.
+	 */
 	public Paddle(Point2D position, Dimension2D size) {
 		super(position, size, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
-	public Paddle(double posX, double posY, Dimension2D size) {
-		super(posX, posY, size, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(posX, posY, size.getWidth(), size.getHeight());
+	/**
+	 * Creates a new instance of Paddle with the given position and size.
+	 * @param x The x-coordinate of the upper-left corner of the paddle.
+	 * @param y The y-coordinate of the upper-left corner of the paddle.
+	 * @param size The size of the paddle.
+	 */
+	public Paddle(double x, double y, Dimension2D size) {
+		super(x, y, size, BORDER_COLOR, FILL_COLOR);
+		hitbox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
+	/**
+	 * Creates a new instance of Paddle with the given position, width and height.
+	 * @param position The coordinates of the upper-left corner of the paddle.
+	 * @param width The width of the paddle.
+	 * @param height The height of the paddle.
+	 */
 	public Paddle(Point2D position, double width, double height) {
 		super(position, width, height, BORDER_COLOR, FILL_COLOR);
 		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
 		velocity = new Point2D(0, 0);
 	}	
 	
-	public Paddle(double posX, double posY, double width, double height) {
-		super(posX, posY, width, height, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(posX, posY, width, height);
+	/**
+	 * Creates a new instance of Paddle with the given position, width and height.
+	 * @param x The x-coordinate of the upper-left corner of the paddle.
+	 * @param y The y-coordinate of the upper-left corner of the paddle.
+	 * @param width The width of the paddle.
+	 * @param height The height of the paddle.
+	 */
+	public Paddle(double x, double y, double width, double height) {
+		super(x, y, width, height, BORDER_COLOR, FILL_COLOR);
+		hitbox = new BoundingBox(x, y, width, height);
 		velocity = new Point2D(0, 0);
 	}
 	
+	/**
+	 * Creates a new instance of Paddle at position {@code (0,0)} with the given size.
+	 * @param size The size of the paddle.
+	 */
 	public Paddle(Dimension2D size) {
 		this(0, 0, size);
 	}
 	
+	/**
+	 * Creates a new instance of Paddle at position {@code (0,0)} with the given width and height.
+	 * @param width The width of the paddle.
+	 * @param height The height of the paddle.
+	 */
 	public Paddle(double width, double height) {
 		this(0, 0, width, height);
 	}
@@ -76,35 +114,33 @@ public class Paddle extends Entity implements Collidable, Movable {
 		updateHitBox();
 	}
 	
-	@Override
 	public BoundingBox getHitBox() {
 		return hitbox;
 	}
-
-	@Override 
+ 
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
 	}
 	
-	@Override
 	public Point2D getVelocity() {
 		return velocity;
 	}
 
-	@Override
 	public void setVelocity(Point2D velocity) {
 		this.velocity = velocity;
 	}
 
-	@Override
 	public void moveTo(Point2D point) {
 		setPosition(point);
 		updateHitBox();
 	}
 
-	@Override
 	public void move(double time) {
 		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
+	}
+	
+	public void inverseHorizontalVelocity() {
+		velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}
 }

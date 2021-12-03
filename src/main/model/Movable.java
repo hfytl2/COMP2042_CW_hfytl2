@@ -20,9 +20,38 @@ package main.model;
 
 import javafx.geometry.Point2D;
 
+/**
+ * The {@code Movable} interface provides definitions for common methods for entities that update their position dynamically.
+ * 
+ * @author Lim Tze Yang
+ */
 interface Movable {
+	/**
+	 * Gets the value of the property velocity.
+	 * @return velocity The velocity of the entity.
+	 */
 	public Point2D getVelocity();
+	
+	/**
+	 * Sets the value of the property velocity.
+	 * @param velocity The new velocity of the entity.
+	 */
 	public void setVelocity(Point2D velocity);
+	
+	/**
+	 * Moves the entity to the given coordinates.
+	 * @param point The coordinates to move the entity to.
+	 */
 	public void moveTo(Point2D point);
+	
+	/**
+	 * Updates the position of the entity based on the velocity and the given elapsed time.
+	 * @param time The elapsed time since the position of the entity was last updated.
+	 */
 	public void move(double time);
+	
+	/**
+	 * Inverses the horizontal velocity of the entity.
+	 */
+	public void inverseHorizontalVelocity();
 }

@@ -30,8 +30,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import javafx.scene.Parent;
-//import main.GameFrame;
 
+/**
+ * A controller class that handles events in the HomeMenu.
+ * 
+ * @author Lim Tze Yang
+ */
 public class HomeMenuController {
 	
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
@@ -50,6 +54,11 @@ public class HomeMenuController {
     @FXML
     private void initialize() {}
     
+    /**
+     * Switches to the GameFrame when play button is pressed.
+     * 
+     * @throws IOException
+     */
     @FXML
     private void playButtonPressed() throws IOException {
     	Parent gameroot = FXMLLoader.load(getClass().getResource(gameFXML));
@@ -72,6 +81,11 @@ public class HomeMenuController {
     	fadeHome.play();
     }
     
+    /**
+     * Switches to the HelpMenu when the help button is pressed.
+     * 
+     * @throws IOException
+     */
     @FXML
     private void helpButtonPressed() throws IOException {
     	Parent helproot = FXMLLoader.load(getClass().getResource(helpFXML));
@@ -119,6 +133,9 @@ public class HomeMenuController {
     	fadeHome.play();
     }   
     
+    /**
+     * Exits the application when the exit button is pressed.
+     */
     @FXML
     private void exitButtonPressed() {
     	System.out.println("Goodbye " + System.getProperty("user.name"));
