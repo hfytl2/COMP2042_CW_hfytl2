@@ -19,9 +19,9 @@
 package main.controller;
 
 import java.net.URL;
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Iterator;
-//import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -55,7 +55,6 @@ public class GameFrameController {
 	private static final double BOTTOM_MARGIN = 10;
 	
 	private Game game;
-//	private Random rng;
 	private GraphicsContext gc;
 	private AnimationTimer timer;
 	private long lastnanotime;
@@ -75,23 +74,26 @@ public class GameFrameController {
     private void initialize() {
     	game = new Game(gamecanvas);
     	Player player = game.getPlayer();
-    	updateGameInfo();    	
-//    	rng = new Random();
+    	updateGameInfo();
     	gameroot.setOnKeyPressed(key -> {
     		player.addInput(key.getCode());
     		
-    		if (!game.isPaused()) {
-    			if (key.getCode().equals(KeyCode.ESCAPE)) {
-    				game.pause();
-    			}
+    		if (!game.isOver()) {
+    			if (!game.isPaused()) {
+    				if (key.getCode().equals(KeyCode.ESCAPE)) {
+    					game.pause();
+    					timer.stop();
+    				}
     		
-    			if (key.getCode().equals(KeyCode.SPACE)) {    			
-    				if (!game.isStarted()) {    					
-//    			        double speedx = rng.nextInt(75) - 20;
-//    			        double speedy = -rng.nextInt(50);
+    				if (key.getCode().equals(KeyCode.SPACE)) {    			
+    					if (!game.hasStarted()) {
+    						double angle = Math.toRadians(90);
+    			        	double speedx = Ball.BALL_SPEED * Math.cos(angle);
+    			        	double speedy = -Ball.BALL_SPEED * Math.sin(angle);
     			        
-    					game.start();
-    					game.getBall().setVelocity(new Point2D(-25, -75));
+    						game.start();
+    						game.getBall().setVelocity(new Point2D(speedx, speedy));
+    					}
     				}
     			}
     		}
@@ -285,6 +287,7 @@ public class GameFrameController {
     		
     		if (bricks.size() == 0) {
     			game.nextLevel();
+    			game.initializePaddleBall();
     		}
     	}
     }
@@ -301,7 +304,13 @@ public class GameFrameController {
     	boolean impact = paddlehitbox.intersects(ballhitbox) && paddlehitbox.contains(down);
     	
     	if (impact) {
-    		ball.inverseVerticalVelocity();
+    		double distance = down.getX() - paddlehitbox.getMinX();
+    		double cosine = ((distance * 2) / paddlehitbox.getWidth()) - 1;
+    		double angle = Math.acos(cosine);
+    		double speedx = Ball.BALL_SPEED * Math.cos(angle);
+    		double speedy = -Ball.BALL_SPEED * Math.sin(angle);
+    		
+    		ball.setVelocity(new Point2D(speedx, speedy));
     	}
     }
     
@@ -363,7 +372,7 @@ public class GameFrameController {
     				paddle.setVelocity(new Point2D(0, 0));
     			}
     			
-    			if (!game.isStarted()) {
+    			if (!game.hasStarted()) {
     				ball.setVelocity(paddle.getVelocity());
     			}
     		}

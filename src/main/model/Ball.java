@@ -30,6 +30,8 @@ import javafx.scene.paint.Color;
  */
 public abstract class Ball extends Entity implements Collidable, Movable {
 	
+	public static final double BALL_SPEED = 100;
+	
 	private BoundingBox hitbox;
 	private Point2D velocity;
 	
