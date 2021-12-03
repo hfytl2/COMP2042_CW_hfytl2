@@ -128,13 +128,13 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	}
 	
 	public void inverseHorizontalVelocity() {
-		this.velocity = new Point2D(velocity.getX(), -velocity.getY());
+		this.velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}
 	
 	/**
 	 * Inverses the vertical velocity of the ball.
 	 */
 	public void inverseVerticalVelocity() {
-		this.velocity = new Point2D(-velocity.getX(), velocity.getY());
+		this.velocity = new Point2D(velocity.getX(), -velocity.getY());
 	}	
 }
