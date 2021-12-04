@@ -52,7 +52,7 @@ import main.model.Crackable;
  */
 public class GameFrameController {
 	
-	private static final double BOTTOM_MARGIN = 10;
+	private static final double BOTTOM_MARGIN = 13;
 	
 	private Game game;
 	private GraphicsContext gc;
@@ -87,12 +87,9 @@ public class GameFrameController {
     		
     				if (key.getCode().equals(KeyCode.SPACE)) {    			
     					if (!game.hasStarted()) {
-    						double angle = Math.toRadians(90);
-    			        	double speedx = Ball.BALL_SPEED * Math.cos(angle);
-    			        	double speedy = -Ball.BALL_SPEED * Math.sin(angle);
     			        
     						game.start();
-    						game.getBall().setVelocity(new Point2D(speedx, speedy));
+    						game.getBall().setVelocity(new Point2D(Ball.BALL_SPEED * Math.cos(Math.toRadians(90)), Ball.BALL_SPEED * Math.sin(Math.toRadians(90))));
     					}
     				}
     			}
@@ -116,11 +113,11 @@ public class GameFrameController {
 				Paddle paddle = game.getPaddle();
 				Ball ball = game.getBall();						    	
 		    	handlePaddleMovement();		    	
-				ball.move(elapsedtime);				
+				ball.move(elapsedtime);
 				paddle.move(elapsedtime);
+				handleBallBoundaryCollision();
 				handleBrickCollision();
 		    	handlePaddleCollision();
-				handleBallBoundaryCollision();
 				handlePaddleBoundaryCollision();
 				gc.clearRect(0, 0, gamecanvas.getWidth(), gamecanvas.getHeight());
 				renderLevel();
@@ -234,7 +231,7 @@ public class GameFrameController {
     	
     	while (brickiterator.hasNext()) {
     		Brick brick = brickiterator.next();
-    		BoundingBox brickhitbox = brick.getHitBox();    		
+    		BoundingBox brickhitbox = brick.getHitBox();
     		
     		if (brickhitbox.intersects(ballhitbox)) {
     			brick.damage();
@@ -307,12 +304,9 @@ public class GameFrameController {
     	
     	if (impact) {
     		double distance = down.getX() - paddlehitbox.getMinX();
-    		double cosine = ((distance * 2) / paddlehitbox.getWidth()) - 1;
-    		double angle = Math.acos(cosine);
-    		double speedx = Ball.BALL_SPEED * Math.cos(angle);
-    		double speedy = -Ball.BALL_SPEED * Math.sin(angle);
+    		double cosine = ((distance * 2) / paddlehitbox.getWidth()) - 1;    		
     		
-    		ball.setVelocity(new Point2D(speedx, speedy));
+    		ball.setVelocity(new Point2D(Ball.BALL_SPEED * Math.cos(Math.acos(cosine)), -Ball.BALL_SPEED * Math.sin(Math.acos(cosine))));
     	}
     }
     
@@ -324,7 +318,7 @@ public class GameFrameController {
     	Bounds boundary = gamecanvas.getBoundsInLocal();
     	Ball ball = game.getBall();
     	BoundingBox hitbox = ball.getHitBox();
-    	boolean topboundary = hitbox.getMinY() <= boundary.getMinY();    	
+    	boolean topboundary = hitbox.getMinY() - BOTTOM_MARGIN <= boundary.getMinY();    	
     	boolean rightboundary = hitbox.getMaxX() >= boundary.getMaxX();
     	boolean bottomboundary = hitbox.getMaxY() >= boundary.getMaxY();
     	boolean leftboundary = hitbox.getMinX() <= boundary.getMinX();

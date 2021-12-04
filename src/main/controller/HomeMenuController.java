@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -29,6 +31,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 
 /**
@@ -60,13 +63,12 @@ public class HomeMenuController {
      * @throws IOException
      */
     @FXML
-    private void playButtonPressed() throws IOException {
+    private void playButtonPressed(ActionEvent event) throws IOException {
     	Parent gameroot = FXMLLoader.load(getClass().getResource(gameFXML));
     	FadeTransition fadeGame = new FadeTransition(Duration.millis(fadetime), gameroot);
     	FadeTransition fadeHome = new FadeTransition(Duration.millis(fadetime), homeroot);
-    	
     	gameroot.setOpacity(0);
-    	parentcontainer.getChildren().add(gameroot);
+    	parentcontainer.getChildren().add(gameroot);    	
     	fadeGame.setFromValue(0);
     	fadeGame.setToValue(1);
     	fadeHome.setFromValue(1);
@@ -76,6 +78,7 @@ public class HomeMenuController {
     		help.setFocusTraversable(false);
     		exit.setFocusTraversable(false);
     		fadeGame.play();
+    		((Node)(event.getSource())).getScene().getWindow().hide();
     	});
     	gameroot.requestFocus();
     	fadeHome.play();
@@ -139,6 +142,6 @@ public class HomeMenuController {
     @FXML
     private void exitButtonPressed() {
     	System.out.println("Goodbye " + System.getProperty("user.name"));
-    	System.exit(0);
+    	Platform.exit();
     }    
 }
