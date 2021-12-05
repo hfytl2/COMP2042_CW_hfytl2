@@ -24,15 +24,14 @@
 
 .greetings {
 	-fx-fill: white;
-	-fx-font-family: "Noto Mono";
-	-fx-font-size: 25pt;
+	-fx-font-size: 22pt;
 	-fx-font-smoothing-type: lcd;
 }
 
 .title {
 	-fx-fill: black;
-	-fx-font-family: "Noto Mono";
-	-fx-font-size: 40pt;
+	-fx-font-family: 'Arcade Normal';
+	-fx-font-size: 25pt;
 	-fx-font-weight: bold;
 	-fx-font-smoothing-type: lcd;
 }
@@ -49,6 +48,7 @@
 .button {
 	-fx-background-color: #C3C4C4, linear-gradient(#D6D6D6 50%, white 100%), radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
     -fx-background-insets: 0, 1, 1;
+    -fx-font-family: 'Arcade Normal';
     -fx-text-fill: black;
     -fx-font-size: 16pt;
     -fx-font-weight: bold;

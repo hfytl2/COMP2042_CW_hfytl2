@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.scene.Parent;
 
 /**
@@ -24,6 +25,8 @@ public class BrickDestroy extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
+		Font.loadFont(getClass().getResourceAsStream("assets/ARCADE_N.TTF"), 10);
+		primaryStage.centerOnScreen();
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
 		primaryStage.setTitle("Brick Destroy");
@@ -32,6 +35,8 @@ public class BrickDestroy extends Application {
 		primaryStage.setOnHiding(hiding -> {
 			Stage newstage = new Stage();
 			newstage.initOwner(primaryStage);
+			newstage.setX(primaryStage.getX());
+			newstage.setY(primaryStage.getY());
 	    	newstage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
 	    	newstage.setTitle("Brick Destroy");
 	    	newstage.setScene(primaryStage.getScene());

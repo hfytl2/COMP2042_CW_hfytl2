@@ -12,6 +12,7 @@
 	<GridPane fx:id="homeroot" styleClass="gridroot" prefHeight="450" prefWidth="600">
 		<VBox styleClass="vbox" GridPane.rowIndex="0">
 			<Text styleClass="greetings" text="Welcome to:"/>
+			<Text/>
 			<Text styleClass="title" text="Brick Destroy"/>
 			<Text styleClass="credits" text="Version 0.1"/>
 		</VBox>
@@ -20,7 +21,7 @@
 				<cursor>
 					<Cursor fx:constant="HAND"/>
 				</cursor>
-			</Button>		
+			</Button>
 			<Button fx:id="help" contentDisplay="CENTER" text="HELP" onAction="#helpButtonPressed">
 				<cursor>
 					<Cursor fx:constant="HAND"/>

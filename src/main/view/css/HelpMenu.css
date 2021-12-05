@@ -11,14 +11,18 @@
 	-fx-spacing: 13px;
 }
 
+.controlcontainer {
+	-fx-alignment: center;
+}
+
 .hbox {
 	-fx-alignment: bottom-left;
 }
 
 .title {
 	-fx-fill: white;
-	-fx-font-family: "Noto Mono";
-	-fx-font-size: 32pt;
+	-fx-font-family: "Arcade Normal";
+	-fx-font-size: 17pt;
 	-fx-font-weight: bold;
 	-fx-font-smoothing-type: lcd;
 }
@@ -28,6 +32,18 @@
 	-fx-font-family: sans-serif;
 	-fx-font-size: 12pt;
 	-fx-font-smoothing-type: lcd;
+}
+
+.control {
+	-fx-fill: white;
+	-fx-font-family: "Arcade Normal";
+	-fx-font-size: 8pt;
+}
+
+.controltitle {
+	-fx-fill: white;
+	-fx-font-family: "Arcade Normal";
+	-fx-font-size: 12pt;
 }
 
 .button {
