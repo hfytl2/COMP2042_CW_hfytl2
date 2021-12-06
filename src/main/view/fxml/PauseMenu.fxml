@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
+
+<GridPane fx:id="pauseroot" prefHeight="450" prefWidth="600" stylesheets="@../css/PauseMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.PauseMenuController">
+	<VBox styleClass="rootcontainer">
+		<HBox styleClass="hbox">
+			<Text styleClass="pausetitle" text="Game Paused"/>
+		</HBox>
+		<VBox styleClass="buttoncontainer">
+			<Button fx:id="resume" contentDisplay="CENTER" text="RESUME" onAction="#resumeButtonPressed">
+				<cursor>
+					<Cursor fx:constant="HAND"/>
+				</cursor>
+			</Button>
+			<Button fx:id="restart" contentDisplay="CENTER" text="RESTART" onAction="#restartButtonPressed">
+				<cursor>
+					<Cursor fx:constant="HAND"/>
+				</cursor>
+			</Button>
+			<Button fx:id="quit" contentDisplay="CENTER" text="EXIT" onAction="#quitButtonPressed">
+				<cursor>
+					<Cursor fx:constant="HAND"/>
+				</cursor>
+			</Button>
+		</VBox>
+	</VBox>
+</GridPane>

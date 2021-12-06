@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<GridPane fx:id="helproot" styleClass="gridroot" prefHeight="450" prefWidth="600" stylesheets="@../css/HelpMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.HelpMenuController">
+	<VBox styleClass="vbox" GridPane.rowIndex="0">
+		<VBox.margin>
+			<Insets left="20.0" right="20.0"/>
+		</VBox.margin>
+		<Text styleClass="title" text="Instructions"/>
+	</VBox>
+	<VBox styleClass="vbox" GridPane.rowIndex="1">
+		<VBox.margin>
+			<Insets left="10.0" right="10.0"/>
+		</VBox.margin>
+		<Text styleClass="paragraph" text="In this game, the player moves a PADDLE horizontally to hit a BALL. The objective is to destroy the BRICKS at the top of the screen with a BALL. The player loses a BALL when it hits the bottom of the screen. The player loses when they have no BALLS left. The player wins when all BRICKS are destroyed." wrappingWidth="450.0"/>
+		<Text styleClass="controltitle" text="Controls:"/>
+		<HBox styleClass="controlcontainer">
+			<ImageView fitWidth="64" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Space-Key.png"></Image>
+				</image>
+			</ImageView>
+			<Text styleClass="control" text=" : Shoot Ball"/>
+		</HBox>
+		<HBox styleClass="controlcontainer">
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/A-Key.png"></Image>
+				</image>
+			</ImageView>
+			<Text styleClass="control" text=" or "/>
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Left-Arrow-Key.png"></Image>
+				</image>
+			</ImageView>
+			<Text styleClass="control" text=" : Move Left"/>
+		</HBox>
+		<HBox styleClass="controlcontainer">
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/D-Key.png"></Image>
+				</image>
+			</ImageView>
+			<Text styleClass="control" text=" or "/>
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Right-Arrow-Key.png"></Image>
+				</image>
+			</ImageView>		
+			<Text styleClass="control" text=" : Move Right"/>
+		</HBox>
+		<HBox styleClass="controlcontainer">
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Esc-Key.png"></Image>
+				</image>
+			</ImageView>
+			<Text styleClass="control" text=" : Toggle Pause Menu" />
+		</HBox>
+	</VBox>
+	<HBox styleClass="hbox" GridPane.rowIndex="2">
+		<HBox.margin>
+			<Insets left="20.0" />
+		</HBox.margin>
+		<Button fx:id="back" contentDisplay="CENTER" onAction="#backButtonPressed" text="BACK">
+			<cursor>
+				<Cursor fx:constant="HAND" />
+			</cursor>
+         <HBox.margin>
+            <Insets bottom="20.0" />
+         </HBox.margin>
+		</Button>
+	</HBox>
+</GridPane>

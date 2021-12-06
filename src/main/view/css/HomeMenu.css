@@ -1,0 +1,62 @@
+#parentcontainer {
+	-fx-background-color: black;
+}
+
+.gridroot {	
+	-fx-alignment: center;    
+    -fx-vgap: 50px;
+}
+
+#homeroot {
+	-fx-background-image: url("../../assets/homebg.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 600 450;
+}
+
+.vbox {
+	-fx-alignment: center;
+}
+
+.buttons-container {
+	-fx-spacing: 25px;
+}
+
+.greetings {
+	-fx-fill: white;
+	-fx-font-size: 22pt;
+	-fx-font-smoothing-type: lcd;
+}
+
+.title {
+	-fx-fill: black;
+	-fx-font-family: 'Arcade Normal';
+	-fx-font-size: 25pt;
+	-fx-font-weight: bold;
+	-fx-font-smoothing-type: lcd;
+}
+
+.credits {
+	-fx-fill: black;
+	-fx-text-alignment: center;
+	-fx-font-family: monospace;
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;
+	-fx-font-smoothing-type: lcd;
+}
+
+.button {
+	-fx-background-color: black;
+	-fx-border-color: white;
+	-fx-border-width: 3px;
+	-fx-border-style: dashed;
+    -fx-font-family: 'Arcade Normal';
+    -fx-text-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+
+.button:hover, .button:focused {
+	-fx-border-style: solid;
+    -fx-label-padding: 3px;
+}
