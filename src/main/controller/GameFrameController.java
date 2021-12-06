@@ -73,6 +73,9 @@ public class GameFrameController {
     @FXML private Text txtscore;
     @FXML private Canvas gamecanvas;   
     
+    /**
+     * Creates a new instance of GameFrameController.
+     */
     public GameFrameController() {}
     
     @FXML
@@ -403,13 +406,13 @@ public class GameFrameController {
     	if (!game.isOver()) {
 			if (moveleft) {
 	    		if (paddle.getHitBox().getMinX() > gamecanvas.getBoundsInLocal().getMinX()) {
-	    			paddle.setVelocity(new Point2D(-Paddle.PADDLE_SPEED, 0));
+	    			paddle.setVelocity(new Point2D(-paddle.getSpeed(), 0));
 	    		}
 			}
 			
 			if (moveright) {
 				if (paddle.getHitBox().getMaxX() < gamecanvas.getBoundsInLocal().getMaxX()) {
-					paddle.setVelocity(new Point2D(Paddle.PADDLE_SPEED, 0));
+					paddle.setVelocity(new Point2D(paddle.getSpeed(), 0));
 				}
 			}
 			

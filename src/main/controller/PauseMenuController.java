@@ -38,6 +38,9 @@ public class PauseMenuController {
 	@FXML private GridPane pauseroot;
 	@FXML private Button resume, restart, quit;	
     
+	/**
+	 * Creates a new instance of PauseMenuController.
+	 */
     public PauseMenuController() {}
     
     @FXML

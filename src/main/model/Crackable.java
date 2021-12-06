@@ -27,7 +27,13 @@ import javafx.geometry.Point2D;
  * @author Lim Tze Yang
  */
 public interface Crackable {
+	/**
+	 * Constant depth for all cracks.
+	 */
 	public static final int CRACK_DEPTH = 1;
+	/**
+	 * Constant steps for all cracks.
+	 */
     public static final int CRACK_STEPS = 35;
 	
     /**

@@ -18,6 +18,10 @@ import javafx.scene.Parent;
  */
 public class BrickDestroy extends Application {	
 	
+	/**
+	 * Main driver method to launch the Brick Destroy game application.
+	 * @param args Unused arguments.
+	 */
 	public static void main(String[] args) {
         launch(args);
     }

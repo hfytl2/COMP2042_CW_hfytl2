@@ -32,9 +32,9 @@ public class Paddle extends Entity implements Collidable, Movable {
 	
 	private static final Color BORDER_COLOR = Color.TRANSPARENT;
     private static final Color FILL_COLOR = Color.WHITE;
-    public static final double PADDLE_SPEED = 100;
 	
 	private BoundingBox hitbox;
+	private double speed = 100;
 	private Point2D velocity;
 	
 	/**
@@ -120,6 +120,22 @@ public class Paddle extends Entity implements Collidable, Movable {
  
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
+	}
+	
+	/**
+	 * Gets the value of the property speed.
+	 * @return speed The speed of the paddle.
+	 */
+	public double getSpeed() {
+		return speed;
+	}
+	
+	/**
+	 * Sets the value of the property speed.
+	 * @param speed The new speed of the paddle.
+	 */
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 	
 	public Point2D getVelocity() {

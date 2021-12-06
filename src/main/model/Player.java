@@ -35,7 +35,7 @@ public class Player {
 	/**
 	 * Creates a new instance of Player with the given name and lives.
 	 * @param name The name of the player.
-	 * @param lives The lives of the player.
+	 * @param lives The number of lives of the player.
 	 */
 	public Player(String name, int lives) {
 		this.name = name;
@@ -54,7 +54,7 @@ public class Player {
 	
 	/**
 	 * Creates a new instance of Player with the given lives and a default name.
-	 * @param lives
+	 * @param lives The number of lives of the player.
 	 */
 	public Player(int lives) {
 		this("Player", lives);

@@ -52,6 +52,9 @@ public class HomeMenuController {
 	@FXML private GridPane homeroot;
 	@FXML private Button play, help, exit;	
     
+	/**
+	 * Creates a new instance of HomeMenuController.
+	 */
     public HomeMenuController() {}
     
     @FXML

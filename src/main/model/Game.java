@@ -28,7 +28,10 @@ import javafx.scene.canvas.Canvas;
  * @author Lim Tze Yang
  */
 public class Game {
-		
+	
+	/**
+	 * Maximum number of levels for the game.
+	 */
 	public static final int MAX_LEVELS = 4;
 	
 	private boolean started, paused, gameover;

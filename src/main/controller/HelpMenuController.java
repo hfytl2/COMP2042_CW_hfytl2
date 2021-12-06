@@ -44,6 +44,9 @@ public class HelpMenuController {
 	@FXML private GridPane helproot;
 	@FXML private Button back;	
     
+	/**
+	 * Creates a new instance of HelpMenuController.
+	 */
     public HelpMenuController() {}
     
     @FXML
