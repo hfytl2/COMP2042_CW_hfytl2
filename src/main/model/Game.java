@@ -158,8 +158,12 @@ public class Game {
 	/**
 	 * Resets the current level.
 	 */
-	public void resetLevel() {		
-		level = generateLevels().get(level.getLevel());;
+	public void restartLevel() {
+		started = false;
+		paused = false;
+		gameover = false;
+		level = generateLevels().get(level.getLevel() - 1);
+		resetPaddleBall();
 	}
 	
 	/**
@@ -170,7 +174,7 @@ public class Game {
 		
 		if (nextlevel < MAX_LEVELS) {
 			level = levels.get(nextlevel);
-			restartGame();
+			resetPaddleBall();
 		} else {
 			 end();
 		}
@@ -179,7 +183,7 @@ public class Game {
 	/**
 	 * Restarts the game and moves the paddle and ball to their initial positions.
 	 */
-	public void restartGame() {
+	public void resetPaddleBall() {
 		double bottomoffset = 13;
 		
 		started = false;
@@ -197,7 +201,7 @@ public class Game {
 	 */
 	private void initializeGame(int lives) {
 		player = new Player(lives);
-		restartGame();
+		resetPaddleBall();
 		levels = generateLevels();
 		level = levels.get(0);
 	}

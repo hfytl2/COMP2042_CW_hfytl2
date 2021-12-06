@@ -49,7 +49,6 @@ public class BrickDestroy extends Application {
 	    		Platform.exit();
 	    	});
 	    	newstage.show();
-	    	newstage.getScene().lookup(".gameroot").requestFocus();
 		});
 		primaryStage.show();
 	}

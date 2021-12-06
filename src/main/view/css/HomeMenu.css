@@ -46,15 +46,17 @@
 }
 
 .button {
-	-fx-background-color: #C3C4C4, linear-gradient(#D6D6D6 50%, white 100%), radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
-    -fx-background-insets: 0, 1, 1;
+	-fx-background-color: black;
+	-fx-border-color: white;
+	-fx-border-width: 3px;
+	-fx-border-style: dashed;
     -fx-font-family: 'Arcade Normal';
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-size: 16pt;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
 }
 
 .button:hover, .button:focused {
-    -fx-font-size: 20pt;
+	-fx-border-style: solid;
+    -fx-label-padding: 3px;
 }

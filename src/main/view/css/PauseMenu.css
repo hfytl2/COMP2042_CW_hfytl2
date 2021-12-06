@@ -1,0 +1,24 @@
+#pauseroot {
+	-fx-alignment: center;
+	-fx-background-color: rgba(0, 0, 0, 0.75);
+}
+
+.rootcontainer {
+	-fx-alignment: center;
+	-fx-spacing: 50px;
+}
+
+.hbox {
+	-fx-alignment: center;
+}
+
+.pausetitle {
+	-fx-font-family: "Arcade Normal";
+	-fx-font-size: 25pt;
+	-fx-fill: white;
+}
+
+.buttoncontainer {
+	-fx-alignment: center;
+	-fx-spacing: 25px;
+}
