@@ -88,6 +88,13 @@ public class Game {
 	}
 	
 	/**
+	 * Resumes the game.
+	 */
+	public void resume() {
+		paused = false;
+	}
+	
+	/**
 	 * Gets the value of the property gameover.
 	 * @return gameover Defines whether or not the game is over.
 	 */
@@ -173,9 +180,11 @@ public class Game {
 	 * Restarts the game and moves the paddle and ball to their initial positions.
 	 */
 	public void restartGame() {
+		double bottomoffset = 13;
+		
 		started = false;
 		paddle = new Paddle(150, 10);
-		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight());
+		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight() - bottomoffset);
 		paddle.moveTo(paddlestart);
 		ball = new RubberBall();
 		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());
