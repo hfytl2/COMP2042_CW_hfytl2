@@ -37,7 +37,7 @@
 					<Image url="@../../assets/A-Key.png"></Image>
 				</image>
 			</ImageView>
-			<Text styleClass="control" text=" / "/>
+			<Text styleClass="control" text=" or "/>
 			<ImageView fitWidth="32" fitHeight="27">
 				<image>
 					<Image url="@../../assets/Left-Arrow-Key.png"></Image>
@@ -51,7 +51,7 @@
 					<Image url="@../../assets/D-Key.png"></Image>
 				</image>
 			</ImageView>
-			<Text styleClass="control" text=" / "/>
+			<Text styleClass="control" text=" or "/>
 			<ImageView fitWidth="32" fitHeight="27">
 				<image>
 					<Image url="@../../assets/Right-Arrow-Key.png"></Image>

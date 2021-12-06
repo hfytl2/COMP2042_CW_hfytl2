@@ -35,7 +35,7 @@ public class CementBrick extends Brick implements Crackable {
     private static final int SCORE = 20;
     private static final int DURABILITY = 2;
     
-    private ArrayList<Crack> cracks;
+    private ArrayList<Crack> cracks = new ArrayList<Crack>();
     
     /**
      * Creates a new instance of CementBrick with the given position and size.

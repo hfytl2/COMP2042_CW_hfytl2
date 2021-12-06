@@ -30,6 +30,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
@@ -49,6 +50,7 @@ import main.model.Ball;
 import main.model.Brick;
 import main.model.Crack;
 import main.model.Crackable;
+import main.model.DebugConsole;
 
 /**
  * A controller that handles events in the GameFrame.
@@ -87,7 +89,7 @@ public class GameFrameController {
     			}
     		}
     	});
-    	gameroot.setOnKeyPressed(key -> {    		    		
+    	gameroot.setOnKeyPressed(key -> {
     		switch (key.getCode()) {
     			case ESCAPE -> {
     				if (game.hasStarted() && !game.isOver()) {
@@ -101,6 +103,12 @@ public class GameFrameController {
     			case SPACE -> {
     				if (!game.hasStarted() && !game.isOver() && !game.isPaused()) {
     					startGame();
+    				}
+    			}
+    			case F1 -> {
+    				if (player.getInput().contains(KeyCode.SHIFT) && player.getInput().contains(KeyCode.ALT)) {    					
+    					DebugConsole debugconsole = new DebugConsole((Stage)gameroot.getScene().getWindow(), game);
+    					debugconsole.show();
     				}
     			}
     			default -> {
@@ -124,8 +132,7 @@ public class GameFrameController {
     	gameroot.setOnKeyReleased(key -> {
     		player.removeInput(key.getCode());
     	});
-    	gc = gamecanvas.getGraphicsContext2D();
-    	gc.setLineWidth(2);
+    	gc = gamecanvas.getGraphicsContext2D();    	
     	renderLevel();
     	renderBall();
     	renderPaddle();
@@ -168,6 +175,7 @@ public class GameFrameController {
     		double posY = brick.getPosition().getY();
     		double width = brick.getWidth();
     		double height = brick.getHeight();
+    		gc.setLineWidth(2);
     		gc.setFill(brick.getFillColor());
     		gc.setStroke(brick.getBorderColor());
     		gc.fillRect(posX, posY, width, height);
@@ -176,16 +184,16 @@ public class GameFrameController {
     		if (brick instanceof Crackable) {
     			ArrayList<Crack> cracks = ((Crackable) brick).getCracks();
     			if (cracks != null && !cracks.isEmpty()) {
-    				cracks.forEach(crack -> {
+    				cracks.forEach(crack -> {		
         				Path path = crack.getPath();
-        				gc.setFill(brick.getBorderColor());
+        				gc.setStroke(brick.getBorderColor());
         				gc.beginPath();
         				path.getElements().forEach(element -> {
         					if (element instanceof MoveTo) {
         						gc.moveTo(((MoveTo) element).getX(), ((MoveTo) element).getY());
         					} else if (element instanceof LineTo) {
         						gc.lineTo(((LineTo) element).getX(), ((LineTo) element).getY());
-        						gc.fill();
+        						gc.stroke();
         					}
         				});        				
         				gc.closePath();
@@ -206,6 +214,7 @@ public class GameFrameController {
     	double height = ball.getHeight();
     	
     	if (!game.isOver()) {
+    		gc.setLineWidth(2);
     		gc.setFill(ball.getFillColor());
     		gc.setStroke(ball.getBorderColor());
     		gc.fillOval(posX, posY, width, height);
@@ -223,6 +232,7 @@ public class GameFrameController {
     	double width = paddle.getWidth();
     	double height = paddle.getHeight();
     	
+    	gc.setLineWidth(2);
     	gc.setFill(paddle.getFillColor());
     	gc.setStroke(paddle.getBorderColor());
     	gc.fillRect(posX, posY, width, height);
@@ -262,7 +272,7 @@ public class GameFrameController {
     		BoundingBox brickhitbox = brick.getHitBox();
     		
     		if (brickhitbox.intersects(ballhitbox)) {
-    			brick.damage();    			
+    			brick.damage();
     			
     			if (brickhitbox.contains(upperleft) || brickhitbox.contains(upperright)) { 
     				ball.inverseVerticalVelocity();
@@ -272,7 +282,7 @@ public class GameFrameController {
     					brickiterator.remove();
     					updateGameInfo();
     				} else {
-    					if (brick instanceof Crackable) {
+    					if (brick instanceof Crackable) {    						
         					((Crackable) brick).addCrack(upperleft.midpoint(upperright), "Up");
         				}
     				}
@@ -313,8 +323,13 @@ public class GameFrameController {
     		}
     		
     		if (bricks.size() == 0) {
-    			game.nextLevel();
-    			game.resetPaddleBall();
+    			if (game.getCurrentLevel().getLevel() < Game.MAX_LEVELS) {
+    				game.nextLevel();
+    				updateGameInfo();
+    				game.resetPaddleBall();
+    			} else {
+    				game.end();
+    			}
     		}
     	}
     }
@@ -334,7 +349,7 @@ public class GameFrameController {
     		double distance = down.getX() - paddlehitbox.getMinX();
     		double cosine = ((distance * 2) / paddlehitbox.getWidth()) - 1;    		
     		
-    		ball.setVelocity(new Point2D(Ball.BALL_SPEED * Math.cos(Math.acos(cosine)), -Ball.BALL_SPEED * Math.sin(Math.acos(cosine))));
+    		ball.setVelocity(new Point2D(ball.getSpeed() * Math.cos(Math.acos(cosine)), -ball.getSpeed() * Math.sin(Math.acos(cosine))));
     	}
     }
     
@@ -423,7 +438,7 @@ public class GameFrameController {
      */
     private void startGame() {
     	game.start();
-    	game.getBall().setVelocity(new Point2D(Ball.BALL_SPEED * Math.cos(Math.toRadians(90)), Ball.BALL_SPEED * Math.sin(Math.toRadians(90))));
+    	game.getBall().setVelocity(new Point2D(game.getBall().getSpeed() * Math.cos(Math.toRadians(90)), game.getBall().getSpeed() * Math.sin(Math.toRadians(90))));
     }
     
     /**

@@ -28,8 +28,8 @@ import javafx.scene.canvas.Canvas;
  * @author Lim Tze Yang
  */
 public class Game {
-	
-	private static final int MAX_LEVELS = 4;
+		
+	public static final int MAX_LEVELS = 4;
 	
 	private boolean started, paused, gameover;
 	private Canvas gamecanvas;
@@ -164,6 +164,7 @@ public class Game {
 		gameover = false;
 		level = generateLevels().get(level.getLevel() - 1);
 		resetPaddleBall();
+		resetLives(3);
 	}
 	
 	/**
@@ -175,8 +176,6 @@ public class Game {
 		if (nextlevel < MAX_LEVELS) {
 			level = levels.get(nextlevel);
 			resetPaddleBall();
-		} else {
-			 end();
 		}
 	}
 	
@@ -193,6 +192,14 @@ public class Game {
 		ball = new RubberBall();
 		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());
 		ball.moveTo(ballstart);
+	}
+	
+	/**
+	 * Resets the number of lives with the given lives.
+	 * @param lives The resetted number of lives of the player.
+	 */
+	private void resetLives(int lives) {
+		player.setLives(lives);
 	}
 	
 	/** 
@@ -222,5 +229,5 @@ public class Game {
 		levels.add(level3);
 		levels.add(level4);
 		return levels;
-	}
+	}	
 }

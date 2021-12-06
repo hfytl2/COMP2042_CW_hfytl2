@@ -29,10 +29,9 @@ import javafx.scene.paint.Color;
  * @author Lim Tze Yang
  */
 public abstract class Ball extends Entity implements Collidable, Movable {
-	
-	public static final double BALL_SPEED = 100;
-	
+		
 	private BoundingBox hitbox;
+	private double speed = 100;
 	private Point2D velocity;
 	
 	/**
@@ -101,6 +100,30 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	public void setSize(double width, double height) {
 		setSize(width, height);
 		updateHitBox();
+	}	
+		
+	public Point2D getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Point2D velocity) {
+		this.velocity = velocity;
+	}
+	
+	/**
+	 * Gets the value of the property speed
+	 * @return speed The speed of the ball.
+	 */
+	public double getSpeed() {
+		return speed;
+	}
+	
+	/**
+	 * Sets the value of the property speed.
+	 * @param speed The new speed of the ball.
+	 */
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 	
 	public BoundingBox getHitBox() {
@@ -109,14 +132,6 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
-	}
-		
-	public Point2D getVelocity() {
-		return velocity;
-	}
-
-	public void setVelocity(Point2D velocity) {
-		this.velocity = velocity;
 	}
 	
 	public void moveTo(Point2D point) {

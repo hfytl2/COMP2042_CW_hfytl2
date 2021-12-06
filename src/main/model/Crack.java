@@ -36,9 +36,9 @@ public class Crack {
 	private static final int CRACK_SECTIONS = 3;
 	private static final double JUMP_PROBABILITY = 0.7;
 	
-    private Random rng;
-	private Entity parent;
-	private Path path;
+    private Random rng = new Random();
+	private Brick parent;
+	private Path path = new Path();
 	private int depth, steps;
 	
 	/**
@@ -54,6 +54,7 @@ public class Crack {
 		this.depth = depth;
 		this.steps = steps;
 		generateCrack(origin, direction);
+		System.out.println(path);
 	}
 	
 	/**
@@ -77,7 +78,7 @@ public class Crack {
 	 * @param direction The direction in which the crack spreads.
 	 */
 	private void generateCrack(Point2D origin, String direction) {
-		BoundingBox bounds = new BoundingBox(parent.getPosition().getX(), parent.getPosition().getY(), parent.getSize().getWidth(), parent.getSize().getHeight());
+		BoundingBox bounds = parent.getHitBox();
 		Point2D impact = origin;
 		Point2D start, end, random;
 		
