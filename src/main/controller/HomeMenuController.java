@@ -77,11 +77,10 @@ public class HomeMenuController {
     		play.setFocusTraversable(false);
     		help.setFocusTraversable(false);
     		exit.setFocusTraversable(false);
-    		fadeGame.play();
-    		((Node)(event.getSource())).getScene().getWindow().hide();
+    		fadeGame.play();    		
     	});
-    	gameroot.requestFocus();
     	fadeHome.play();
+    	((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
     /**
