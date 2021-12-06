@@ -37,6 +37,12 @@
 					<Image url="@../../assets/A-Key.png"></Image>
 				</image>
 			</ImageView>
+			<Text styleClass="control" text=" / "/>
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Left-Arrow-Key.png"></Image>
+				</image>
+			</ImageView>
 			<Text styleClass="control" text=" : Move Left"/>
 		</HBox>
 		<HBox styleClass="controlcontainer">
@@ -45,6 +51,12 @@
 					<Image url="@../../assets/D-Key.png"></Image>
 				</image>
 			</ImageView>
+			<Text styleClass="control" text=" / "/>
+			<ImageView fitWidth="32" fitHeight="27">
+				<image>
+					<Image url="@../../assets/Right-Arrow-Key.png"></Image>
+				</image>
+			</ImageView>		
 			<Text styleClass="control" text=" : Move Right"/>
 		</HBox>
 		<HBox styleClass="controlcontainer">
