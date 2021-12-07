@@ -22,50 +22,39 @@ import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 
 /**
- * The {@code Player} class represents the player.
+ * The {@code Player} single class represents the player.
  * Note: Added this class to apply SOLID principles and to have a better distinction between the player and the game entity under their control. 
  * 
  * @author Lim Tze Yang
  */
 public class Player {
 	
+	private static Player player = null;
+	
 	private String name;
 	private int lives, score;
-	private ArrayList<KeyCode> input;	
+	private ArrayList<KeyCode> input;
 	
 	/**
-	 * Creates a new instance of Player with the given name and lives.
-	 * @param name The name of the player.
-	 * @param lives The number of lives of the player.
+	 * Creates a new instance of Player.
 	 */
-	public Player(String name, int lives) {
-		this.name = name;
-		this.lives = lives;
+	private Player() {
+		this.name = "Player";
+		this.lives = 3;
 		this.score = 0;
 		input = new ArrayList<KeyCode>();
 	}
 	
 	/**
-	 * Creates a new instance of Player with the given name and {@code 3} lives.
-	 * @param name The name of the player.
+	 * Creates a new singleton instance of the player if it doesn't already exit or return the existing instance of the player.
+	 * @return player The singleton instance of the player.
 	 */
-	public Player(String name) {
-		this(name, 3);
-	}
-	
-	/**
-	 * Creates a new instance of Player with the given lives and a default name.
-	 * @param lives The number of lives of the player.
-	 */
-	public Player(int lives) {
-		this("Player", lives);
-	}	
-	
-	/**
-	 * Creates a new instance of Player with a default name and {@code 3} lives.
-	 */
-	public Player() {
-		this("Player", 3);
+	public static Player getPlayer() {
+		if (player == null) {
+			player = new Player();
+		}
+		
+		return player;
 	}
 	
 	/**

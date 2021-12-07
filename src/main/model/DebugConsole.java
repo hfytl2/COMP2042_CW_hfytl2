@@ -43,12 +43,13 @@ public class DebugConsole extends Stage {
 	 * @param stage The owner stage of the console.
 	 * @param game The game that the console is used to debug.
 	 */
-	public DebugConsole(Stage stage, Game game) {
+	public DebugConsole(Stage stage) {
 		super(StageStyle.UTILITY);
 		initOwner(stage);
 		initModality(Modality.WINDOW_MODAL);
 		setTitle("Debug Console");
 		Parent root = null;
+		Game game = Game.getGame();
 		
 		try {
 			root = FXMLLoader.load(getClass().getResource("../view/fxml/DebugMenu.fxml"));
@@ -63,7 +64,7 @@ public class DebugConsole extends Stage {
 		});
 		resetballs = (Button)root.lookup("#resetballs");
 		resetballs.setOnAction(e -> {
-			game.getPlayer().setLives(3);
+			Player.getPlayer().setLives(3);
 		});
 		ballspeedslider = (Slider)root.lookup("#ballspeedslider");
 		ballspeedslider.setValue(game.getBall().getSpeed());

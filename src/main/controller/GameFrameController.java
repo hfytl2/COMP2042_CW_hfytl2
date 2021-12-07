@@ -46,6 +46,7 @@ import main.model.Game;
 import main.model.Level;
 import main.model.Paddle;
 import main.model.Player;
+import main.model.SteelBrick;
 import main.model.Ball;
 import main.model.Brick;
 import main.model.Crack;
@@ -81,7 +82,7 @@ public class GameFrameController {
     
     @FXML
     private void initialize() {
-    	game = new Game(gamecanvas);
+    	game = Game.getGame(gamecanvas);
     	Player player = game.getPlayer();
     	updateGameInfo();
     	gameroot.focusedProperty().addListener((ov, oldval, newval) -> {
@@ -111,7 +112,7 @@ public class GameFrameController {
     			}
     			case F1 -> {
     				if (player.getInput().contains(KeyCode.SHIFT) && player.getInput().contains(KeyCode.ALT)) {    					
-    					DebugConsole debugconsole = new DebugConsole((Stage)gameroot.getScene().getWindow(), game);
+    					DebugConsole debugconsole = new DebugConsole((Stage)gameroot.getScene().getWindow());
     					debugconsole.show();
     				}
     			}
@@ -148,8 +149,9 @@ public class GameFrameController {
 				double elapsedtime = (currentnanotime - lastnanotime) / 1000000000.0;				
 				lastnanotime = currentnanotime;
 				Paddle paddle = game.getPaddle();
-				Ball ball = game.getBall();
+				Ball ball = game.getBall();				
 				if (!game.isPaused() && !game.isOver()) {
+					updateGameInfo();
 					handlePaddleMovement();		    	
 					ball.move(elapsedtime);
 					paddle.move(elapsedtime);
@@ -190,6 +192,7 @@ public class GameFrameController {
     			if (cracks != null && !cracks.isEmpty()) {
     				cracks.forEach(crack -> {		
         				Path path = crack.getPath();
+        				gc.setLineWidth(1);
         				gc.setStroke(brick.getBorderColor());
         				gc.beginPath();
         				path.getElements().forEach(element -> {
@@ -276,7 +279,13 @@ public class GameFrameController {
     		BoundingBox brickhitbox = brick.getHitBox();
     		
     		if (brickhitbox.intersects(ballhitbox)) {
-    			brick.damage();
+    			if (!(brick instanceof SteelBrick)) {
+    				brick.damage();
+    			} else {
+    				if (((SteelBrick) brick).isDamaged()) {    			
+    					brick.damage();
+    				}
+    			}
     			
     			if (brickhitbox.contains(upperleft) || brickhitbox.contains(upperright)) { 
     				ball.inverseVerticalVelocity();
@@ -284,7 +293,6 @@ public class GameFrameController {
     				if (brick.isDestroyed()) {
     					game.getPlayer().increaseScore(brick.getScore());
     					brickiterator.remove();
-    					updateGameInfo();
     				} else {
     					if (brick instanceof Crackable) {    						
         					((Crackable) brick).addCrack(upperleft.midpoint(upperright), "Up");
@@ -294,8 +302,7 @@ public class GameFrameController {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
-    					brickiterator.remove();
-    					updateGameInfo();
+    					brickiterator.remove();    				
     				} else {
     					if (brick instanceof Crackable) {
         					((Crackable) brick).addCrack(upperright.midpoint(lowerright), "Right");
@@ -306,7 +313,6 @@ public class GameFrameController {
     				
     				if (brick.isDestroyed()) {
     					brickiterator.remove();
-    					updateGameInfo();
     				} else {
     					if (brick instanceof Crackable) {
         					((Crackable) brick).addCrack(lowerleft.midpoint(lowerright), "Down");
@@ -317,7 +323,6 @@ public class GameFrameController {
     				
     				if (brick.isDestroyed()) {
     					brickiterator.remove();
-    					updateGameInfo();
     				} else {
     					if (brick instanceof Crackable) {
         					((Crackable) brick).addCrack(upperleft.midpoint(lowerleft), "Left");
@@ -329,10 +334,9 @@ public class GameFrameController {
     		if (bricks.size() == 0) {
     			if (game.getCurrentLevel().getLevel() < Game.MAX_LEVELS) {
     				game.nextLevel();
-    				updateGameInfo();
     				game.resetPaddleBall();
     			} else {
-    				game.end();
+    				gameOver();
     			}
     		}
     	}
@@ -382,13 +386,12 @@ public class GameFrameController {
     		
     		ball.inverseHorizontalVelocity();
     	} else if (bottomboundary) {
-    		player.loseLife();    		
-    		updateGameInfo();
+    		player.loseLife();
     		
     		if (player.getLives() != 0) {
     			game.resetPaddleBall();
     		} else {
-    			game.end();
+    			gameOver();
     		}
     	}
     }
@@ -481,5 +484,17 @@ public class GameFrameController {
     private void restartGame() {
     	game.restartLevel();
 		gameroot.requestFocus();
+    }
+    
+    /**
+     * Prompts the player to enter their name and shows the game over screen.
+     */
+    private void gameOver() {
+    	ArrayList<String> playerdata = new ArrayList<String>();
+    	
+    	game.end();
+    	timer.stop();
+    	
+    	gameroot.setUserData(playerdata);
     }
 }

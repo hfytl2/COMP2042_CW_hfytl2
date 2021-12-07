@@ -39,6 +39,8 @@ public class Game {
 	 */
 	private static final int BOTTOM_OFFSET = 13;
 	
+	private static Game game;
+	
 	private boolean started, paused, gameover;
 	private Canvas gamecanvas;
 	private Player player;
@@ -48,21 +50,33 @@ public class Game {
 	private Level level;
 	
 	/**
-	 * Creates a new instance of Game with the given gamecanvas and lives.
+	 * Creates a new instance of Game with the given gamecanvas.
 	 * @param gamecanvas The {@link javafx.scene.canvas.Canvas Canvas} in which the game is to be rendered.
-	 * @param lives The amount of lives with which the player starts with.
 	 */
-	public Game(Canvas gamecanvas, int lives) {
+	private Game(Canvas gamecanvas) {
 		this.gamecanvas = gamecanvas;
-		initializeGame(lives);
+		initializeGame();
 	}
 	
 	/**
-	 * Creates a new instance of Game with the given gamecanvas and {@code 3} lives.
+	 * Creates a new singleton instance of the game with the given gamecanvas if it doesn't already exit or return the existing instance of the game.
 	 * @param gamecanvas The {@link javafx.scene.canvas.Canvas Canvas} in which the game is to be rendered.
+	 * @return game The singleton instance of the game.
 	 */
-	public Game(Canvas gamecanvas) {
-		this(gamecanvas, 3);
+	public static Game getGame(Canvas gamecanvas) {
+		if (game == null) {
+			game = new Game(gamecanvas);
+		}
+		
+		return game;
+	}
+	
+	/**
+	 * Creates a new singleton instance of the game if it doesn't already exit or return the existing instance of the game.
+	 * @return game The singleton instance of the game.
+	 */
+	public static Game getGame() {
+		return getGame(game.gamecanvas);
 	}
 	
 	/**
@@ -210,10 +224,9 @@ public class Game {
 	
 	/** 
 	 * Initializes the game with the given lives.
-	 * @param lives The number of lives that the player starts with.
 	 */
-	private void initializeGame(int lives) {
-		player = new Player(lives);
+	private void initializeGame() {
+		player = Player.getPlayer();
 		resetPaddleBall();
 		levels = generateLevels();
 		level = levels.get(0);

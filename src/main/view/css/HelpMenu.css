@@ -3,7 +3,7 @@
 }
 
 #helproot {
-	-fx-background-color: black;
+	-fx-background-color: white;
 }
 
 .vbox {
@@ -20,7 +20,7 @@
 }
 
 .title {
-	-fx-fill: white;
+	-fx-fill: black;
 	-fx-font-family: "Arcade Normal";
 	-fx-font-size: 17pt;
 	-fx-font-weight: bold;
@@ -28,20 +28,20 @@
 }
 
 .paragraph {	
-	-fx-fill: white;
+	-fx-fill: black;
 	-fx-font-family: "Arcade Normal";
 	-fx-font-size: 8pt;
 	-fx-font-smoothing-type: lcd;
 }
 
 .control {
-	-fx-fill: white;
+	-fx-fill: black;
 	-fx-font-family: "Arcade Normal";
 	-fx-font-size: 8pt;
 }
 
 .controltitle {
-	-fx-fill: white;
+	-fx-fill: black;
 	-fx-font-family: "Arcade Normal";
 	-fx-font-size: 12pt;
 }

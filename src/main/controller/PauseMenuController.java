@@ -45,7 +45,47 @@ public class PauseMenuController {
     public PauseMenuController() {}
     
     @FXML
-    private void initialize() {}
+    private void initialize() {
+    	resume.focusedProperty().addListener((ov, oldval, newval) -> {
+    		if (newval) {
+    			buttonOnFocusHover(resume);
+    		} else {
+    			buttonOnUnfocusUnhover(resume);
+    		}
+    	});
+    	resume.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(resume);
+    	});
+    	resume.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(resume);
+    	});
+    	restart.focusedProperty().addListener((ov, oldval, newval) -> {
+    		if (newval) {
+    			buttonOnFocusHover(restart);
+    		} else {
+    			buttonOnUnfocusUnhover(restart);
+    		}
+    	});
+    	restart.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(restart);
+    	});
+    	restart.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(restart);
+    	});
+    	quit.focusedProperty().addListener((ov, oldval, newval) -> {
+    		if (newval) {
+    			buttonOnFocusHover(quit);
+    		} else {
+    			buttonOnUnfocusUnhover(quit);
+    		}
+    	});
+    	quit.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(quit);
+    	});
+    	quit.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(quit);
+    	});
+    }
     
     /**
      * Resumes the game and removes the PauseMenu when the resume button is pressed.
@@ -73,5 +113,15 @@ public class PauseMenuController {
     private void quitButtonPressed() {
     	System.out.println("Goodbye " + System.getProperty("user.name"));
     	Platform.exit();
+    }
+    
+    private void buttonOnFocusHover(Button button) {
+    	button.setStyle("-fx-text-fill: lime;-fx-border-style: solid;-fx-border-color: lime;-fx-label-padding: 3px;");
+    }
+    
+    private void buttonOnUnfocusUnhover(Button button) {
+    	if (!button.isFocused()) {
+    		button.setStyle("-fx-text-fill: white;-fx-border-color: black;-fx-label-padding: 0;");
+    	}
     }
 }
