@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code CementBrick} class represents a type of brick entity that is crackable, has a max durability of {@code 2} and gives a score of {@code 20} when destroyed.
+ * Note: Refactored class hierarchy and structure, removed unused constant and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */

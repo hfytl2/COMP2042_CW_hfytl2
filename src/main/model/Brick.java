@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code Brick} class provides definitions of common properties and methods for entities that represent a brick.
+ * Note: Refactored class hierarchy and structure, removed unused constant and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */
@@ -106,10 +107,12 @@ public abstract class Brick extends Entity implements Collidable {
 		durability = maxdurability;
 	}
 	
+	@Override
 	public BoundingBox getHitBox() {
 		return hitbox;
 	}
 	
+	@Override
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}

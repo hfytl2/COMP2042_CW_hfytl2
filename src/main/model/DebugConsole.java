@@ -29,6 +29,7 @@ import javafx.stage.StageStyle;
 
 /**
  * The {@code DebugConsole} class represents a modal popup window that has to aid with debugging the game.
+ * Note: Converted the {@code DebugConsole} to JavaFX.
  * 
  * @author Lim Tze Yang
  */

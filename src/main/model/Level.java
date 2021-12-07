@@ -25,6 +25,7 @@ import javafx.scene.canvas.Canvas;
 
 /**
  * The {@code Level} class provides definitions for game level generation methods and methods to retrieve information about the level.
+ * Note: Extracted methods from {@code Wall} class from source files to apply SOLID principles by adding them to this new class and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */

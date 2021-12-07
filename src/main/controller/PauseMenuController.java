@@ -28,6 +28,7 @@ import javafx.scene.layout.StackPane;
 
 /**
  * A controller class that handles events in the PauseMenu.
+ * Note: Added this controller to adhere to MVC pattern and apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

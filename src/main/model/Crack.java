@@ -28,6 +28,7 @@ import javafx.scene.shape.Path;
 
 /**
  * The {@code Crack} class represents a crack of a brick entity.
+ * Note: Extracted this class from a nested class of the {@code Brick} class of the source files.
  * 
  * @author Lim Tze Yang
  */
@@ -54,7 +55,6 @@ public class Crack {
 		this.depth = depth;
 		this.steps = steps;
 		generateCrack(origin, direction);
-		System.out.println(path);
 	}
 	
 	/**
@@ -63,13 +63,6 @@ public class Crack {
 	 */
 	public Path getPath() {
 		return path;
-	}
-	
-	/**
-	 * Resets the crack.
-	 */
-	public void reset() {
-		path.getElements().clear();
 	}
 	
 	/**
@@ -84,26 +77,26 @@ public class Crack {
 		
 		switch (direction) {
 			case "Up" -> {
-				start = new Point2D(bounds.getMinX(), bounds.getMaxY());
-	    		end = new Point2D(bounds.getMaxX(), bounds.getMaxY());
+				start = new Point2D(bounds.getMinX(), bounds.getMinY());
+	    		end = new Point2D(bounds.getMaxX(), bounds.getMinY());
 	    		random = getRandomPoint(start, end, "Horizontal");
 	    		createCrack(impact, random);
 			}
 			case "Right" -> {
-				start = new Point2D(bounds.getMinX(), bounds.getMinY());
-	            end = new Point2D(bounds.getMinX(), bounds.getMaxY());;
+				start = new Point2D(bounds.getMaxX(), bounds.getMinY());
+	            end = new Point2D(bounds.getMaxX(), bounds.getMaxY());;
 	            random = getRandomPoint(start, end, "Vertical");
 	            createCrack(impact, random);
 			}
 			case "Down" -> {
-				start = new Point2D(bounds.getMinX(), bounds.getMinY());
-	            end = new Point2D(bounds.getMaxX(), bounds.getMinY());;
+				start = new Point2D(bounds.getMinX(), bounds.getMaxY());
+	            end = new Point2D(bounds.getMaxX(), bounds.getMaxY());;
 	            random = getRandomPoint(start, end, "Horizontal");
 	            createCrack(impact, random);
 			}
 			case "Left" -> {
-				start = new Point2D(bounds.getMaxX(), bounds.getMinY());
-	    		end = new Point2D(bounds.getMaxX(), bounds.getMaxY());
+				start = new Point2D(bounds.getMinX(), bounds.getMinY());
+	    		end = new Point2D(bounds.getMinX(), bounds.getMaxY());
 	    		random = getRandomPoint(start, end, "Vertical");
 	    		createCrack(impact, random);
 			}

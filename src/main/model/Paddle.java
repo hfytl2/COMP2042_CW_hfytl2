@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code Paddle} class represents a paddle entity that can collide with and change the direction of a ball entity.
+ * Note: Extracted methods from {@code Player} class from source files to distinguish between the in-game player controlled entity and the player itself and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */
@@ -114,10 +115,12 @@ public class Paddle extends Entity implements Collidable, Movable {
 		updateHitBox();
 	}
 	
+	@Override
 	public BoundingBox getHitBox() {
 		return hitbox;
 	}
  
+	@Override
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
 	}
@@ -138,24 +141,29 @@ public class Paddle extends Entity implements Collidable, Movable {
 		this.speed = speed;
 	}
 	
+	@Override
 	public Point2D getVelocity() {
 		return velocity;
 	}
 
+	@Override
 	public void setVelocity(Point2D velocity) {
 		this.velocity = velocity;
 	}
 
+	@Override
 	public void moveTo(Point2D point) {
 		setPosition(point);
 		updateHitBox();
 	}
 
+	@Override
 	public void move(double time) {
 		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
 	}
 	
+	@Override
 	public void inverseHorizontalVelocity() {
 		velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}

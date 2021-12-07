@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code ClayBrick} class represents the basic type of brick entity that has a maximum durability of {@code 1} and gives a score of {@code 10} when destroyed.
+ * Note: Refactored class hierarchy and structure, removed unused constant and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */

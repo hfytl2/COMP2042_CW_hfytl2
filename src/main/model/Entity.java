@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Root of the game entity hierarchy. Every entity in the game has {@code Entity} as a superclass. All balls, bricks and paddle inherits its properties and implements its methods.
+ * Note: Added this abstract class to apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

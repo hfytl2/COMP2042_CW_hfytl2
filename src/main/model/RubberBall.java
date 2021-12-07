@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code RubberBall} represents the default type of ball entity that can collide with and destroy bricks.
+ * Note: Converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */

@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 
 /**
- * The {@code Player} class represents the player. 
+ * The {@code Player} class represents the player.
+ * Note: Added this class to apply SOLID principles and to have a better distinction between the player and the game entity under their control. 
  * 
  * @author Lim Tze Yang
  */

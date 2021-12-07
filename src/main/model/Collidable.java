@@ -22,6 +22,7 @@ import javafx.geometry.BoundingBox;
 
 /**
  * The {@code Collidable} interface provides definitions for common methods for entities that are collidable.
+ * Note: Added this interface to apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

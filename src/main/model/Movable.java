@@ -22,6 +22,7 @@ import javafx.geometry.Point2D;
 
 /**
  * The {@code Movable} interface provides definitions for common methods for entities that update their position dynamically.
+ * Note: This interface was added to apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

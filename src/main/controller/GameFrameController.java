@@ -54,6 +54,7 @@ import main.model.DebugConsole;
 
 /**
  * A controller that handles events in the GameFrame.
+ * Note: Added this controller to adhere to MVC pattern and apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

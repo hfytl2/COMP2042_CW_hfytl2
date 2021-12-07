@@ -24,6 +24,7 @@ import javafx.scene.canvas.Canvas;
 
 /**
  * The {@code Game} class represents the game.
+ * Note: Extracted methods from {@code Wall} class from source files to apply SOLID principles by adding them to this new class and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */
@@ -33,6 +34,10 @@ public class Game {
 	 * Maximum number of levels for the game.
 	 */
 	public static final int MAX_LEVELS = 4;
+	/**
+	 * Number used to offset the paddle and ball from the bottom of the screen.
+	 */
+	private static final int BOTTOM_OFFSET = 13;
 	
 	private boolean started, paused, gameover;
 	private Canvas gamecanvas;
@@ -185,12 +190,10 @@ public class Game {
 	/**
 	 * Restarts the game and moves the paddle and ball to their initial positions.
 	 */
-	public void resetPaddleBall() {
-		double bottomoffset = 13;
-		
+	public void resetPaddleBall() {		
 		started = false;
 		paddle = new Paddle(150, 10);
-		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight() - bottomoffset);
+		Point2D paddlestart = new Point2D((gamecanvas.getWidth() / 2) - (paddle.getWidth() / 2), gamecanvas.getHeight() - paddle.getHeight() - BOTTOM_OFFSET);
 		paddle.moveTo(paddlestart);
 		ball = new RubberBall();
 		Point2D ballstart = new Point2D((gamecanvas.getWidth() / 2) - (ball.getWidth() / 2), paddlestart.getY() - ball.getHeight());

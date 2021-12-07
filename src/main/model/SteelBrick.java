@@ -24,7 +24,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 /**
- * The {@code SteelBrick} class represents a type of brick entity that has a {@code 40%} chance of not getting damaged on impact and a maximum durability of {@code 1} and gives a score of {@code 30} when destroyed.
+ * The {@code SteelBrick} class represents a type of brick entity that has a {@code 40%} chance of not getting damaged on impact and a maximum durability of {@code 1} 
+ * and gives a score of {@code 30} when destroyed.
+ * Note: Refactored class hierarchy and structure, removed unused constant and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */

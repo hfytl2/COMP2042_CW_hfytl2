@@ -23,6 +23,7 @@ import javafx.geometry.Point2D;
 
 /**
  * The {@code Crackable} interface provides definitions for common methods for bricks that are crackable.
+ * Note: This interface was added to apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

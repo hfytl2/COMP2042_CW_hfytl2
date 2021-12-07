@@ -36,6 +36,7 @@ import javafx.scene.Parent;
 
 /**
  * A controller class that handles events in the HomeMenu.
+ * Note: Added this controller to adhere to MVC pattern and apply SOLID principles.
  * 
  * @author Lim Tze Yang
  */

@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 
 /**
  * The {@code Ball} class provides definitions of common properties and methods for entities that represent a ball.
+ * Note: Refactored class hierarchy and structure and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */
@@ -101,11 +102,13 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		setSize(width, height);
 		updateHitBox();
 	}	
-		
+	
+	@Override
 	public Point2D getVelocity() {
 		return velocity;
 	}
 
+	@Override
 	public void setVelocity(Point2D velocity) {
 		this.velocity = velocity;
 	}
@@ -126,24 +129,29 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		this.speed = speed;
 	}
 	
+	@Override
 	public BoundingBox getHitBox() {
 		return hitbox;
 	}
-		
+	
+	@Override
 	public void updateHitBox() {
 		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}
 	
+	@Override
 	public void moveTo(Point2D point) {
 		setPosition(point);
 		updateHitBox();
 	}
-		
+	
+	@Override
 	public void move(double time) {
 		setPosition(getPosition().add(velocity.multiply(time)));
 		updateHitBox();
 	}
 	
+	@Override
 	public void inverseHorizontalVelocity() {
 		this.velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}
