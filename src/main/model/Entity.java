@@ -31,58 +31,58 @@ import javafx.scene.paint.Color;
 public abstract class Entity {
 	
 	private Point2D position;
-	private Color bordercolor, fillcolor;
+	private Color borderColor, fillColor;
 	private Dimension2D size;
 	
 	/**
-	 * Creates a new instance of Entity with the given position, size, bordercolor and fillcolor.
+	 * Creates a new instance of Entity with the given position, size, borderColor and fillColor.
 	 * @param position The coordinates of the upper-left corner of the entity.
 	 * @param size The size of the entity.
-	 * @param bordercolor The border color of the entity.
-	 * @param fillcolor The fill color of the entity.
+	 * @param borderColor The border color of the entity.
+	 * @param fillColor The fill color of the entity.
 	 */
-	public Entity(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor) {
+	public Entity(Point2D position, Dimension2D size, Color borderColor, Color fillColor) {
 		this.position = position;
 		this.size = size;
-		this.bordercolor = bordercolor;
-		this.fillcolor = fillcolor;
+		this.borderColor = borderColor;
+		this.fillColor = fillColor;
 	}
 	
 	/**
-	 * Creates a new instance of Entity with the given position, size, bordercolor and fillcolor.
+	 * Creates a new instance of Entity with the given position, size, borderColor and fillColor.
 	 * @param x The x-coordinate of the upper-left corner of the entity.
 	 * @param y The y-coordinate of the upper-left corner of the entity.
 	 * @param size The size of the entity.
-	 * @param bordercolor The border color of the entity.
-	 * @param fillcolor The fill color of the entity.
+	 * @param borderColor The border color of the entity.
+	 * @param fillColor The fill color of the entity.
 	 */
-	public Entity(double x, double y, Dimension2D size, Color bordercolor, Color fillcolor) {
-		this(new Point2D(x, y), size, bordercolor, fillcolor);
+	public Entity(double x, double y, Dimension2D size, Color borderColor, Color fillColor) {
+		this(new Point2D(x, y), size, borderColor, fillColor);
 	}
 	
 	/**
-	 * Creates a new instance of {@code Entity} with the given position, width, height, bordercolor and fillcolor.
+	 * Creates a new instance of {@code Entity} with the given position, width, height, borderColor and fillColor.
 	 * @param position The coordinates of the upper-left corner of the entity.
 	 * @param width The width of the entity.
 	 * @param height The height of the entity.
-	 * @param bordercolor The border color of the entity.
-	 * @param fillcolor The fill color of the entity.
+	 * @param borderColor The border color of the entity.
+	 * @param fillColor The fill color of the entity.
 	 */
-	public Entity(Point2D position, double width, double height, Color bordercolor, Color fillcolor) {
-		this(position, new Dimension2D(width, height), bordercolor, fillcolor);
+	public Entity(Point2D position, double width, double height, Color borderColor, Color fillColor) {
+		this(position, new Dimension2D(width, height), borderColor, fillColor);
 	}
 	
 	/**
-	 * Creates a new instance of {@code Entity} with the given position, width, height, bordercolor and fillcolor.
+	 * Creates a new instance of {@code Entity} with the given position, width, height, borderColor and fillColor.
 	 * @param x The x-coordinate of the upper-left corner of the entity.
 	 * @param y The y-coordinate of the upper-left corner of the entity.
 	 * @param width The width of the entity.
 	 * @param height The height of the entity.
-	 * @param bordercolor The border color of the entity.
-	 * @param fillcolor The fill color of the entity.
+	 * @param borderColor The border color of the entity.
+	 * @param fillColor The fill color of the entity.
 	 */
-	public Entity(double x, double y, double width, double height, Color bordercolor, Color fillcolor) {
-		this(new Point2D(x, y), new Dimension2D(width, height), bordercolor, fillcolor);
+	public Entity(double x, double y, double width, double height, Color borderColor, Color fillColor) {
+		this(new Point2D(x, y), new Dimension2D(width, height), borderColor, fillColor);
 	}
 	
 	/**
@@ -111,35 +111,35 @@ public abstract class Entity {
 	}
 	
 	/**
-	 * Gets the value of the property bordercolor.
+	 * Gets the value of the property borderColor.
 	 * @return The {@link javafx.scene.paint.Color Color} of the outline of the entity.
 	 */
 	public Color getBorderColor() {
-		return bordercolor;
+		return borderColor;
 	}
 	
 	/**
-	 * Sets the value of the property bordercolor.
+	 * Sets the value of the property borderColor.
 	 * @param color The new {@link javafx.scene.paint.Color Color} of the outline of the entity.
 	 */
 	public void setBorderColor(Color color) {
-		bordercolor = color;
+		borderColor = color;
 	}
 	
 	/**
-	 * Gets the value of the property fillcolor.
+	 * Gets the value of the property fillColor.
 	 * @return The {@link javafx.scene.paint.Color Color} that fills the interior of the entity.
 	 */
 	public Color getFillColor() {
-		return fillcolor;
+		return fillColor;
 	}
 	
 	/**
-	 * Sets the value of the property fillcolor.
+	 * Sets the value of the property fillColor.
 	 * @param color The new {@link javafx.scene.paint.Color Color} that fills the interior of the entity.
 	 */
 	public void setFillColor(Color color) {
-		fillcolor = color;
+		fillColor = color;
 	}
 	
 	/**

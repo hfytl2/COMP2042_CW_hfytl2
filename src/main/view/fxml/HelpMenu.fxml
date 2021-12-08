@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<GridPane fx:id="helproot" styleClass="gridroot" prefHeight="450" prefWidth="600" stylesheets="@../css/HelpMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.HelpMenuController">
+<GridPane fx:id="helpRoot" styleClass="gridroot" prefHeight="450" prefWidth="600" stylesheets="@../css/HelpMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.HelpMenuController">
 	<VBox styleClass="vbox" GridPane.rowIndex="0">
 		<VBox.margin>
 			<Insets left="20.0" right="20.0"/>

@@ -1,0 +1,66 @@
+#highScoreRoot {
+	-fx-background-color: black;
+	-fx-hgap: 10px;
+	-fx-vgap: 20px;
+	-fx-alignment: center;
+}
+
+#heading {
+	-fx-alignment: center;
+}
+
+#title {
+	-fx-fill: white;
+	-fx-font-family: 'Arcade Normal';
+	-fx-alignment: center;
+	-fx-font-size: 25pt;
+}
+
+#leaderboard > .viewport, #leaderboard {
+	-fx-background-color: transparent;
+}
+
+#leaderboard {
+	-fx-alignment: center;
+	-fx-background-color: black;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .track {
+	-fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+	-fx-background-color: white;
+}
+
+#leaderboardContainer {
+	-fx-alignment:center;
+	-fx-hgap: 5px;
+	-fx-vgap: 10px;
+}
+
+.leaderboardtext {
+	-fx-fill: white;
+	-fx-font-family: 'Arcade Normal';
+	-fx-font-size: 10pt;
+}
+
+#btnTryAgain, #btnMainMenu {
+	-fx-background-color: black;
+	-fx-border-color: white;
+	-fx-border-width: 3px;
+    -fx-font-family: 'Arcade Normal';
+    -fx-text-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+
+#btnTryAgain:hover, #btnTryAgain:focused, #btnMainMenu:hover, #btnMainMenu:focused {
+	-fx-text-fill: lime;
+	-fx-border-color: lime;
+}

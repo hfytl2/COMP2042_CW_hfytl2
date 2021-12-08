@@ -29,6 +29,8 @@ import javafx.scene.input.KeyCode;
  */
 public class Player {
 	
+	public static final int MAX_LIVES = 3;
+	
 	private static Player player = null;
 	
 	private String name;
@@ -39,10 +41,7 @@ public class Player {
 	 * Creates a new instance of Player.
 	 */
 	private Player() {
-		this.name = "Player";
-		this.lives = 3;
-		this.score = 0;
-		input = new ArrayList<KeyCode>();
+		initializePlayer();
 	}
 	
 	/**
@@ -87,6 +86,10 @@ public class Player {
 	 */
 	public void setLives(int lives) {
 		this.lives = lives;
+	}
+	
+	public void resetLives() {
+		lives = MAX_LIVES;
 	}
 	
 	/**
@@ -146,5 +149,16 @@ public class Player {
 		if (input.contains(code)) {
 			input.remove(code);
 		}
+	}
+	
+	/**
+	 * Set player state to initial state.
+	 */
+	public Player initializePlayer() {
+		this.name = "Player";
+		this.lives = MAX_LIVES;
+		this.score = 0;
+		input = new ArrayList<KeyCode>();
+		return this;
 	}
 }

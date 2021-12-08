@@ -1,4 +1,4 @@
-#pauseroot {
+#pauseRoot {
 	-fx-alignment: center;
 	-fx-background-color: rgba(0, 0, 0, 0.75);
 }
@@ -21,4 +21,19 @@
 .buttoncontainer {
 	-fx-alignment: center;
 	-fx-spacing: 25px;
+}
+
+#resume, #restart, #quit {
+	-fx-background-color: black;
+	-fx-border-color: black;
+	-fx-border-width: 3px;
+    -fx-font-family: 'Arcade Normal';
+    -fx-text-fill: white;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+
+#resume:hover, #resume:focused, #restart:hover, #restart:focused, #quit:hover, #quit:focused {
+	-fx-text-fill: lime;
+	-fx-border-color: lime;
 }

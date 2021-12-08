@@ -6,14 +6,14 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="gameroot" prefHeight="450" prefWidth="600" styleClass="gameroot" stylesheets="@../css/GameFrame.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.GameFrameController">
+<StackPane fx:id="gameRoot" prefHeight="450" prefWidth="600" styleClass="gameroot" stylesheets="@../css/GameFrame.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.GameFrameController">
    	<VBox>
    		<HBox prefHeight="15" prefWidth="600" styleClass="hbox">
-   			<Text fx:id="txtbricks" styleClass="text" text="Bricks: 30"/>
-   			<Text fx:id="txtballs" styleClass="text" text="Balls: 3"/>
-   			<Text fx:id="txtlevel" styleClass="text" text="Level: 1"/>
-	   		<Text fx:id="txtscore" styleClass="text" text="Score: 0"/>			   		
+   			<Text fx:id="txtBricks" styleClass="text" text="Bricks: 30"/>
+   			<Text fx:id="txtBalls" styleClass="text" text="Balls: 3"/>
+   			<Text fx:id="txtLevel" styleClass="text" text="Level: 1"/>
+	   		<Text fx:id="txtScore" styleClass="text" text="Score: 0"/>			   		
    		</HBox>
-		<Canvas fx:id="gamecanvas" height="435" width="600"/>
+		<Canvas fx:id="gameCanvas" height="435" width="600"/>
 	</VBox>
 </StackPane>

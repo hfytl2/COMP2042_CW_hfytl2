@@ -36,7 +36,7 @@ public class PauseMenuController {
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
-	@FXML private GridPane pauseroot;
+	@FXML private GridPane pauseRoot;
 	@FXML private Button resume, restart, quit;	
     
 	/**
@@ -46,8 +46,8 @@ public class PauseMenuController {
     
     @FXML
     private void initialize() {
-    	resume.focusedProperty().addListener((ov, oldval, newval) -> {
-    		if (newval) {
+    	resume.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
     			buttonOnFocusHover(resume);
     		} else {
     			buttonOnUnfocusUnhover(resume);
@@ -59,8 +59,8 @@ public class PauseMenuController {
     	resume.setOnMouseExited(e -> {
     		buttonOnUnfocusUnhover(resume);
     	});
-    	restart.focusedProperty().addListener((ov, oldval, newval) -> {
-    		if (newval) {
+    	restart.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
     			buttonOnFocusHover(restart);
     		} else {
     			buttonOnUnfocusUnhover(restart);
@@ -72,8 +72,8 @@ public class PauseMenuController {
     	restart.setOnMouseExited(e -> {
     		buttonOnUnfocusUnhover(restart);
     	});
-    	quit.focusedProperty().addListener((ov, oldval, newval) -> {
-    		if (newval) {
+    	quit.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
     			buttonOnFocusHover(quit);
     		} else {
     			buttonOnUnfocusUnhover(quit);
@@ -92,8 +92,8 @@ public class PauseMenuController {
      */
     @FXML
     private void resumeButtonPressed() {
-    	StackPane gameroot = (StackPane)pauseroot.getParent();
-    	gameroot.getChildren().remove(pauseroot);    	
+    	StackPane gameroot = (StackPane)pauseRoot.getParent();
+    	gameroot.getChildren().remove(pauseRoot);    	
     }
     
     /**
@@ -101,9 +101,9 @@ public class PauseMenuController {
      */
     @FXML
     private void restartButtonPressed() {
-    	StackPane gameroot = (StackPane)pauseroot.getParent();
-    	pauseroot.setUserData("Restart");
-    	gameroot.getChildren().remove(pauseroot);
+    	StackPane gameroot = (StackPane)pauseRoot.getParent();
+    	pauseRoot.setUserData("Restart");
+    	gameroot.getChildren().remove(pauseRoot);
     }
     
     /**

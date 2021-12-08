@@ -34,7 +34,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	private static final Color BORDER_COLOR = Color.LIME.darker().darker();
     private static final Color FILL_COLOR = Color.LIME;
 	
-	private BoundingBox hitbox;
+	private BoundingBox hitBox;
 	private double speed = 100;
 	private Point2D velocity;
 	
@@ -45,7 +45,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	 */
 	public Paddle(Point2D position, Dimension2D size) {
 		super(position, size, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+		hitBox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
@@ -57,7 +57,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	 */
 	public Paddle(double x, double y, Dimension2D size) {
 		super(x, y, size, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
+		hitBox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
@@ -69,7 +69,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	 */
 	public Paddle(Point2D position, double width, double height) {
 		super(position, width, height, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+		hitBox = new BoundingBox(position.getX(), position.getY(), width, height);
 		velocity = new Point2D(0, 0);
 	}	
 	
@@ -82,7 +82,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	 */
 	public Paddle(double x, double y, double width, double height) {
 		super(x, y, width, height, BORDER_COLOR, FILL_COLOR);
-		hitbox = new BoundingBox(x, y, width, height);
+		hitBox = new BoundingBox(x, y, width, height);
 		velocity = new Point2D(0, 0);
 	}
 	
@@ -117,12 +117,12 @@ public class Paddle extends Entity implements Collidable, Movable {
 	
 	@Override
 	public BoundingBox getHitBox() {
-		return hitbox;
+		return hitBox;
 	}
  
 	@Override
 	public void updateHitBox() {
-		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
+		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
 	}
 	
 	/**
@@ -167,4 +167,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	public void inverseHorizontalVelocity() {
 		velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}
+
+	@Override
+	public void inverseVerticalVelocity() {}
 }

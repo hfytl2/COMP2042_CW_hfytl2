@@ -35,8 +35,8 @@ import javafx.stage.StageStyle;
  */
 public class DebugConsole extends Stage {
 	
-	private Button skiplevel, resetballs;
-	private Slider ballspeedslider;
+	private Button btnSkipLevel, btnResetBalls;
+	private Slider sliderBallSpeed;
 	
 	/**
 	 * Creates a new instance of DebugConsole with the given stage and game.
@@ -58,18 +58,18 @@ public class DebugConsole extends Stage {
 		}
 		
 		setScene(new Scene(root));
-		skiplevel = (Button)root.lookup("#skiplevel");
-		skiplevel.setOnAction(e -> {
+		btnSkipLevel = (Button)root.lookup("#btnSkipLevel");
+		btnSkipLevel.setOnAction(e -> {
 			game.nextLevel();
 		});
-		resetballs = (Button)root.lookup("#resetballs");
-		resetballs.setOnAction(e -> {
-			Player.getPlayer().setLives(3);
+		btnResetBalls = (Button)root.lookup("#btnResetBalls");
+		btnResetBalls.setOnAction(e -> {
+			game.getPlayer().resetLives();
 		});
-		ballspeedslider = (Slider)root.lookup("#ballspeedslider");
-		ballspeedslider.setValue(game.getBall().getSpeed());
-		ballspeedslider.valueProperty().addListener((ov, oldval, newval) -> {
-			game.getBall().setSpeed((double)newval);
+		sliderBallSpeed = (Slider)root.lookup("#sliderBallSpeed");
+		sliderBallSpeed.setValue(game.getBall().getSpeed());
+		sliderBallSpeed.valueProperty().addListener((observableVal, oldVal, newVal) -> {
+			game.getBall().setSpeed((double)newVal);
 		});
 	}
 }

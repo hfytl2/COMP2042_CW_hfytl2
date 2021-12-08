@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="parentcontainer" stylesheets="@../css/HomeMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.HomeMenuController">
-	<GridPane fx:id="homeroot" styleClass="gridroot" prefHeight="450" prefWidth="600">
+<StackPane fx:id="parentContainer" stylesheets="@../css/HomeMenu.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.HomeMenuController">
+	<GridPane fx:id="homeRoot" styleClass="gridroot" prefHeight="450" prefWidth="600">
 		<VBox styleClass="vbox" GridPane.rowIndex="0">
 			<Text styleClass="greetings" text="Welcome to:"/>
 			<Text/>

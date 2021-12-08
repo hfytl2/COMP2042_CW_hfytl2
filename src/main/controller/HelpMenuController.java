@@ -18,7 +18,6 @@
 
 package main.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -42,7 +41,7 @@ public class HelpMenuController {
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
-	@FXML private GridPane helproot;
+	@FXML private GridPane helpRoot;
 	@FXML private Button back;	
     
 	/**
@@ -55,19 +54,17 @@ public class HelpMenuController {
 	
     /**
      * Switches to the HomeMenu when back button is pressed.
-     * 
-     * @throws IOException
      */
 	@FXML
-    private void backButtonPressed() throws IOException {
+    private void backButtonPressed() {
     	Scene scene = back.getScene();
-    	StackPane parentcontainer = (StackPane)scene.getRoot();
-    	GridPane homeroot = (GridPane)parentcontainer.lookup("#homeroot");
-    	Button play = (Button)homeroot.lookup("#play");
-    	Button help = (Button)homeroot.lookup("#help");
-    	Button exit = (Button)homeroot.lookup("#exit");
-    	FadeTransition fadeHome = new FadeTransition(Duration.millis(fadetime), homeroot);
-    	FadeTransition fadeHelp = new FadeTransition(Duration.millis(fadetime), helproot);
+    	StackPane parentContainer = (StackPane)scene.getRoot();
+    	GridPane homeRoot = (GridPane)parentContainer.lookup("#homeRoot");
+    	Button play = (Button)homeRoot.lookup("#play");
+    	Button help = (Button)homeRoot.lookup("#help");
+    	Button exit = (Button)homeRoot.lookup("#exit");
+    	FadeTransition fadeHome = new FadeTransition(Duration.millis(fadetime), homeRoot);
+    	FadeTransition fadeHelp = new FadeTransition(Duration.millis(fadetime), helpRoot);
     	
     	fadeHome.setFromValue(0);
     	fadeHome.setToValue(1);
@@ -81,9 +78,9 @@ public class HelpMenuController {
     	fadeHelp.setToValue(0);
     	fadeHelp.setOnFinished(e -> {
     		fadeHome.play();
-    		parentcontainer.getChildren().remove(helproot);
+    		parentContainer.getChildren().remove(helpRoot);
     	});
-    	parentcontainer.requestFocus();
+    	parentContainer.requestFocus();
     	fadeHelp.play();
     }
 }

@@ -1,6 +1,5 @@
 package main;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -27,33 +26,38 @@ public class BrickDestroy extends Application {
     }
 	
 	@Override
-	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
-		Font.loadFont(getClass().getResourceAsStream("assets/ARCADE_N.TTF"), 10);
-		primaryStage.centerOnScreen();
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
-		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.setTitle("Brick Destroy");
-		primaryStage.setScene(new Scene(root, 600, 450));
-		primaryStage.setResizable(false);
-		primaryStage.setOnHiding(hiding -> {
-			Stage newstage = new Stage();
-			newstage.initOwner(primaryStage);
-			newstage.setX(primaryStage.getX());
-			newstage.setY(primaryStage.getY());
-	    	newstage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
-	    	newstage.setTitle("Brick Destroy");
-	    	newstage.setScene(primaryStage.getScene());
-	    	newstage.setResizable(false);
-	    	newstage.setOnHiding(hidegame -> {
-	    		primaryStage.setScene(newstage.getScene());
-	    		primaryStage.show();
-	    	});
-	    	newstage.setOnCloseRequest(closegame -> {
-	    		Platform.exit();
-	    	});
-	    	newstage.show();
-		});
-		primaryStage.show();
+	public void start(Stage primaryStage) {
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
+			Font.loadFont(getClass().getResourceAsStream("assets/ARCADE_N.TTF"), 10);
+			primaryStage.centerOnScreen();
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
+			primaryStage.initStyle(StageStyle.TRANSPARENT);
+			primaryStage.setTitle("Brick Destroy");
+			primaryStage.setScene(new Scene(root, 600, 450));
+			primaryStage.setResizable(false);
+			primaryStage.setOnHiding(hiding -> {
+				Stage newStage = new Stage();
+				newStage.initOwner(primaryStage);
+				newStage.setX(primaryStage.getX());
+				newStage.setY(primaryStage.getY());
+		    	newStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/icon.jpg")));
+		    	newStage.setTitle("Brick Destroy");
+		    	newStage.setScene(primaryStage.getScene());
+		    	newStage.setResizable(false);
+		    	newStage.setOnHiding(hidingGame -> {
+		    		primaryStage.setScene(((Stage)hidingGame.getSource()).getScene());		    		
+		    		primaryStage.show();
+		    	});
+		    	newStage.setOnCloseRequest(closegame -> {
+		    		Platform.exit();
+		    	});
+		    	newStage.show();
+			});
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

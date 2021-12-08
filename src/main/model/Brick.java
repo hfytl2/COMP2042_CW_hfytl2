@@ -31,90 +31,90 @@ import javafx.scene.paint.Color;
  */
 public abstract class Brick extends Entity implements Collidable {
 	
-	private BoundingBox hitbox;
-	private int score, durability, maxdurability;
+	private BoundingBox hitBox;
+	private int score, durability, maxDurability;
 	private boolean destroyed;	
 	
 	/**
-	 * Creates a new instance of Brick with the given position, size, bordercolor, fillcolor, score and maxdurability.
+	 * Creates a new instance of Brick with the given position, size, borderColor, fillColor, score and maxDurability.
 	 * @param position The coordinates of the upper-left corner of the brick.
 	 * @param size The size of the brick.
-	 * @param bordercolor The border color of the brick.
-	 * @param fillcolor The fill color of the brick.
+	 * @param borderColor The border color of the brick.
+	 * @param fillColor The fill color of the brick.
 	 * @param score The score of the brick.
-	 * @param maxdurability The max durability of the brick.
+	 * @param maxDurability The max durability of the brick.
 	 */
-	public Brick(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor, int score, int maxdurability) {
-		super(position, size, bordercolor, fillcolor);
-		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+	public Brick(Point2D position, Dimension2D size, Color borderColor, Color fillColor, int score, int maxDurability) {
+		super(position, size, borderColor, fillColor);
+		hitBox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 		this.score = score;
-		this.maxdurability = maxdurability;
-		durability = maxdurability;
+		this.maxDurability = maxDurability;
+		durability = maxDurability;
 	}
 	
 	/**
-	 * Creates a new instance of Brick with the given position, size, bordercolor, fillcolor, score and maxdurability.
+	 * Creates a new instance of Brick with the given position, size, borderColor, fillColor, score and maxDurability.
 	 * @param x The x-coordinate of the upper-left corner of the brick.
 	 * @param y The y-coordinate of the upper-left corner of the brick.
 	 * @param size The size of the brick.
-	 * @param bordercolor The border color of the brick.
-	 * @param fillcolor The fill color of the brick.
+	 * @param borderColor The border color of the brick.
+	 * @param fillColor The fill color of the brick.
 	 * @param score The score of the brick.
-	 * @param maxdurability The max durability of the brick.
+	 * @param maxDurability The max durability of the brick.
 	 */
-	public Brick(double x, double y, Dimension2D size, Color bordercolor, Color fillcolor, int score, int maxdurability) {
-		super(x, y, size, bordercolor, fillcolor);
-		hitbox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
+	public Brick(double x, double y, Dimension2D size, Color borderColor, Color fillColor, int score, int maxDurability) {
+		super(x, y, size, borderColor, fillColor);
+		hitBox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
 		this.score = score;
-		this.maxdurability = maxdurability;
-		durability = maxdurability;
+		this.maxDurability = maxDurability;
+		durability = maxDurability;
 	}
 	
 	/**
-	 * Creates a new instance of Brick with the given position, width, height, bordercolor, fillcolor, score and maxdurability.
+	 * Creates a new instance of Brick with the given position, width, height, borderColor, fillColor, score and maxDurability.
 	 * @param position The coordinates of the upper-left corner of the brick.
 	 * @param width The width of the brick.
 	 * @param height The height of the brick.
-	 * @param bordercolor The border color of the brick.
-	 * @param fillcolor The fill color of the brick.
+	 * @param borderColor The border color of the brick.
+	 * @param fillColor The fill color of the brick.
 	 * @param score The score of the brick.
-	 * @param maxdurability The max durability of the brick.
+	 * @param maxDurability The max durability of the brick.
 	 */
-	public Brick(Point2D position, double width, double height, Color bordercolor, Color fillcolor, int score, int maxdurability) {
-		super(position, width, height, bordercolor, fillcolor);
-		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+	public Brick(Point2D position, double width, double height, Color borderColor, Color fillColor, int score, int maxDurability) {
+		super(position, width, height, borderColor, fillColor);
+		hitBox = new BoundingBox(position.getX(), position.getY(), width, height);
 		this.score = score;
-		this.maxdurability = maxdurability;
-		durability = maxdurability;
+		this.maxDurability = maxDurability;
+		durability = maxDurability;
 	}	
 	
 	/**
-	 * Creates a new instance of Brick with the given position, width, height, bordercolor, fillcolor, score and maxdurability.
+	 * Creates a new instance of Brick with the given position, width, height, borderColor, fillColor, score and maxDurability.
 	 * @param x The x-coordinate of the upper-left corner of the brick.
 	 * @param y The y-coordinate of the upper-left corner of the brick.
 	 * @param width The width of the brick.
 	 * @param height The height of the brick.
-	 * @param bordercolor The border color of the brick.
-	 * @param fillcolor The fill color of the brick.
+	 * @param borderColor The border color of the brick.
+	 * @param fillColor The fill color of the brick.
 	 * @param score The score of the brick.
-	 * @param maxdurability The max durability of the brick.
+	 * @param maxDurability The max durability of the brick.
 	 */
-	public Brick(double x, double y, double width, double height, Color bordercolor, Color fillcolor, int score, int maxdurability) {
-		super(x, y, width, height, bordercolor, fillcolor);
-		hitbox = new BoundingBox(x, y, width, height);
+	public Brick(double x, double y, double width, double height, Color borderColor, Color fillColor, int score, int maxDurability) {
+		super(x, y, width, height, borderColor, fillColor);
+		hitBox = new BoundingBox(x, y, width, height);
 		this.score = score;
-		this.maxdurability = maxdurability;
-		durability = maxdurability;
+		this.maxDurability = maxDurability;
+		durability = maxDurability;
 	}
 	
 	@Override
 	public BoundingBox getHitBox() {
-		return hitbox;
+		return hitBox;
 	}
 	
 	@Override
 	public void updateHitBox() {
-		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
+		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}
 	
 	/**
@@ -142,11 +142,11 @@ public abstract class Brick extends Entity implements Collidable {
 	}
 	
 	/**
-	 * Gets the value of the property maxdurability.
-	 * @return maxdurability The maximum durability of the brick.
+	 * Gets the value of the property maxDurability.
+	 * @return maxDurability The maximum durability of the brick.
 	 */
 	public int getMaxDurability() {
-		return maxdurability;
+		return maxDurability;
 	}
 	
 	/**
