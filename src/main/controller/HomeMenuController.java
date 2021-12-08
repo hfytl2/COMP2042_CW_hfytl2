@@ -18,6 +18,7 @@
 
 package main.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -42,10 +44,11 @@ import javafx.scene.Parent;
  */
 public class HomeMenuController {
 	
+	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	String helpFXML = "../view/fxml/HelpMenu.fxml";
 	String gameFXML = "../view/fxml/GameFrame.fxml";
-	static final double FADE_TIME = 250;
+	static final double FADE_TIME = 250;	
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -66,6 +69,7 @@ public class HomeMenuController {
      */
     @FXML
     private void playButtonPressed(ActionEvent event) {
+    	buttonPressedSFX.play();
     	Parent gameRoot = null;
     	
     	try {
@@ -99,6 +103,7 @@ public class HomeMenuController {
      */
     @FXML
     private void helpButtonPressed() throws IOException {
+    	buttonPressedSFX.play();
     	Parent helpRoot = FXMLLoader.load(getClass().getResource(helpFXML));
     	FadeTransition fadeHelp = new FadeTransition(Duration.millis(FADE_TIME), helpRoot);
     	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
@@ -148,6 +153,7 @@ public class HomeMenuController {
      */
     @FXML
     private void exitButtonPressed() {
+    	buttonPressedSFX.play();
     	System.out.println("Goodbye " + System.getProperty("user.name"));
     	Platform.exit();
     }    

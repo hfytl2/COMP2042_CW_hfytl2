@@ -18,6 +18,7 @@
 
 package main.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 /**
@@ -36,6 +38,7 @@ import javafx.util.Duration;
  */
 public class HelpMenuController {
 	
+	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	double fadetime = 250;
 	
@@ -57,6 +60,7 @@ public class HelpMenuController {
      */
 	@FXML
     private void backButtonPressed() {
+		buttonPressedSFX.play();
     	Scene scene = back.getScene();
     	StackPane parentContainer = (StackPane)scene.getRoot();
     	GridPane homeRoot = (GridPane)parentContainer.lookup("#homeRoot");

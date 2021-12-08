@@ -33,6 +33,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import main.model.Game;
@@ -45,6 +46,7 @@ import main.model.Game;
  */
 public class HighScoreMenuController {
 	
+	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
 	String gameFXML = "../view/fxml/GameFrame.fxml";
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	static final double FADE_TIME = 250;
@@ -91,6 +93,7 @@ public class HighScoreMenuController {
      */
     @FXML
     private void tryAgainButtonPressed() {
+    	buttonPressedSFX.play();
     	Parent gameRoot = null;
     	Game.getGame().restartGame();
     	
@@ -119,6 +122,7 @@ public class HighScoreMenuController {
      */
     @FXML
     private void mainMenuButtonPressed(ActionEvent event) {
+    	buttonPressedSFX.play();
     	GridPane homeRoot = (GridPane)highScoreRoot.getParent().lookup("#homeRoot");    	
     	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
 		FadeTransition fadeHighScore = new FadeTransition(Duration.millis(FADE_TIME), highScoreRoot);

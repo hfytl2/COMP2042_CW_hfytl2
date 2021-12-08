@@ -35,8 +35,7 @@ public class BrickDestroy extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Parent root = null;		
-		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-		bgmPlayer.play();
+		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);		
 		
 		try {
 			root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
@@ -66,6 +65,7 @@ public class BrickDestroy extends Application {
 		    	newStage.show();
 			});
 			primaryStage.show();
+			bgmPlayer.play();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

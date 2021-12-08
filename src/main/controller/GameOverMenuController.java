@@ -36,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import main.model.Player;
@@ -48,7 +49,9 @@ import main.model.Player;
  */
 public class GameOverMenuController {
 	
-	@FXML private URL location;	
+	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
+	
+	@FXML private URL location;
     @FXML private ResourceBundle resources;
 	@FXML private GridPane gameOverRoot;
 	@FXML private VBox inputContainer, inputHeading, inputFieldContainer;
@@ -72,6 +75,7 @@ public class GameOverMenuController {
      */
     @FXML
     private void submitButtonPressed() {
+    	buttonPressedSFX.play();
     	Player.getPlayer().setName(inputField.getText());
     	Parent root = null;
     	File highScoreFile = new File("src/main/highscore.txt");

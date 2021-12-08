@@ -18,6 +18,7 @@
 
 package main.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -25,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 
 /**
  * A controller class that handles events in the PauseMenu.
@@ -33,6 +35,8 @@ import javafx.scene.layout.StackPane;
  * @author Lim Tze Yang
  */
 public class PauseMenuController {
+	
+	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -92,6 +96,7 @@ public class PauseMenuController {
      */
     @FXML
     private void resumeButtonPressed() {
+    	buttonPressedSFX.play();
     	StackPane gameroot = (StackPane)pauseRoot.getParent();
     	gameroot.getChildren().remove(pauseRoot);    	
     }
@@ -101,6 +106,7 @@ public class PauseMenuController {
      */
     @FXML
     private void restartButtonPressed() {
+    	buttonPressedSFX.play();
     	StackPane gameroot = (StackPane)pauseRoot.getParent();
     	pauseRoot.setUserData("Restart");
     	gameroot.getChildren().remove(pauseRoot);
@@ -111,6 +117,7 @@ public class PauseMenuController {
      */
     @FXML
     private void quitButtonPressed() {
+    	buttonPressedSFX.play();
     	System.out.println("Goodbye " + System.getProperty("user.name"));
     	Platform.exit();
     }

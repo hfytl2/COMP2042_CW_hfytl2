@@ -70,6 +70,7 @@ public class GameFrameController {
 	private AnimationTimer timer;
 	private long lastNanoTime;
 	private AudioClip ballBounceSFX = new AudioClip(new File("src/main/assets/ballbounce.mp3").toURI().toString());
+	private AudioClip loseBallSFX = new AudioClip(new File("src/main/assets/loseball.mp3").toURI().toString());
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -119,8 +120,6 @@ public class GameFrameController {
     				if (player.getInput().contains(KeyCode.SHIFT) && player.getInput().contains(KeyCode.ALT)) {    					
     					DebugConsole debugconsole = new DebugConsole((Stage)gameRoot.getScene().getWindow());
     					debugconsole.show();
-    				} else {
-    					gameOver();
     				}
     			}
     			default -> {
@@ -398,6 +397,7 @@ public class GameFrameController {
     		
     		ball.inverseHorizontalVelocity();
     	} else if (bottomBoundary) {
+    		loseBallSFX.play();
     		player.loseLife();
     		
     		if (player.getLives() != 0) {
