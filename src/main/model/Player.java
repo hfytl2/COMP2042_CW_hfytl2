@@ -29,6 +29,9 @@ import javafx.scene.input.KeyCode;
  */
 public class Player {
 	
+	/**
+	 * The number of lives the player starts with.
+	 */
 	public static final int MAX_LIVES = 3;
 	
 	private static Player player = null;
@@ -88,6 +91,9 @@ public class Player {
 		this.lives = lives;
 	}
 	
+	/**
+	 * Sets the value of the property lives to {@value #MAX_LIVES}.
+	 */
 	public void resetLives() {
 		lives = MAX_LIVES;
 	}
@@ -152,7 +158,8 @@ public class Player {
 	}
 	
 	/**
-	 * Set player state to initial state.
+	 * Set player state to initial state and return the singleton player instance.
+	 * @return player The singleton player instance.
 	 */
 	public Player initializePlayer() {
 		this.name = "Player";

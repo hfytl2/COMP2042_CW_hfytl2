@@ -41,7 +41,6 @@ public class DebugConsole extends Stage {
 	/**
 	 * Creates a new instance of DebugConsole with the given stage and game.
 	 * @param stage The owner stage of the console.
-	 * @param game The game that the console is used to debug.
 	 */
 	public DebugConsole(Stage stage) {
 		super(StageStyle.UTILITY);
