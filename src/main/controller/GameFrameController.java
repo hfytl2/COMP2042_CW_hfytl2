@@ -19,6 +19,7 @@
 package main.controller;
 
 import java.net.URL;
+import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -67,6 +69,7 @@ public class GameFrameController {
 	private GraphicsContext graphicsContext;
 	private AnimationTimer timer;
 	private long lastNanoTime;
+	private AudioClip ballBounceSFX = new AudioClip(new File("src/main/assets/ballbounce.mp3").toURI().toString());
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -283,6 +286,8 @@ public class GameFrameController {
     		BoundingBox brickHitBox = brick.getHitBox();
     		
     		if (brickHitBox.intersects(ballHitBox)) {
+    			ballBounceSFX.play();
+    			
     			if (!(brick instanceof SteelBrick)) {
     				brick.damage();
     			} else {
@@ -291,7 +296,7 @@ public class GameFrameController {
     				}
     			}
     			
-    			if (brickHitBox.contains(upperLeft) || brickHitBox.contains(upperRight)) { 
+    			if (brickHitBox.contains(upperLeft.midpoint(upperRight))) { 
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -302,7 +307,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(upperLeft.midpoint(upperRight), "Up");
         				}
     				}
-    			} else if (brickHitBox.contains(upperRight) || brickHitBox.contains(lowerRight)) {
+    			} else if (brickHitBox.contains(upperRight.midpoint(lowerRight))) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -312,7 +317,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(upperRight.midpoint(lowerRight), "Right");
         				}
     				}
-    			} else if (brickHitBox.contains(lowerLeft) || brickHitBox.contains(lowerRight)) {
+    			} else if (brickHitBox.contains(lowerLeft.midpoint(lowerRight))) {
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -322,7 +327,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(lowerLeft.midpoint(lowerRight), "Down");
         				}
     				}
-    			} else if (brickHitBox.contains(upperLeft) || brickHitBox.contains(lowerLeft)) {
+    			} else if (brickHitBox.contains(upperLeft.midpoint(lowerLeft))) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -358,6 +363,7 @@ public class GameFrameController {
     	boolean impact = paddleHitBox.intersects(ballHitBox) && paddleHitBox.contains(down);
     	
     	if (impact) {
+    		ballBounceSFX.play();
     		double distance = down.getX() - paddleHitBox.getMinX();
     		double cosine = ((distance * 2) / paddleHitBox.getWidth()) - 1;    		
     		
@@ -379,9 +385,11 @@ public class GameFrameController {
     	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
     	
     	if (topBoundary) {
+    		ballBounceSFX.play();
     		ball.moveTo(new Point2D(hitBox.getMinX(), boundary.getMinY()));
     		ball.inverseVerticalVelocity();
     	} else if (rightBoundary || leftBoundary) {
+    		ballBounceSFX.play();
     		if (rightBoundary) {
     			ball.moveTo(new Point2D(boundary.getMaxX() - hitBox.getWidth(), hitBox.getMinY()));
     		} else {

@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.Parent;
 
@@ -15,7 +19,10 @@ import javafx.scene.Parent;
  * 
  * @author Lim Tze Yang
  */
-public class BrickDestroy extends Application {	
+public class BrickDestroy extends Application {
+	
+	Media bgm = new Media(new File("src/main/assets/backgroundmusic.mp3").toURI().toString());
+	MediaPlayer bgmPlayer = new MediaPlayer(bgm);
 	
 	/**
 	 * Main driver method to launch the Brick Destroy game application.
@@ -27,7 +34,10 @@ public class BrickDestroy extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		Parent root = null;
+		Parent root = null;		
+		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		bgmPlayer.play();
+		
 		try {
 			root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
 			Font.loadFont(getClass().getResourceAsStream("assets/ARCADE_N.TTF"), 10);
@@ -59,5 +69,10 @@ public class BrickDestroy extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void stop() {
+		bgmPlayer.stop();
 	}
 }
