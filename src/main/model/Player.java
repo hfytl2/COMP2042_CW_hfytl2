@@ -22,50 +22,38 @@ import java.util.ArrayList;
 import javafx.scene.input.KeyCode;
 
 /**
- * The {@code Player} class represents the player.
+ * The {@code Player} single class represents the player.
  * Note: Added this class to apply SOLID principles and to have a better distinction between the player and the game entity under their control. 
  * 
  * @author Lim Tze Yang
  */
 public class Player {
 	
+	public static final int MAX_LIVES = 3;
+	
+	private static Player player = null;
+	
 	private String name;
 	private int lives, score;
-	private ArrayList<KeyCode> input;	
+	private ArrayList<KeyCode> input;
 	
 	/**
-	 * Creates a new instance of Player with the given name and lives.
-	 * @param name The name of the player.
-	 * @param lives The number of lives of the player.
+	 * Creates a new instance of Player.
 	 */
-	public Player(String name, int lives) {
-		this.name = name;
-		this.lives = lives;
-		this.score = 0;
-		input = new ArrayList<KeyCode>();
+	private Player() {
+		initializePlayer();
 	}
 	
 	/**
-	 * Creates a new instance of Player with the given name and {@code 3} lives.
-	 * @param name The name of the player.
+	 * Creates a new singleton instance of the player if it doesn't already exit or return the existing instance of the player.
+	 * @return player The singleton instance of the player.
 	 */
-	public Player(String name) {
-		this(name, 3);
-	}
-	
-	/**
-	 * Creates a new instance of Player with the given lives and a default name.
-	 * @param lives The number of lives of the player.
-	 */
-	public Player(int lives) {
-		this("Player", lives);
-	}	
-	
-	/**
-	 * Creates a new instance of Player with a default name and {@code 3} lives.
-	 */
-	public Player() {
-		this("Player", 3);
+	public static Player getPlayer() {
+		if (player == null) {
+			player = new Player();
+		}
+		
+		return player;
 	}
 	
 	/**
@@ -98,6 +86,10 @@ public class Player {
 	 */
 	public void setLives(int lives) {
 		this.lives = lives;
+	}
+	
+	public void resetLives() {
+		lives = MAX_LIVES;
 	}
 	
 	/**
@@ -157,5 +149,16 @@ public class Player {
 		if (input.contains(code)) {
 			input.remove(code);
 		}
+	}
+	
+	/**
+	 * Set player state to initial state.
+	 */
+	public Player initializePlayer() {
+		this.name = "Player";
+		this.lives = MAX_LIVES;
+		this.score = 0;
+		input = new ArrayList<KeyCode>();
+		return this;
 	}
 }

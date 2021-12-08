@@ -19,6 +19,7 @@
 package main.controller;
 
 import java.net.URL;
+import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,6 +36,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -46,6 +48,7 @@ import main.model.Game;
 import main.model.Level;
 import main.model.Paddle;
 import main.model.Player;
+import main.model.SteelBrick;
 import main.model.Ball;
 import main.model.Brick;
 import main.model.Crack;
@@ -61,18 +64,18 @@ import main.model.DebugConsole;
 public class GameFrameController {
 	
 	private Game game;
-	private GraphicsContext gc;
+	private GraphicsContext graphicsContext;
 	private AnimationTimer timer;
-	private long lastnanotime;
+	private long lastNanoTime;
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
-    @FXML private StackPane gameroot;
-    @FXML private Text txtbricks;
-    @FXML private Text txtballs;
-    @FXML private Text txtlevel;
-    @FXML private Text txtscore;
-    @FXML private Canvas gamecanvas;   
+    @FXML private StackPane gameRoot;
+    @FXML private Text txtBricks;
+    @FXML private Text txtBalls;
+    @FXML private Text txtLevel;
+    @FXML private Text txtScore;
+    @FXML private Canvas gameCanvas;   
     
     /**
      * Creates a new instance of GameFrameController.
@@ -81,19 +84,19 @@ public class GameFrameController {
     
     @FXML
     private void initialize() {
-    	game = new Game(gamecanvas);
+    	game = Game.getGame(gameCanvas);
     	Player player = game.getPlayer();
     	updateGameInfo();
-    	gameroot.focusedProperty().addListener((ov, oldval, newval) -> {
+    	gameRoot.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
     		if (!game.isPaused()) {
-    			if (!newval) {
+    			if (!newVal) {
     				if (game.hasStarted()) {
     					pauseGame();
     				}
     			}
     		}
     	});
-    	gameroot.setOnKeyPressed(key -> {
+    	gameRoot.setOnKeyPressed(key -> {
     		switch (key.getCode()) {
     			case ESCAPE -> {
     				if (game.hasStarted() && !game.isOver()) {
@@ -111,8 +114,10 @@ public class GameFrameController {
     			}
     			case F1 -> {
     				if (player.getInput().contains(KeyCode.SHIFT) && player.getInput().contains(KeyCode.ALT)) {    					
-    					DebugConsole debugconsole = new DebugConsole((Stage)gameroot.getScene().getWindow(), game);
+    					DebugConsole debugconsole = new DebugConsole((Stage)gameRoot.getScene().getWindow());
     					debugconsole.show();
+    				} else {
+    					gameOver();
     				}
     			}
     			default -> {
@@ -120,10 +125,10 @@ public class GameFrameController {
     			}
     		}
     	});
-    	gameroot.getChildren().addListener((ListChangeListener<Node>) change -> {
+    	gameRoot.getChildren().addListener((ListChangeListener<Node>) change -> {
     		while (change.next()) {
     			if (change.wasRemoved()) {
-    				if (change.getRemoved().get(0).getId().equals("pauseroot")) {
+    				if (change.getRemoved().get(0).getId().equals("pauseRoot")) {
     					if (change.getRemoved().get(0).getUserData() != null) {
     						restartGame();
     					}else {
@@ -133,23 +138,24 @@ public class GameFrameController {
     			}
     		}
     	});
-    	gameroot.setOnKeyReleased(key -> {
+    	gameRoot.setOnKeyReleased(key -> {
     		player.removeInput(key.getCode());
     	});
-    	gc = gamecanvas.getGraphicsContext2D();    	
+    	graphicsContext = gameCanvas.getGraphicsContext2D();    	
     	renderLevel();
     	renderBall();
     	renderPaddle();
-    	lastnanotime = System.nanoTime();
+    	lastNanoTime = System.nanoTime();
     	timer = new AnimationTimer() {
     		
 			@Override
 			public void handle(long currentnanotime) {
-				double elapsedtime = (currentnanotime - lastnanotime) / 1000000000.0;				
-				lastnanotime = currentnanotime;
+				double elapsedtime = (currentnanotime - lastNanoTime) / 1000000000.0;				
+				lastNanoTime = currentnanotime;
 				Paddle paddle = game.getPaddle();
-				Ball ball = game.getBall();
+				Ball ball = game.getBall();				
 				if (!game.isPaused() && !game.isOver()) {
+					updateGameInfo();
 					handlePaddleMovement();		    	
 					ball.move(elapsedtime);
 					paddle.move(elapsedtime);
@@ -157,7 +163,7 @@ public class GameFrameController {
 					handleBrickCollision();
 			    	handlePaddleCollision();
 					handlePaddleBoundaryCollision();
-					gc.clearRect(0, 0, gamecanvas.getWidth(), gamecanvas.getHeight());
+					graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 					renderLevel();
 					renderBall();
 					renderPaddle();
@@ -175,32 +181,33 @@ public class GameFrameController {
     	ArrayList<Brick> bricks = level.getBricks();
     	
     	bricks.forEach(brick -> {
-			double posX = brick.getPosition().getX();
-    		double posY = brick.getPosition().getY();
+			double x = brick.getPosition().getX();
+    		double y = brick.getPosition().getY();
     		double width = brick.getWidth();
     		double height = brick.getHeight();
-    		gc.setLineWidth(2);
-    		gc.setFill(brick.getFillColor());
-    		gc.setStroke(brick.getBorderColor());
-    		gc.fillRect(posX, posY, width, height);
-    		gc.strokeRect(posX, posY, width, height);
+    		graphicsContext.setLineWidth(2);
+    		graphicsContext.setFill(brick.getFillColor());
+    		graphicsContext.setStroke(brick.getBorderColor());
+    		graphicsContext.fillRect(x, y, width, height);
+    		graphicsContext.strokeRect(x, y, width, height);
     		
     		if (brick instanceof Crackable) {
     			ArrayList<Crack> cracks = ((Crackable) brick).getCracks();
     			if (cracks != null && !cracks.isEmpty()) {
     				cracks.forEach(crack -> {		
         				Path path = crack.getPath();
-        				gc.setStroke(brick.getBorderColor());
-        				gc.beginPath();
+        				graphicsContext.setLineWidth(1);
+        				graphicsContext.setStroke(brick.getBorderColor());
+        				graphicsContext.beginPath();
         				path.getElements().forEach(element -> {
         					if (element instanceof MoveTo) {
-        						gc.moveTo(((MoveTo) element).getX(), ((MoveTo) element).getY());
+        						graphicsContext.moveTo(((MoveTo) element).getX(), ((MoveTo) element).getY());
         					} else if (element instanceof LineTo) {
-        						gc.lineTo(((LineTo) element).getX(), ((LineTo) element).getY());
-        						gc.stroke();
+        						graphicsContext.lineTo(((LineTo) element).getX(), ((LineTo) element).getY());
+        						graphicsContext.stroke();
         					}
         				});        				
-        				gc.closePath();
+        				graphicsContext.closePath();
         			});
     			}    			
     		}
@@ -212,17 +219,17 @@ public class GameFrameController {
      */
     private void renderBall() {
     	Ball ball = game.getBall();
-    	double posX = ball.getPosition().getX();
-    	double posY = ball.getPosition().getY();
+    	double x = ball.getPosition().getX();
+    	double y = ball.getPosition().getY();
     	double width = ball.getWidth();
     	double height = ball.getHeight();
     	
     	if (!game.isOver()) {
-    		gc.setLineWidth(2);
-    		gc.setFill(ball.getFillColor());
-    		gc.setStroke(ball.getBorderColor());
-    		gc.fillOval(posX, posY, width, height);
-    		gc.strokeOval(posX, posY, width, height);
+    		graphicsContext.setLineWidth(2);
+    		graphicsContext.setFill(ball.getFillColor());
+    		graphicsContext.setStroke(ball.getBorderColor());
+    		graphicsContext.fillOval(x, y, width, height);
+    		graphicsContext.strokeOval(x, y, width, height);
     	}
     }
     
@@ -231,29 +238,29 @@ public class GameFrameController {
      */
     private void renderPaddle() {
     	Paddle paddle = game.getPaddle();
-    	double posX = paddle.getPosition().getX();
-    	double posY = paddle.getPosition().getY();
+    	double x = paddle.getPosition().getX();
+    	double y = paddle.getPosition().getY();
     	double width = paddle.getWidth();
     	double height = paddle.getHeight();
     	
-    	gc.setLineWidth(2);
-    	gc.setFill(paddle.getFillColor());
-    	gc.setStroke(paddle.getBorderColor());
-    	gc.fillRect(posX, posY, width, height);
-    	gc.strokeRect(posX, posY, width, height);
+    	graphicsContext.setLineWidth(2);
+    	graphicsContext.setFill(paddle.getFillColor());
+    	graphicsContext.setStroke(paddle.getBorderColor());
+    	graphicsContext.fillRect(x, y, width, height);
+    	graphicsContext.strokeRect(x, y, width, height);
     }
     
     /**
      * Checks for and handles the collision of the paddle with the game boundary.
      */
     private void handlePaddleBoundaryCollision() {
-    	Bounds boundary = gamecanvas.getBoundsInLocal();
+    	Bounds boundary = gameCanvas.getBoundsInLocal();
     	Paddle paddle = game.getPaddle();
-    	Bounds hitbox = paddle.getHitBox();
-    	boolean rightboundary = hitbox.getMaxX() >= boundary.getMaxX();
-    	boolean leftboundary = hitbox.getMinX() <= boundary.getMinX();
+    	Bounds hitBox = paddle.getHitBox();
+    	boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
+    	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
     	
-    	if (rightboundary || leftboundary) {
+    	if (rightBoundary || leftBoundary) {
     		paddle.setVelocity(new Point2D(0, 0));
     	}
     }
@@ -263,64 +270,66 @@ public class GameFrameController {
      */
     private void handleBrickCollision() {    	
     	Ball ball = game.getBall();
-    	BoundingBox ballhitbox = ball.getHitBox();
-    	Point2D upperleft = new Point2D(ballhitbox.getMinX(), ballhitbox.getMinY());
-		Point2D upperright = new Point2D(ballhitbox.getMaxX(), ballhitbox.getMinY());
-		Point2D lowerleft = new Point2D(ballhitbox.getMinX(), ballhitbox.getMaxY());
-		Point2D lowerright = new Point2D(ballhitbox.getMinX(), ballhitbox.getMaxY());
+    	BoundingBox ballHitBox = ball.getHitBox();
+    	Point2D upperLeft = new Point2D(ballHitBox.getMinX(), ballHitBox.getMinY());
+		Point2D upperRight = new Point2D(ballHitBox.getMaxX(), ballHitBox.getMinY());
+		Point2D lowerLeft = new Point2D(ballHitBox.getMinX(), ballHitBox.getMaxY());
+		Point2D lowerRight = new Point2D(ballHitBox.getMinX(), ballHitBox.getMaxY());
 		ArrayList<Brick> bricks = game.getCurrentLevel().getBricks();
-    	Iterator<Brick> brickiterator = bricks.iterator();
+    	Iterator<Brick> brickIterator = bricks.iterator();
     	
-    	while (brickiterator.hasNext()) {
-    		Brick brick = brickiterator.next();
-    		BoundingBox brickhitbox = brick.getHitBox();
+    	while (brickIterator.hasNext()) {
+    		Brick brick = brickIterator.next();
+    		BoundingBox brickHitBox = brick.getHitBox();
     		
-    		if (brickhitbox.intersects(ballhitbox)) {
-    			brick.damage();
+    		if (brickHitBox.intersects(ballHitBox)) {
+    			if (!(brick instanceof SteelBrick)) {
+    				brick.damage();
+    			} else {
+    				if (((SteelBrick) brick).isDamaged()) {    			
+    					brick.damage();
+    				}
+    			}
     			
-    			if (brickhitbox.contains(upperleft) || brickhitbox.contains(upperright)) { 
+    			if (brickHitBox.contains(upperLeft) || brickHitBox.contains(upperRight)) { 
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
     					game.getPlayer().increaseScore(brick.getScore());
-    					brickiterator.remove();
-    					updateGameInfo();
+    					brickIterator.remove();
     				} else {
     					if (brick instanceof Crackable) {    						
-        					((Crackable) brick).addCrack(upperleft.midpoint(upperright), "Up");
+        					((Crackable) brick).addCrack(upperLeft.midpoint(upperRight), "Up");
         				}
     				}
-    			} else if (brickhitbox.contains(upperright) || brickhitbox.contains(lowerright)) {
+    			} else if (brickHitBox.contains(upperRight) || brickHitBox.contains(lowerRight)) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
-    					brickiterator.remove();
-    					updateGameInfo();
+    					brickIterator.remove();    				
     				} else {
     					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(upperright.midpoint(lowerright), "Right");
+        					((Crackable) brick).addCrack(upperRight.midpoint(lowerRight), "Right");
         				}
     				}
-    			} else if (brickhitbox.contains(lowerleft) || brickhitbox.contains(lowerright)) {
+    			} else if (brickHitBox.contains(lowerLeft) || brickHitBox.contains(lowerRight)) {
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
-    					brickiterator.remove();
-    					updateGameInfo();
+    					brickIterator.remove();
     				} else {
     					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(lowerleft.midpoint(lowerright), "Down");
+        					((Crackable) brick).addCrack(lowerLeft.midpoint(lowerRight), "Down");
         				}
     				}
-    			} else if (brickhitbox.contains(upperleft) || brickhitbox.contains(lowerleft)) {
+    			} else if (brickHitBox.contains(upperLeft) || brickHitBox.contains(lowerLeft)) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
-    					brickiterator.remove();
-    					updateGameInfo();
+    					brickIterator.remove();
     				} else {
     					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(upperleft.midpoint(lowerleft), "Left");
+        					((Crackable) brick).addCrack(upperLeft.midpoint(lowerLeft), "Left");
         				}
     				}
     			}    			    			
@@ -329,10 +338,9 @@ public class GameFrameController {
     		if (bricks.size() == 0) {
     			if (game.getCurrentLevel().getLevel() < Game.MAX_LEVELS) {
     				game.nextLevel();
-    				updateGameInfo();
     				game.resetPaddleBall();
     			} else {
-    				game.end();
+    				gameOver();
     			}
     		}
     	}
@@ -344,14 +352,14 @@ public class GameFrameController {
     private void handlePaddleCollision() {
     	Ball ball = game.getBall();
     	Paddle paddle = game.getPaddle();
-    	BoundingBox ballhitbox = ball.getHitBox();
-    	BoundingBox paddlehitbox = paddle.getHitBox();
-    	Point2D down = new Point2D(ballhitbox.getMinX() + (ballhitbox.getWidth() / 2), ballhitbox.getMaxY());
-    	boolean impact = paddlehitbox.intersects(ballhitbox) && paddlehitbox.contains(down);
+    	BoundingBox ballHitBox = ball.getHitBox();
+    	BoundingBox paddleHitBox = paddle.getHitBox();
+    	Point2D down = new Point2D(ballHitBox.getMinX() + (ballHitBox.getWidth() / 2), ballHitBox.getMaxY());
+    	boolean impact = paddleHitBox.intersects(ballHitBox) && paddleHitBox.contains(down);
     	
     	if (impact) {
-    		double distance = down.getX() - paddlehitbox.getMinX();
-    		double cosine = ((distance * 2) / paddlehitbox.getWidth()) - 1;    		
+    		double distance = down.getX() - paddleHitBox.getMinX();
+    		double cosine = ((distance * 2) / paddleHitBox.getWidth()) - 1;    		
     		
     		ball.setVelocity(new Point2D(ball.getSpeed() * Math.cos(Math.acos(cosine)), -ball.getSpeed() * Math.sin(Math.acos(cosine))));
     	}
@@ -362,33 +370,32 @@ public class GameFrameController {
      */
     private void handleBallBoundaryCollision() {    	
     	Player player = game.getPlayer();
-    	Bounds boundary = gamecanvas.getBoundsInLocal();
+    	Bounds boundary = gameCanvas.getBoundsInLocal();
     	Ball ball = game.getBall();
-    	BoundingBox hitbox = ball.getHitBox();
-    	boolean topboundary = hitbox.getMinY() <= boundary.getMinY();    	
-    	boolean rightboundary = hitbox.getMaxX() >= boundary.getMaxX();
-    	boolean bottomboundary = hitbox.getMaxY() >= boundary.getMaxY();
-    	boolean leftboundary = hitbox.getMinX() <= boundary.getMinX();
+    	BoundingBox hitBox = ball.getHitBox();
+    	boolean topBoundary = hitBox.getMinY() <= boundary.getMinY();    	
+    	boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
+    	boolean bottomBoundary = hitBox.getMaxY() >= boundary.getMaxY();
+    	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
     	
-    	if (topboundary) {
-    		ball.moveTo(new Point2D(hitbox.getMinX(), boundary.getMinY()));
+    	if (topBoundary) {
+    		ball.moveTo(new Point2D(hitBox.getMinX(), boundary.getMinY()));
     		ball.inverseVerticalVelocity();
-    	} else if (rightboundary || leftboundary) {
-    		if (rightboundary) {
-    			ball.moveTo(new Point2D(boundary.getMaxX() - hitbox.getWidth(), hitbox.getMinY()));
+    	} else if (rightBoundary || leftBoundary) {
+    		if (rightBoundary) {
+    			ball.moveTo(new Point2D(boundary.getMaxX() - hitBox.getWidth(), hitBox.getMinY()));
     		} else {
-    			ball.moveTo(new Point2D(boundary.getMinX() + hitbox.getWidth(), hitbox.getMinY()));
+    			ball.moveTo(new Point2D(boundary.getMinX() + hitBox.getWidth(), hitBox.getMinY()));
     		} 
     		
     		ball.inverseHorizontalVelocity();
-    	} else if (bottomboundary) {
-    		player.loseLife();    		
-    		updateGameInfo();
+    	} else if (bottomBoundary) {
+    		player.loseLife();
     		
     		if (player.getLives() != 0) {
     			game.resetPaddleBall();
     		} else {
-    			game.end();
+    			gameOver();
     		}
     	}
     }
@@ -401,23 +408,23 @@ public class GameFrameController {
     	Paddle paddle = game.getPaddle();
     	Ball ball = game.getBall();
     	ArrayList<KeyCode> input = player.getInput();
-    	boolean moveleft = input.contains(KeyCode.A) || input.contains(KeyCode.LEFT);
-    	boolean moveright = input.contains(KeyCode.D) || input.contains(KeyCode.RIGHT);
+    	boolean moveLeft = input.contains(KeyCode.A) || input.contains(KeyCode.LEFT);
+    	boolean moveRight = input.contains(KeyCode.D) || input.contains(KeyCode.RIGHT);
     	
     	if (!game.isOver()) {
-			if (moveleft) {
-	    		if (paddle.getHitBox().getMinX() > gamecanvas.getBoundsInLocal().getMinX()) {
+			if (moveLeft) {
+	    		if (paddle.getHitBox().getMinX() > gameCanvas.getBoundsInLocal().getMinX()) {
 	    			paddle.setVelocity(new Point2D(-paddle.getSpeed(), 0));
 	    		}
 			}
 			
-			if (moveright) {
-				if (paddle.getHitBox().getMaxX() < gamecanvas.getBoundsInLocal().getMaxX()) {
+			if (moveRight) {
+				if (paddle.getHitBox().getMaxX() < gameCanvas.getBoundsInLocal().getMaxX()) {
 					paddle.setVelocity(new Point2D(paddle.getSpeed(), 0));
 				}
 			}
 			
-			if ((moveleft && moveright) || !(moveleft || moveright)) {
+			if ((moveLeft && moveRight) || !(moveLeft || moveRight)) {
 				paddle.setVelocity(new Point2D(0, 0));
 			}
 			
@@ -431,10 +438,10 @@ public class GameFrameController {
      * Updates game information text.
      */
     private void updateGameInfo() {
-    	txtbricks.setText("Bricks: " + game.getCurrentLevel().getBricks().size());
-    	txtballs.setText("Balls: " + game.getPlayer().getLives());
-    	txtlevel.setText("Level: " + game.getCurrentLevel().getLevel());
-    	txtscore.setText("Score: " + game.getPlayer().getScore());
+    	txtBricks.setText("Bricks: " + game.getCurrentLevel().getBricks().size());
+    	txtBalls.setText("Balls: " + game.getPlayer().getLives());
+    	txtLevel.setText("Level: " + game.getCurrentLevel().getLevel());
+    	txtScore.setText("Score: " + game.getPlayer().getScore());
     }
     
     /**
@@ -449,30 +456,30 @@ public class GameFrameController {
      * Pauses the game.
      */
     private void pauseGame() {
-    	Parent pauseroot = null;
+    	Parent pauseRoot = null;
     	
     	try {
-    		pauseroot = FXMLLoader.load(getClass().getResource("../view/fxml/PauseMenu.fxml"));
+    		pauseRoot = FXMLLoader.load(getClass().getResource("../view/fxml/PauseMenu.fxml"));
     	} catch(Exception e) {
     		e.printStackTrace();
     	}        	
-    	gameroot.getChildren().add(pauseroot);
+    	gameRoot.getChildren().add(pauseRoot);
     	game.pause();
-    	pauseroot.lookup("#resume").requestFocus();
+    	pauseRoot.lookup("#resume").requestFocus();
     }
     
     /**
      * Resumes the game.
      */
     private void resumeGame() {
-    	GridPane pauseroot = (GridPane)gameroot.lookup("#pauseroot");
+    	GridPane pauseRoot = (GridPane)gameRoot.lookup("#pauseRoot");
     	
-    	if (gameroot.getChildren().contains(pauseroot)) {
-    		gameroot.getChildren().remove(pauseroot);
+    	if (gameRoot.getChildren().contains(pauseRoot)) {
+    		gameRoot.getChildren().remove(pauseRoot);
     	}
     	
 		game.resume();
-		gameroot.requestFocus();
+		gameRoot.requestFocus();
     }
     
     /**
@@ -480,6 +487,32 @@ public class GameFrameController {
      */
     private void restartGame() {
     	game.restartLevel();
-		gameroot.requestFocus();
+		gameRoot.requestFocus();
+    }
+    
+    /**
+     * Shows a frame for the player to input their name to be used for the high score listing.
+     */
+    private void showGameOverMenu() {
+    	Parent root = null;
+    	try {
+			root = FXMLLoader.load(getClass().getResource("../view/fxml/GameOverMenu.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	((StackPane)gameRoot.getParent()).getChildren().add(root);
+    	root.lookup("#inputField").requestFocus();
+    	((TextField)root.lookup("#inputField")).selectAll();
+    	((StackPane)gameRoot.getParent()).getChildren().remove(gameRoot);    	
+    }
+    
+    /**
+     * Prompts the player to enter their name and shows the game over screen.
+     */
+    private void gameOver() {    
+    	game.end();
+    	timer.stop();
+    	showGameOverMenu();
     }
 }

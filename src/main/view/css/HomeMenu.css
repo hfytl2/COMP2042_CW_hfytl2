@@ -1,5 +1,5 @@
-#parentcontainer {
-	-fx-background-color: black;
+#parentContainer {
+	-fx-background-color: white;
 }
 
 .gridroot {	
@@ -7,7 +7,7 @@
     -fx-vgap: 50px;
 }
 
-#homeroot {
+#homeRoot {
 	-fx-background-image: url("../../assets/homebg.jpg");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
@@ -24,7 +24,8 @@
 
 .greetings {
 	-fx-fill: white;
-	-fx-font-size: 22pt;
+	-fx-font-family: 'Arcade Normal';
+	-fx-font-size: 15pt;
 	-fx-font-smoothing-type: lcd;
 }
 
@@ -47,9 +48,8 @@
 
 .button {
 	-fx-background-color: black;
-	-fx-border-color: white;
+	-fx-border-color: black;
 	-fx-border-width: 3px;
-	-fx-border-style: dashed;
     -fx-font-family: 'Arcade Normal';
     -fx-text-fill: white;
     -fx-font-size: 16pt;
@@ -57,6 +57,7 @@
 }
 
 .button:hover, .button:focused {
-	-fx-border-style: solid;
+	-fx-text-fill: lime;
+	-fx-border-color: lime;
     -fx-label-padding: 3px;
 }

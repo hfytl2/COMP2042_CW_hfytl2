@@ -45,12 +45,12 @@ public class HomeMenuController {
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	String helpFXML = "../view/fxml/HelpMenu.fxml";
 	String gameFXML = "../view/fxml/GameFrame.fxml";
-	double fadetime = 250;
+	static final double FADE_TIME = 250;
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
-	@FXML private StackPane parentcontainer;
-	@FXML private GridPane homeroot;
+	@FXML private StackPane parentContainer;
+	@FXML private GridPane homeRoot;
 	@FXML private Button play, help, exit;	
     
 	/**
@@ -63,29 +63,33 @@ public class HomeMenuController {
     
     /**
      * Switches to the GameFrame when play button is pressed.
-     * 
-     * @throws IOException
      */
     @FXML
-    private void playButtonPressed(ActionEvent event) throws IOException {
-    	Parent gameroot = FXMLLoader.load(getClass().getResource(gameFXML));
-    	FadeTransition fadeGame = new FadeTransition(Duration.millis(fadetime), gameroot);
-    	FadeTransition fadeHome = new FadeTransition(Duration.millis(fadetime), homeroot);
-    	gameroot.setOpacity(0);
-    	parentcontainer.getChildren().add(gameroot);    	
-    	fadeGame.setFromValue(0);
-    	fadeGame.setToValue(1);
-    	fadeHome.setFromValue(1);
-    	fadeHome.setToValue(0);
-    	fadeHome.setOnFinished(e -> {
-    		play.setFocusTraversable(false);
-    		help.setFocusTraversable(false);
-    		exit.setFocusTraversable(false);
-    		fadeGame.play();    		
-    	});
-    	gameroot.requestFocus();
-    	fadeHome.play();
-    	((Node)(event.getSource())).getScene().getWindow().hide();
+    private void playButtonPressed(ActionEvent event) {
+    	Parent gameRoot = null;
+    	
+    	try {
+	    	gameRoot = FXMLLoader.load(getClass().getResource(gameFXML));
+	    	FadeTransition fadeGame = new FadeTransition(Duration.millis(FADE_TIME), gameRoot);
+	    	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
+	    	gameRoot.setOpacity(0);
+	    	parentContainer.getChildren().add(gameRoot);    	
+	    	fadeGame.setFromValue(0);
+	    	fadeGame.setToValue(1);
+	    	fadeHome.setFromValue(1);
+	    	fadeHome.setToValue(0);
+	    	fadeHome.setOnFinished(e -> {
+	    		play.setFocusTraversable(false);
+	    		help.setFocusTraversable(false);
+	    		exit.setFocusTraversable(false);
+	    		fadeGame.play();    		
+	    	});
+	    	gameRoot.requestFocus();
+	    	fadeHome.play();
+	    	((Node)(event.getSource())).getScene().getWindow().hide();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
     
     /**
@@ -95,20 +99,19 @@ public class HomeMenuController {
      */
     @FXML
     private void helpButtonPressed() throws IOException {
-    	Parent helproot = FXMLLoader.load(getClass().getResource(helpFXML));
-    	Button back = (Button)helproot.lookup("#back");
-    	FadeTransition fadeHelp = new FadeTransition(Duration.millis(fadetime), helproot);
-    	FadeTransition fadeHome = new FadeTransition(Duration.millis(fadetime), homeroot);
+    	Parent helpRoot = FXMLLoader.load(getClass().getResource(helpFXML));
+    	FadeTransition fadeHelp = new FadeTransition(Duration.millis(FADE_TIME), helpRoot);
+    	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
     	
-    	helproot.setOpacity(0);
-    	parentcontainer.getChildren().add(helproot);
+    	helpRoot.setOpacity(0);
+    	parentContainer.getChildren().add(helpRoot);
     	fadeHelp.setFromValue(0);
     	fadeHelp.setToValue(1);
     	fadeHelp.setOnFinished(e -> {
-    		back.requestFocus();
-    		helproot.setOnKeyPressed(key -> {
+    		helpRoot.lookup("#back").requestFocus();
+    		helpRoot.setOnKeyPressed(key -> {
         		if (key.getCode() == KeyCode.BACK_SPACE) {
-        			if (parentcontainer.getChildren().contains(helproot)) {
+        			if (parentContainer.getChildren().contains(helpRoot)) {
 	    		    	fadeHome.setFromValue(0);
 	    		    	fadeHome.setToValue(1);
 	    		    	fadeHome.setOnFinished(e1 -> {
@@ -121,7 +124,7 @@ public class HomeMenuController {
 	    		    	fadeHelp.setToValue(0);
 	    		    	fadeHelp.setOnFinished(e1 -> {
 	    		    		fadeHome.play();
-	    		    		parentcontainer.getChildren().remove(helproot);
+	    		    		parentContainer.getChildren().remove(helpRoot);
 	    		    	});
 	    		    	fadeHelp.play();
         			}
@@ -136,7 +139,7 @@ public class HomeMenuController {
     		exit.setFocusTraversable(false);
     		fadeHelp.play();
     	});
-    	helproot.requestFocus();
+    	helpRoot.requestFocus();
     	fadeHome.play();
     }   
     

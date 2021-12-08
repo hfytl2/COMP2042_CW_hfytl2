@@ -55,4 +55,9 @@ interface Movable {
 	 * Inverses the horizontal velocity of the entity.
 	 */
 	public void inverseHorizontalVelocity();
+	
+	/**
+	 * Inverses the vertical velocity of the entity.
+	 */
+	public void inverseVerticalVelocity();
 }

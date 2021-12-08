@@ -36,7 +36,7 @@ public class PauseMenuController {
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
-	@FXML private GridPane pauseroot;
+	@FXML private GridPane pauseRoot;
 	@FXML private Button resume, restart, quit;	
     
 	/**
@@ -45,15 +45,55 @@ public class PauseMenuController {
     public PauseMenuController() {}
     
     @FXML
-    private void initialize() {}
+    private void initialize() {
+    	resume.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
+    			buttonOnFocusHover(resume);
+    		} else {
+    			buttonOnUnfocusUnhover(resume);
+    		}
+    	});
+    	resume.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(resume);
+    	});
+    	resume.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(resume);
+    	});
+    	restart.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
+    			buttonOnFocusHover(restart);
+    		} else {
+    			buttonOnUnfocusUnhover(restart);
+    		}
+    	});
+    	restart.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(restart);
+    	});
+    	restart.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(restart);
+    	});
+    	quit.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+    		if (newVal) {
+    			buttonOnFocusHover(quit);
+    		} else {
+    			buttonOnUnfocusUnhover(quit);
+    		}
+    	});
+    	quit.setOnMouseEntered(e -> {
+    		buttonOnFocusHover(quit);
+    	});
+    	quit.setOnMouseExited(e -> {
+    		buttonOnUnfocusUnhover(quit);
+    	});
+    }
     
     /**
      * Resumes the game and removes the PauseMenu when the resume button is pressed.
      */
     @FXML
     private void resumeButtonPressed() {
-    	StackPane gameroot = (StackPane)pauseroot.getParent();
-    	gameroot.getChildren().remove(pauseroot);    	
+    	StackPane gameroot = (StackPane)pauseRoot.getParent();
+    	gameroot.getChildren().remove(pauseRoot);    	
     }
     
     /**
@@ -61,9 +101,9 @@ public class PauseMenuController {
      */
     @FXML
     private void restartButtonPressed() {
-    	StackPane gameroot = (StackPane)pauseroot.getParent();
-    	pauseroot.setUserData("Restart");
-    	gameroot.getChildren().remove(pauseroot);
+    	StackPane gameroot = (StackPane)pauseRoot.getParent();
+    	pauseRoot.setUserData("Restart");
+    	gameroot.getChildren().remove(pauseRoot);
     }
     
     /**
@@ -73,5 +113,15 @@ public class PauseMenuController {
     private void quitButtonPressed() {
     	System.out.println("Goodbye " + System.getProperty("user.name"));
     	Platform.exit();
+    }
+    
+    private void buttonOnFocusHover(Button button) {
+    	button.setStyle("-fx-text-fill: lime;-fx-border-style: solid;-fx-border-color: lime;-fx-label-padding: 3px;");
+    }
+    
+    private void buttonOnUnfocusUnhover(Button button) {
+    	if (!button.isFocused()) {
+    		button.setStyle("-fx-text-fill: white;-fx-border-color: black;-fx-label-padding: 0;");
+    	}
     }
 }

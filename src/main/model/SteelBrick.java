@@ -38,7 +38,7 @@ public class SteelBrick extends Brick {
     private static final int DURABILITY = 1;
     private static final double PROBABILITY = 0.4;
     
-    private Random rng;
+    private Random rng = new Random();
     
     /**
      * Creates a new instance of SteelBrick with the given position and size.

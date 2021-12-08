@@ -31,8 +31,8 @@ import javafx.scene.paint.Color;
 public class RubberBall extends Ball {
 	
 	private static final Dimension2D SIZE = new Dimension2D(10, 10);
-	private static final Color BORDER_COLOR = Color.TRANSPARENT;
-	private static final Color FILL_COLOR = Color.WHITE;    
+	private static final Color BORDER_COLOR = Color.rgb(255, 219, 88).darker().darker();
+	private static final Color FILL_COLOR = Color.rgb(255, 219, 88);
     
 	/**
 	 * Creates a new instance of RubberBall with the given position.

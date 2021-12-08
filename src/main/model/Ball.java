@@ -31,63 +31,63 @@ import javafx.scene.paint.Color;
  */
 public abstract class Ball extends Entity implements Collidable, Movable {
 		
-	private BoundingBox hitbox;
+	private BoundingBox hitBox;
 	private double speed = 100;
 	private Point2D velocity;
 	
 	/**
-	 * Creates a new instance of Ball with the given position, size, bordercolor and fillcolor.
+	 * Creates a new instance of Ball with the given position, size, borderColor and fillColor.
 	 * @param position The coordinates of the upper-left corner of the ball.
 	 * @param size The size of the ball.
-	 * @param bordercolor The border color of the ball.
-	 * @param fillcolor The fill color of the ball.
+	 * @param borderColor The border color of the ball.
+	 * @param fillColor The fill color of the ball.
 	 */
-	public Ball(Point2D position, Dimension2D size, Color bordercolor, Color fillcolor) {
-		super(position, size, bordercolor, fillcolor);
-		hitbox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+	public Ball(Point2D position, Dimension2D size, Color borderColor, Color fillColor) {
+		super(position, size, borderColor, fillColor);
+		hitBox = new BoundingBox(position.getX(), position.getY(), size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
 	/**
-	 * Creates a new instance of Ball with the given position, size, bordercolor and fillcolor.
+	 * Creates a new instance of Ball with the given position, size, borderColor and fillColor.
 	 * @param x The x-coordinate of the upper-left corner of the ball.
 	 * @param y The y-coordinate of the upper-left corner of the ball.
 	 * @param size The size of the ball.
-	 * @param bordercolor The border color of the ball.
-	 * @param fillcolor The fill color of the ball.
+	 * @param borderColor The border color of the ball.
+	 * @param fillColor The fill color of the ball.
 	 */
-	public Ball(double x, double y, Dimension2D size, Color bordercolor, Color fillcolor) {
-		super(x, y, size, bordercolor, fillcolor);
-		hitbox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
+	public Ball(double x, double y, Dimension2D size, Color borderColor, Color fillColor) {
+		super(x, y, size, borderColor, fillColor);
+		hitBox = new BoundingBox(x, y, size.getWidth(), size.getHeight());
 		velocity = new Point2D(0, 0);
 	}
 	
 	/**
-	 * Creates a new instance of Ball with the given position, width, height, bordercolor and fillcolor.
+	 * Creates a new instance of Ball with the given position, width, height, borderColor and fillColor.
 	 * @param position The coordinates of the upper-left corner of the ball.
 	 * @param width The width of the ball.
 	 * @param height The height of the ball.
-	 * @param bordercolor The border color of the ball.
-	 * @param fillcolor The fill color of the ball.
+	 * @param borderColor The border color of the ball.
+	 * @param fillColor The fill color of the ball.
 	 */
-	public Ball(Point2D position, double width, double height, Color bordercolor, Color fillcolor) {
-		super(position, width, height, bordercolor, fillcolor);
-		hitbox = new BoundingBox(position.getX(), position.getY(), width, height);
+	public Ball(Point2D position, double width, double height, Color borderColor, Color fillColor) {
+		super(position, width, height, borderColor, fillColor);
+		hitBox = new BoundingBox(position.getX(), position.getY(), width, height);
 		velocity = new Point2D(0, 0);
 	}	
 	
 	/**
-	 * Creates a new instance of Ball with the given position, width, height, bordercolor and fillcolor.
+	 * Creates a new instance of Ball with the given position, width, height, borderColor and fillColor.
 	 * @param x The x-coordinate of the upper-left corner of the ball.
 	 * @param y The y-coordinate of the upper-left corner of the ball.
 	 * @param width The width of the ball.
 	 * @param height The height of the ball.
-	 * @param bordercolor The border color of the ball.
-	 * @param fillcolor The fill color of the ball.
+	 * @param borderColor The border color of the ball.
+	 * @param fillColor The fill color of the ball.
 	 */
-	public Ball(double x, double y, double width, double height, Color bordercolor, Color fillcolor) {
-		super(x, y, width, height, bordercolor, fillcolor);
-		hitbox = new BoundingBox(x, y, width, height);
+	public Ball(double x, double y, double width, double height, Color borderColor, Color fillColor) {
+		super(x, y, width, height, borderColor, fillColor);
+		hitBox = new BoundingBox(x, y, width, height);
 		velocity = new Point2D(0, 0);
 	}
 	
@@ -131,12 +131,12 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	
 	@Override
 	public BoundingBox getHitBox() {
-		return hitbox;
+		return hitBox;
 	}
 	
 	@Override
 	public void updateHitBox() {
-		hitbox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
+		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
 	}
 	
 	@Override
@@ -156,9 +156,7 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		this.velocity = new Point2D(-velocity.getX(), velocity.getY());
 	}
 	
-	/**
-	 * Inverses the vertical velocity of the ball.
-	 */
+	@Override
 	public void inverseVerticalVelocity() {
 		this.velocity = new Point2D(velocity.getX(), -velocity.getY());
 	}	
