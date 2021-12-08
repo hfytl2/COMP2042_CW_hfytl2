@@ -18,7 +18,6 @@
 
 package main.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,7 +43,7 @@ import javafx.scene.Parent;
  */
 public class HomeMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
+	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	String helpFXML = "../view/fxml/HelpMenu.fxml";
 	String gameFXML = "../view/fxml/GameFrame.fxml";

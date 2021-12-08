@@ -18,7 +18,6 @@
 
 package main.controller;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -38,7 +37,7 @@ import javafx.util.Duration;
  */
 public class HelpMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
+	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	double fadetime = 250;
 	

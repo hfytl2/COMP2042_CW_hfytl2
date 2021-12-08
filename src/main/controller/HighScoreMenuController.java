@@ -46,7 +46,7 @@ import main.model.Game;
  */
 public class HighScoreMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
+	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
 	String gameFXML = "../view/fxml/GameFrame.fxml";
 	String homeFXML = "../view/fxml/HomeMenu.fxml";
 	static final double FADE_TIME = 250;

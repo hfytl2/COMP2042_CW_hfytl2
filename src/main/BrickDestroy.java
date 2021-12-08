@@ -1,7 +1,5 @@
 package main;
 
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +19,7 @@ import javafx.scene.Parent;
  */
 public class BrickDestroy extends Application {
 	
-	Media bgm = new Media(new File("src/main/assets/backgroundmusic.mp3").toURI().toString());
+	Media bgm = new Media(getClass().getResource("assets/backgroundmusic.mp3").toString());
 	MediaPlayer bgmPlayer = new MediaPlayer(bgm);
 	
 	/**

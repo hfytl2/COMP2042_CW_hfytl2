@@ -18,7 +18,6 @@
 
 package main.controller;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -36,7 +35,7 @@ import javafx.scene.media.AudioClip;
  */
 public class PauseMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(new File("src/main/assets/buttonpress.mp3").toURI().toString());
+	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;

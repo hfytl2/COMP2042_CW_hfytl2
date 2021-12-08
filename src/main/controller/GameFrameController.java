@@ -18,10 +18,8 @@
 
 package main.controller;
 
-import java.net.URL;
-import java.io.File;
 import java.io.IOException;
-import java.lang.Math;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -32,7 +30,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
@@ -46,16 +43,17 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
-import main.model.Game;
-import main.model.Level;
-import main.model.Paddle;
-import main.model.Player;
-import main.model.SteelBrick;
+import javafx.stage.Stage;
 import main.model.Ball;
 import main.model.Brick;
 import main.model.Crack;
 import main.model.Crackable;
 import main.model.DebugConsole;
+import main.model.Game;
+import main.model.Level;
+import main.model.Paddle;
+import main.model.Player;
+import main.model.SteelBrick;
 
 /**
  * A controller that handles events in the GameFrame.
@@ -69,8 +67,8 @@ public class GameFrameController {
 	private GraphicsContext graphicsContext;
 	private AnimationTimer timer;
 	private long lastNanoTime;
-	private AudioClip ballBounceSFX = new AudioClip(new File("src/main/assets/ballbounce.mp3").toURI().toString());
-	private AudioClip loseBallSFX = new AudioClip(new File("src/main/assets/loseball.mp3").toURI().toString());
+	private AudioClip ballBounceSFX = new AudioClip(getClass().getResource("../assets/ballbounce.mp3").toString());
+	private AudioClip loseBallSFX = new AudioClip(getClass().getResource("../assets/loseball.mp3").toString());
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
