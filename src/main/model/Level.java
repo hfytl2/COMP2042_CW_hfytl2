@@ -50,7 +50,7 @@ public class Level {
 		this.gameCanvas = gameCanvas;
 		this.level = level;
 		type = "SingleType";
-		bricks = generateSingleTypeLevel(brickType);
+		bricks = generateChessboardLevel(brickType, brickType);
 	}
 	
 	/**
@@ -88,46 +88,6 @@ public class Level {
 	 * @return bricks A list containing all the brick entities in the level.
 	 */
 	public ArrayList<Brick> getBricks() {
-		return bricks;
-	}
-	
-	/**
-	 * Generates a level of type SingleType which contains a single type of brick entities.
-	 * @param brickType The type of brick entities of the level.
-	 * @return bricks A list containing all the brick entities in the level.
-	 */
-	private ArrayList<Brick> generateSingleTypeLevel(String brickType) {
-		int brickCount = BRICK_COUNT;
-		brickCount -= BRICK_COUNT % LINES;
-		int lineBricks = brickCount / LINES;
-		double brickWidth = gameCanvas.getWidth() / lineBricks;
-		double brickHeight = brickWidth / BRICK_SIZE_RATIO;
-		double x, y;
-		brickCount += LINES / 2;
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		Point2D position;
-		Dimension2D brickSize = new Dimension2D(brickWidth, brickHeight);
-		int i;
-		
-		for (i = 0; i < brickCount; i++) {
-			int line = i / lineBricks;
-			
-			if (line == LINES)
-				break;
-			
-			x = (i % lineBricks) * brickWidth;
-			x = (line % 2 == 0) ? x : (x - (brickWidth / 2));
-			y = line * brickHeight;
-			position = new Point2D(x, y);
-			bricks.add(createBrick(brickType, position, brickSize));			
-		}
-		
-		for (y = brickHeight; i < brickCount; i++, y += 2 * brickHeight) {
-			x = (lineBricks * brickWidth) - (brickWidth / 2);
-			position = new Point2D(x, y);
-			bricks.add(createBrick(brickType, position, brickSize));
-		}
-		
 		return bricks;
 	}
 	

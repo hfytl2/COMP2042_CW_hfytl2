@@ -105,14 +105,22 @@ public class Paddle extends Entity implements Collidable, Movable {
 	
 	@Override
 	public void setSize(Dimension2D size) {
-		setSize(size);
+		super.setSize(size);
 		updateHitBox();
 	}
 	
 	@Override
 	public void setSize(double width, double height) {
-		setSize(width, height);
+		super.setSize(width, height);
 		updateHitBox();
+	}
+	
+	/**
+	 * Decreases the width of the paddle by the given amount.
+	 * @param amount The amount by which the width of the paddle is decreased.
+	 */
+	public void shrink(double amount) {
+		setSize(getWidth() - amount, getHeight());
 	}
 	
 	@Override

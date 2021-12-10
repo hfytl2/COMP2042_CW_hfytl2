@@ -38,6 +38,14 @@ public class Game {
 	 * Number used to offset the paddle and ball from the bottom of the screen.
 	 */
 	private static final int BOTTOM_OFFSET = 13;
+	/**
+	 * The number by which the width of the paddle shrinks after each level.
+	 */
+	private static final double PADDLE_SHRINK = 10;
+	/**
+	 * The minimum width of the paddle.
+	 */
+	private static final double MIN_PADDLE_WIDTH = 50;
 	
 	private static Game game;
 	
@@ -170,10 +178,10 @@ public class Game {
 	 * @param level The new level of the game.
 	 */
 	public void setCurrentLevel(int level) {
-		if (level <= MAX_LEVELS) {
+		if (level < MAX_LEVELS) {
 			this.level = levels.get(level);
 		} else {
-			this.level = levels.get(MAX_LEVELS);
+			this.level = levels.get(MAX_LEVELS - 1);
 		}
 	}
 	
@@ -207,7 +215,12 @@ public class Game {
 	 */
 	public void nextLevel() {
 		setCurrentLevel(level.getLevel());
-		resetPaddleBall();
+		
+		if (paddle.getWidth() > MIN_PADDLE_WIDTH) {
+			paddle.shrink(PADDLE_SHRINK);
+		}
+		
+		resetPaddleBall();		
 	}
 	
 	/**
@@ -226,15 +239,13 @@ public class Game {
 	 */
 	private ArrayList<Level> generateLevels() {
 		levels = new ArrayList<Level>();		
-		Level level1 = new Level(gameCanvas, 1, "Clay");
-		Level level2 = new Level(gameCanvas, 2, "Clay", "Cement");
-		Level level3 = new Level(gameCanvas, 3, "Clay", "Steel");
-		Level level4 = new Level(gameCanvas, 4, "Steel", "Cement");
-		
-		levels.add(level1);
-		levels.add(level2);
-		levels.add(level3);
-		levels.add(level4);
+		levels.add(new Level(gameCanvas, 1, "Clay"));
+		levels.add(new Level(gameCanvas, 2, "Clay", "Cement"));
+		levels.add(new Level(gameCanvas, 3, "Clay", "Steel"));
+		levels.add(new Level(gameCanvas, 4, "Cement"));
+		levels.add(new Level(gameCanvas, 5, "Cement", "Steel"));
+		levels.add(new Level(gameCanvas, 6, "Steel"));
+		levels.add(new Level(gameCanvas, 7, "Steel", "Cement"));
 		return levels;
 	}
 	

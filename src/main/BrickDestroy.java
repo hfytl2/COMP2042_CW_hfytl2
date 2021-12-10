@@ -1,5 +1,7 @@
 package main;
 
+import java.net.URISyntaxException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +21,10 @@ import javafx.scene.Parent;
  */
 public class BrickDestroy extends Application {
 	
-	Media bgm = new Media(getClass().getResource("assets/backgroundmusic.mp3").toString());
+	Media bgm = new Media(getClass().getResource("assets/backgroundmusic.mp3").toURI().toString());
 	MediaPlayer bgmPlayer = new MediaPlayer(bgm);
+	
+	public BrickDestroy() throws URISyntaxException {}
 	
 	/**
 	 * Main driver method to launch the Brick Destroy game application.
@@ -33,7 +37,8 @@ public class BrickDestroy extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Parent root = null;		
-		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);		
+		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		bgmPlayer.setAutoPlay(true);
 		
 		try {
 			root = FXMLLoader.load(getClass().getResource("view/fxml/HomeMenu.fxml"));
@@ -60,10 +65,31 @@ public class BrickDestroy extends Application {
 		    	newStage.setOnCloseRequest(closegame -> {
 		    		Platform.exit();
 		    	});
+		    	newStage.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+					if (newVal) {
+						if (bgmPlayer.getStatus().equals(MediaPlayer.Status.PAUSED) || bgmPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+							bgmPlayer.play();
+						}						
+					} else {
+						if (bgmPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+							bgmPlayer.pause();
+						}						
+					}
+				});
 		    	newStage.show();
 			});
+			primaryStage.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
+				if (newVal) {
+					if (bgmPlayer.getStatus().equals(MediaPlayer.Status.PAUSED) || bgmPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+						bgmPlayer.play();
+					}						
+				} else {
+					if (bgmPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+						bgmPlayer.pause();
+					}						
+				}
+			});
 			primaryStage.show();
-			bgmPlayer.play();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,6 +97,8 @@ public class BrickDestroy extends Application {
 	
 	@Override
 	public void stop() {
-		bgmPlayer.stop();
+		if (!bgmPlayer.getStatus().equals(MediaPlayer.Status.STOPPED)) {
+			bgmPlayer.stop();
+		}		
 	}
 }

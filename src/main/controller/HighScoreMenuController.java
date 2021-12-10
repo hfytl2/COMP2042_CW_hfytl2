@@ -107,8 +107,9 @@ public class HighScoreMenuController {
 	    	fadeGame.setToValue(1);
 	    	fadeHighScore.setFromValue(1);
 	    	fadeHighScore.setToValue(0);
-	    	fadeHighScore.setOnFinished(e -> {
+	    	fadeHighScore.setOnFinished(e -> {	    		
 	    		fadeGame.play();
+	    		((StackPane)highScoreRoot.getParent()).getChildren().remove(highScoreRoot);
 	    	});
 	    	gameRoot.requestFocus();
 	    	fadeHighScore.play();

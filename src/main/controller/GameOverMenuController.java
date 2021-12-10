@@ -21,6 +21,7 @@ package main.controller;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,7 +75,7 @@ public class GameOverMenuController {
      * Save player score and name from input to {@code highscore.txt} and show HighScoreMenu when submit button is pressed.
      */
     @FXML
-    private void submitButtonPressed() {
+    private void submitButtonPressed() throws URISyntaxException {
     	buttonPressedSFX.play();
     	Player.getPlayer().setName(inputField.getText());
     	Parent root = null;

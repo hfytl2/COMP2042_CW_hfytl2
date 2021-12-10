@@ -115,15 +115,20 @@ public class GameFrameController {
     				}
     			}
     			case F1 -> {
-    				if (player.getInput().contains(KeyCode.SHIFT) && player.getInput().contains(KeyCode.ALT)) {    					
+    				if (key.isAltDown() && key.isShiftDown()) {    					
     					DebugConsole debugconsole = new DebugConsole((Stage)gameRoot.getScene().getWindow());
     					debugconsole.show();
+    				} else {
+    					gameOver();
     				}
     			}
     			default -> {
     				player.addInput(key.getCode());
     			}
     		}
+    	});
+    	gameRoot.setOnKeyReleased(key -> {
+    		player.removeInput(key.getCode());
     	});
     	gameRoot.getChildren().addListener((ListChangeListener<Node>) change -> {
     		while (change.next()) {
@@ -137,10 +142,7 @@ public class GameFrameController {
     				}
     			}
     		}
-    	});
-    	gameRoot.setOnKeyReleased(key -> {
-    		player.removeInput(key.getCode());
-    	});
+    	});    	
     	graphicsContext = gameCanvas.getGraphicsContext2D();    	
     	renderLevel();
     	renderBall();
@@ -156,7 +158,7 @@ public class GameFrameController {
 				Ball ball = game.getBall();				
 				if (!game.isPaused() && !game.isOver()) {
 					updateGameInfo();
-					handlePaddleMovement();		    	
+					handlePaddleMovement();
 					ball.move(elapsedtime);
 					paddle.move(elapsedtime);
 					handleBallBoundaryCollision();
@@ -359,8 +361,11 @@ public class GameFrameController {
     	Point2D down = new Point2D(ballHitBox.getMinX() + (ballHitBox.getWidth() / 2), ballHitBox.getMaxY());
     	boolean impact = paddleHitBox.intersects(ballHitBox) && paddleHitBox.contains(down);
     	
-    	if (impact) {
-    		ballBounceSFX.play();
+    	if(impact) {
+    		if (game.hasStarted() && !game.isPaused()) {
+    			ballBounceSFX.play();
+    		}
+    		
     		double distance = down.getX() - paddleHitBox.getMinX();
     		double cosine = ((distance * 2) / paddleHitBox.getWidth()) - 1;    		
     		

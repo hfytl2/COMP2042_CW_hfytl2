@@ -93,13 +93,13 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	
 	@Override
 	public void setSize(Dimension2D size) {
-		setSize(size);
+		super.setSize(size);
 		updateHitBox();
 	}
 	
 	@Override
 	public void setSize(double width, double height) {
-		setSize(width, height);
+		super.setSize(width, height);
 		updateHitBox();
 	}	
 	

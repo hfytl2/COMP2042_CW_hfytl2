@@ -1,12 +1,8 @@
 # Brick Destroy
-This is a simple arcade video game.
-Player's goal is to destroy a wall with a small ball.
-The game has very simple command:
-SPACE start/pause the game
-A move left the player
-D move rigth the player
-ESC enter/exit pause menu
-ALT+SHITF+F1 open console
-the game automatically pause if the frame loses focus
-
-Enjoy ;-)
+## Key Changes
+### Refactoring activities:
+- The entirety of the source files has been converted to use JavaFX instead of Swing in favour of its MVC friendliness, growing and more flexible toolkit as well as faster UI development with the use of FXML.
+- 
+### Additions:
+- Added 3 additional levels with different combinations of existing brick types.
+- Added paddle shrink as the player progresses through the levels to increase difficulty.
