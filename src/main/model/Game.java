@@ -240,7 +240,7 @@ public class Game {
 	 * @return levels A list containing all the levels in the game.
 	 */
 	private ArrayList<Level> generateLevels() {
-		levels = new ArrayList<Level>();		
+		levels = new ArrayList<Level>();
 		levels.add(new Level(gameCanvas, 1, "Clay"));
 		levels.add(new Level(gameCanvas, 2, "Clay", "Cement"));
 		levels.add(new Level(gameCanvas, 3, "Clay", "Concrete"));

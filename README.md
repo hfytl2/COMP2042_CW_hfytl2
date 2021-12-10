@@ -1,8 +1,16 @@
 # Brick Destroy
 ## Key Changes
 ### Refactoring activities:
-- The entirety of the source files has been converted to use JavaFX instead of Swing in favour of its MVC friendliness, growing and more flexible toolkit as well as faster UI development with the use of FXML.
-- 
+- Fully converted to JavaFX instead of Swing in favour of its MVC friendliness, growing and more flexible toolkit as well as faster UI development with the use of FXML.
+- Used FXML files in conjunction with controller classes for all menu interfaces to adhere to MVC pattern
+- Extracted properties and methods from the Wall class and split it into the Game and Level classes, following SOLID principles
+- Created an abstract class (Entity) to allow classes with common properties and methods (Brick, Ball, Paddle) to extend from, following the Liskov substitution and dependency inversion principles.
+- Extracted properties and methods from the Player class that are related to the in-game paddle entity to its own Paddle class so that there is a distinction between the player and the in-game entity that the player controls, improving encapsulation.
+- Extracted the Crack subclass from the Brick class into its own Crack class, following the single-responsibility and open-closed principles.
+- Added singleton design pattern to the Game and Player classes to enhance maintainability.
+- Extracted methods relating to entity movements into its own Movable interface, following interface segregation principle.
+- Extracted methods relating to entity collisions into its own Collidable interface, following interface segregation principle.
+- Added a Crackable interface which defines methods for bricks that can have cracks, following interface segregation principle.
 ### Additions:
 - Added a home menu screen with a background image relevant to the game, buttons to start the game, read the help instructions or exit the game.
 - Added a help screen which display the instructions of the game and its controls.

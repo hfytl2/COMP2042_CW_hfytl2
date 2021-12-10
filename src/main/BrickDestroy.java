@@ -24,6 +24,10 @@ public class BrickDestroy extends Application {
 	Media bgm = new Media(getClass().getResource("assets/backgroundmusic.mp3").toURI().toString());
 	MediaPlayer bgmPlayer = new MediaPlayer(bgm);
 	
+	/**
+	 * Empty constructor class to throw URISyntaxException.
+	 * @throws URISyntaxException Background music parsing exception.
+	 */
 	public BrickDestroy() throws URISyntaxException {}
 	
 	/**
