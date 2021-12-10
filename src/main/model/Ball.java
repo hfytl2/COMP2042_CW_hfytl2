@@ -19,8 +19,10 @@
 package main.model;
 
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -113,18 +115,12 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 		this.velocity = velocity;
 	}
 	
-	/**
-	 * Gets the value of the property speed
-	 * @return speed The speed of the ball.
-	 */
+	@Override
 	public double getSpeed() {
 		return speed;
 	}
-	
-	/**
-	 * Sets the value of the property speed.
-	 * @param speed The new speed of the ball.
-	 */
+
+	@Override
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
@@ -137,6 +133,47 @@ public abstract class Ball extends Entity implements Collidable, Movable {
 	@Override
 	public void updateHitBox() {
 		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
+	}
+	
+	@Override
+	public boolean handleBoundaryCollision(Canvas gameCanvas) {
+		Bounds boundary = gameCanvas.getBoundsInLocal();
+		boolean topBoundary = getHitBox().getMinY() <= boundary.getMinY();    	
+    	boolean rightBoundary = getHitBox().getMaxX() >= boundary.getMaxX();
+    	boolean bottomBoundary = getHitBox().getMaxY() >= boundary.getMaxY();
+    	boolean leftBoundary = getHitBox().getMinX() <= boundary.getMinX();
+    	boolean collide = topBoundary || rightBoundary || bottomBoundary || leftBoundary;
+    	
+    	if (topBoundary) {
+    		moveTo(new Point2D(hitBox.getMinX(), boundary.getMinY()));
+    		inverseVerticalVelocity();
+    	} else if (rightBoundary || leftBoundary) {
+    		if (rightBoundary) {
+    			moveTo(new Point2D(boundary.getMaxX() - hitBox.getWidth(), hitBox.getMinY()));
+    		} else {
+    			moveTo(new Point2D(boundary.getMinX() + hitBox.getWidth(), hitBox.getMinY()));
+    		} 
+    		
+    		inverseHorizontalVelocity();
+    	}
+    	
+    	return collide;
+	}
+	
+	@Override
+	public boolean handleCollision(Collidable entity) {
+		BoundingBox entityHitBox = entity.getHitBox();		
+		Point2D down = new Point2D(hitBox.getMinX() + (hitBox.getWidth() / 2), hitBox.getMaxY());
+		boolean collide = hitBox.intersects(entityHitBox) && entityHitBox.contains(down);
+		
+		if (collide) {
+			double distance = down.getX() - entityHitBox.getMinX();
+			double cosine = ((distance * 2) / entityHitBox.getWidth()) - 1;    		
+			
+			setVelocity(new Point2D(speed * Math.cos(Math.acos(cosine)), -speed * Math.sin(Math.acos(cosine))));
+		}
+		
+		return collide;
 	}
 	
 	@Override

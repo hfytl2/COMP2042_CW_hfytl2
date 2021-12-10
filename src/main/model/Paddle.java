@@ -19,8 +19,10 @@
 package main.model;
 
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -133,18 +135,31 @@ public class Paddle extends Entity implements Collidable, Movable {
 		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getSize().getWidth(), getSize().getHeight());
 	}
 	
-	/**
-	 * Gets the value of the property speed.
-	 * @return speed The speed of the paddle.
-	 */
+	@Override
+	public boolean handleBoundaryCollision(Canvas gameCanvas) {
+		Bounds boundary = gameCanvas.getBoundsInLocal();
+		boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
+    	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
+    	boolean collide = rightBoundary || leftBoundary;
+    	
+    	if (collide) {
+    		setVelocity(new Point2D(0, 0));
+    	}
+    	
+    	return collide;
+	}
+	
+	@Override
+	public boolean handleCollision(Collidable entity) {
+		return false;
+	}
+	
+	@Override
 	public double getSpeed() {
 		return speed;
 	}
 	
-	/**
-	 * Sets the value of the property speed.
-	 * @param speed The new speed of the paddle.
-	 */
+	@Override
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}

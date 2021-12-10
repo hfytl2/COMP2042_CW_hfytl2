@@ -28,6 +28,18 @@ import javafx.geometry.Point2D;
  */
 interface Movable {
 	/**
+	 * Gets the value of the property speed.
+	 * @return speed The speed of the entity.
+	 */
+	public double getSpeed();
+	
+	/**
+	 * Sets the value of the property speed.
+	 * @param speed The new speed of the entity.
+	 */
+	public void setSpeed(double speed);
+	
+	/**
 	 * Gets the value of the property velocity.
 	 * @return velocity The velocity of the entity.
 	 */

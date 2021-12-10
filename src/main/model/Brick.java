@@ -21,6 +21,7 @@ package main.model;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -115,6 +116,67 @@ public abstract class Brick extends Entity implements Collidable {
 	@Override
 	public void updateHitBox() {
 		hitBox = new BoundingBox(getPosition().getX(), getPosition().getY(), getWidth(), getHeight());
+	}
+	
+	@Override
+	public boolean handleBoundaryCollision(Canvas gameCanvas) {
+		return false;
+	}
+	
+	@Override
+	public boolean handleCollision(Collidable entity) {
+		BoundingBox entityHitBox = entity.getHitBox();
+		Point2D upperLeft = new Point2D(entityHitBox.getMinX(), entityHitBox.getMinY());
+		Point2D upperRight = new Point2D(entityHitBox.getMaxX(), entityHitBox.getMinY());
+		Point2D lowerLeft = new Point2D(entityHitBox.getMinX(), entityHitBox.getMaxY());
+		Point2D lowerRight = new Point2D(entityHitBox.getMinX(), entityHitBox.getMaxY());
+		boolean collide = hitBox.intersects(entityHitBox);
+		
+		if (collide) {
+			if (!(this instanceof SteelBrick)) {
+				damage();
+			} else {
+				if (((SteelBrick) this).isDamaged()) {    			
+					damage();
+				}
+			}
+		}
+		
+		if (hitBox.contains(upperLeft.midpoint(upperRight)) || hitBox.contains(upperLeft) || hitBox.contains(upperRight)) { 
+			((Movable)entity).inverseVerticalVelocity();
+			
+			if (!isDestroyed()) {
+				if (this instanceof Crackable) {    						
+					((Crackable) this).addCrack(upperLeft.midpoint(upperRight), "Up");
+				}
+			}
+		} else if (hitBox.contains(upperRight.midpoint(lowerRight)) || hitBox.contains(upperRight) || hitBox.contains(lowerRight)) {
+			((Movable)entity).inverseHorizontalVelocity();
+			
+			if (!isDestroyed()) {
+				if (this instanceof Crackable) {
+					((Crackable) this).addCrack(upperRight.midpoint(lowerRight), "Right");
+				}
+			}
+		} else if (hitBox.contains(lowerLeft.midpoint(lowerRight)) || hitBox.contains(lowerLeft) || hitBox.contains(lowerRight)) {
+			((Movable)entity).inverseVerticalVelocity();
+			
+			if (!isDestroyed()) {
+				if (this instanceof Crackable) {
+					((Crackable) this).addCrack(lowerLeft.midpoint(lowerRight), "Down");
+				}
+			}
+		} else if (hitBox.contains(upperLeft.midpoint(lowerLeft))  || hitBox.contains(upperLeft) || hitBox.contains(lowerLeft)) {
+			((Movable)entity).inverseHorizontalVelocity();
+			
+			if (!isDestroyed()) {
+				if (this instanceof Crackable) {
+					((Crackable) this).addCrack(upperLeft.midpoint(lowerLeft), "Left");
+				}
+			}
+		}
+	
+		return collide;
 	}
 	
 	/**

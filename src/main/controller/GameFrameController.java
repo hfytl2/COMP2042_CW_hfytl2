@@ -27,8 +27,6 @@ import javafx.animation.AnimationTimer;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -53,7 +51,6 @@ import main.model.Game;
 import main.model.Level;
 import main.model.Paddle;
 import main.model.Player;
-import main.model.SteelBrick;
 
 /**
  * A controller that handles events in the GameFrame.
@@ -161,10 +158,25 @@ public class GameFrameController {
 					handlePaddleMovement();
 					ball.move(elapsedtime);
 					paddle.move(elapsedtime);
-					handleBallBoundaryCollision();
+					
+					if (ball.handleBoundaryCollision(gameCanvas)) {
+				    	if (ball.getHitBox().getMaxY() >= gameCanvas.getBoundsInLocal().getMaxY()) {
+				    		loseBallSFX.play();
+				    		player.loseLife();
+				    		
+				    		if (player.getLives() != 0) {
+				    			game.resetPaddleBallPosition();
+				    		} else {
+				    			gameOver();
+				    		}
+				    	} else {
+				    		ballBounceSFX.play();
+				    	}
+					}
+					
 					handleBrickCollision();
-			    	handlePaddleCollision();
-					handlePaddleBoundaryCollision();
+			    	if (ball.handleCollision(paddle) && game.hasStarted()) ballBounceSFX.play();
+					paddle.handleBoundaryCollision(gameCanvas);
 					graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 					renderLevel();
 					renderBall();
@@ -253,90 +265,23 @@ public class GameFrameController {
     }
     
     /**
-     * Checks for and handles the collision of the paddle with the game boundary.
-     */
-    private void handlePaddleBoundaryCollision() {
-    	Bounds boundary = gameCanvas.getBoundsInLocal();
-    	Paddle paddle = game.getPaddle();
-    	Bounds hitBox = paddle.getHitBox();
-    	boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
-    	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
-    	
-    	if (rightBoundary || leftBoundary) {
-    		paddle.setVelocity(new Point2D(0, 0));
-    	}
-    }
-    
-    /**
      * Checks for and handles the collision of the ball with bricks.
      */
-    private void handleBrickCollision() {    	
+    private void handleBrickCollision() {
     	Ball ball = game.getBall();
-    	BoundingBox ballHitBox = ball.getHitBox();
-    	Point2D upperLeft = new Point2D(ballHitBox.getMinX(), ballHitBox.getMinY());
-		Point2D upperRight = new Point2D(ballHitBox.getMaxX(), ballHitBox.getMinY());
-		Point2D lowerLeft = new Point2D(ballHitBox.getMinX(), ballHitBox.getMaxY());
-		Point2D lowerRight = new Point2D(ballHitBox.getMinX(), ballHitBox.getMaxY());
 		ArrayList<Brick> bricks = game.getCurrentLevel().getBricks();
     	Iterator<Brick> brickIterator = bricks.iterator();
     	
     	while (brickIterator.hasNext()) {
     		Brick brick = brickIterator.next();
-    		BoundingBox brickHitBox = brick.getHitBox();
     		
-    		if (brickHitBox.intersects(ballHitBox)) {
+    		if (brick.handleCollision(ball)) {
     			ballBounceSFX.play();
-    			
-    			if (!(brick instanceof SteelBrick)) {
-    				brick.damage();
-    			} else {
-    				if (((SteelBrick) brick).isDamaged()) {    			
-    					brick.damage();
-    				}
-    			}
-    			
-    			if (brickHitBox.contains(upperLeft.midpoint(upperRight)) || brickHitBox.contains(upperLeft) || brickHitBox.contains(upperRight)) { 
-    				ball.inverseVerticalVelocity();
     				
-    				if (brick.isDestroyed()) {
-    					game.getPlayer().increaseScore(brick.getScore());
-    					brickIterator.remove();
-    				} else {
-    					if (brick instanceof Crackable) {    						
-        					((Crackable) brick).addCrack(upperLeft.midpoint(upperRight), "Up");
-        				}
-    				}
-    			} else if (brickHitBox.contains(upperRight.midpoint(lowerRight)) || brickHitBox.contains(upperRight) || brickHitBox.contains(lowerRight)) {
-    				ball.inverseHorizontalVelocity();
-    				
-    				if (brick.isDestroyed()) {
-    					brickIterator.remove();    				
-    				} else {
-    					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(upperRight.midpoint(lowerRight), "Right");
-        				}
-    				}
-    			} else if (brickHitBox.contains(lowerLeft.midpoint(lowerRight)) || brickHitBox.contains(lowerLeft) || brickHitBox.contains(lowerRight)) {
-    				ball.inverseVerticalVelocity();
-    				
-    				if (brick.isDestroyed()) {
-    					brickIterator.remove();
-    				} else {
-    					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(lowerLeft.midpoint(lowerRight), "Down");
-        				}
-    				}
-    			} else if (brickHitBox.contains(upperLeft.midpoint(lowerLeft))  || brickHitBox.contains(upperLeft) || brickHitBox.contains(lowerLeft)) {
-    				ball.inverseHorizontalVelocity();
-    				
-    				if (brick.isDestroyed()) {
-    					brickIterator.remove();
-    				} else {
-    					if (brick instanceof Crackable) {
-        					((Crackable) brick).addCrack(upperLeft.midpoint(lowerLeft), "Left");
-        				}
-    				}
-    			}    			    			
+				if (brick.isDestroyed()) {
+					game.getPlayer().increaseScore(brick.getScore());
+					brickIterator.remove();
+				}  			    			
     		}
     		
     		if (bricks.size() == 0) {
@@ -347,68 +292,7 @@ public class GameFrameController {
     			}
     		}
     	}
-    }
-    
-    /**
-     * Checks for and handles the collision of the paddle with the ball.
-     */
-    private void handlePaddleCollision() {
-    	Ball ball = game.getBall();
-    	Paddle paddle = game.getPaddle();
-    	BoundingBox ballHitBox = ball.getHitBox();
-    	BoundingBox paddleHitBox = paddle.getHitBox();
-    	Point2D down = new Point2D(ballHitBox.getMinX() + (ballHitBox.getWidth() / 2), ballHitBox.getMaxY());
-    	boolean impact = paddleHitBox.intersects(ballHitBox) && paddleHitBox.contains(down);
-    	
-    	if(impact) {
-    		if (game.hasStarted() && !game.isPaused()) {
-    			ballBounceSFX.play();
-    		}
-    		
-    		double distance = down.getX() - paddleHitBox.getMinX();
-    		double cosine = ((distance * 2) / paddleHitBox.getWidth()) - 1;    		
-    		
-    		ball.setVelocity(new Point2D(ball.getSpeed() * Math.cos(Math.acos(cosine)), -ball.getSpeed() * Math.sin(Math.acos(cosine))));
-    	}
-    }
-    
-    /**
-     * Checks for and handles the collision of the ball with the game boundary.
-     */
-    private void handleBallBoundaryCollision() {    	
-    	Player player = game.getPlayer();
-    	Bounds boundary = gameCanvas.getBoundsInLocal();
-    	Ball ball = game.getBall();
-    	BoundingBox hitBox = ball.getHitBox();
-    	boolean topBoundary = hitBox.getMinY() <= boundary.getMinY();    	
-    	boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
-    	boolean bottomBoundary = hitBox.getMaxY() >= boundary.getMaxY();
-    	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
-    	
-    	if (topBoundary) {
-    		ballBounceSFX.play();
-    		ball.moveTo(new Point2D(hitBox.getMinX(), boundary.getMinY()));
-    		ball.inverseVerticalVelocity();
-    	} else if (rightBoundary || leftBoundary) {
-    		ballBounceSFX.play();
-    		if (rightBoundary) {
-    			ball.moveTo(new Point2D(boundary.getMaxX() - hitBox.getWidth(), hitBox.getMinY()));
-    		} else {
-    			ball.moveTo(new Point2D(boundary.getMinX() + hitBox.getWidth(), hitBox.getMinY()));
-    		} 
-    		
-    		ball.inverseHorizontalVelocity();
-    	} else if (bottomBoundary) {
-    		loseBallSFX.play();
-    		player.loseLife();
-    		
-    		if (player.getLives() != 0) {
-    			game.resetPaddleBallPosition();
-    		} else {
-    			gameOver();
-    		}
-    	}
-    }
+    } 
     
     /**
      * Handles paddle movement based on user input.

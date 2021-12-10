@@ -58,5 +58,5 @@ public class RubberBall extends Ball {
 	 */
 	public RubberBall() {
     	this(0, 0);
-    }
+    }		
 }

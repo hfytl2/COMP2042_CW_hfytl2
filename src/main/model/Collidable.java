@@ -19,6 +19,7 @@
 package main.model;
 
 import javafx.geometry.BoundingBox;
+import javafx.scene.canvas.Canvas;
 
 /**
  * The {@code Collidable} interface provides definitions for common methods for entities that are collidable.
@@ -37,4 +38,14 @@ interface Collidable {
 	 * Updates the value of the property hitbox based on the position and size of the entity.
 	 */
 	public void updateHitBox();
+	
+	/**
+     * Checks for and handles the collision of the entity with the game boundary.
+     */
+	public boolean handleBoundaryCollision(Canvas gameCanvas);
+	
+	/**
+     * Checks for and handles the collision of the entity with another collidable entity.
+     */
+	public boolean handleCollision(Collidable entity);
 }
