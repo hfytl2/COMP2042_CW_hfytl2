@@ -31,8 +31,8 @@ import javafx.scene.paint.Color;
  */
 public class CementBrick extends Brick implements Crackable {
 	
-	private static final Color FILL_COLOR = Color.rgb(147, 147, 147);
-    private static final Color BORDER_COLOR = Color.rgb(217, 199, 175);
+	private static final Color FILL_COLOR = Color.rgb(133, 138, 126);
+    private static final Color BORDER_COLOR = Color.rgb(213, 207, 207);
     private static final int SCORE = 20;
     private static final int DURABILITY = 2;
     

@@ -31,10 +31,6 @@ import javafx.scene.canvas.Canvas;
 public class Game {
 	
 	/**
-	 * Maximum number of levels for the game.
-	 */
-	public static final int MAX_LEVELS = 4;
-	/**
 	 * Number used to offset the paddle and ball from the bottom of the screen.
 	 */
 	private static final int BOTTOM_OFFSET = 13;
@@ -178,22 +174,20 @@ public class Game {
 	 * @param level The new level of the game.
 	 */
 	public void setCurrentLevel(int level) {
-		if (level < MAX_LEVELS) {
+		if (level < levels.size()) {
 			this.level = levels.get(level);
 		} else {
-			this.level = levels.get(MAX_LEVELS - 1);
+			this.level = levels.get(levels.size() - 1);
 		}
 	}
 	
 	/**
 	 * Restarts the game and moves the paddle and ball to their initial positions.
 	 */
-	public void resetPaddleBall() {		
-		started = false;
-		paddle = new Paddle(150, 10);
+	public void resetPaddleBallPosition() {		
+		started = false;		
 		Point2D paddleStart = new Point2D((gameCanvas.getWidth() / 2) - (paddle.getWidth() / 2), gameCanvas.getHeight() - paddle.getHeight() - BOTTOM_OFFSET);
-		paddle.moveTo(paddleStart);
-		ball = new RubberBall();
+		paddle.moveTo(paddleStart);		
 		Point2D ballStart = new Point2D((gameCanvas.getWidth() / 2) - (ball.getWidth() / 2), paddleStart.getY() - ball.getHeight());
 		ball.moveTo(ballStart);
 	}		
@@ -206,12 +200,12 @@ public class Game {
 		paused = false;
 		gameover = false;
 		level = generateLevels().get(level.getLevel() - 1);
-		resetPaddleBall();
+		resetPaddleBallPosition();
 		player.resetLives();
 	}
 	
 	/**
-	 * Go to the next level.
+	 * Progresses to the next level, shrinks the paddle and resets the positions of the paddle and ball.
 	 */
 	public void nextLevel() {
 		setCurrentLevel(level.getLevel());
@@ -220,7 +214,15 @@ public class Game {
 			paddle.shrink(PADDLE_SHRINK);
 		}
 		
-		resetPaddleBall();		
+		resetPaddleBallPosition();		
+	}
+	
+	/**
+	 * Gets the maximum number of levels in the game.
+	 * @return maxLevels The maximum number of levels in the game.
+	 */
+	public int getMaxLevels() {
+		return levels.size();
 	}
 	
 	/**
@@ -241,11 +243,14 @@ public class Game {
 		levels = new ArrayList<Level>();		
 		levels.add(new Level(gameCanvas, 1, "Clay"));
 		levels.add(new Level(gameCanvas, 2, "Clay", "Cement"));
-		levels.add(new Level(gameCanvas, 3, "Clay", "Steel"));
-		levels.add(new Level(gameCanvas, 4, "Cement"));
-		levels.add(new Level(gameCanvas, 5, "Cement", "Steel"));
-		levels.add(new Level(gameCanvas, 6, "Steel"));
-		levels.add(new Level(gameCanvas, 7, "Steel", "Cement"));
+		levels.add(new Level(gameCanvas, 3, "Clay", "Concrete"));
+		levels.add(new Level(gameCanvas, 4, "Clay", "Steel"));
+		levels.add(new Level(gameCanvas, 5, "Cement"));
+		levels.add(new Level(gameCanvas, 6, "Cement", "Concrete"));
+		levels.add(new Level(gameCanvas, 7, "Cement", "Steel"));
+		levels.add(new Level(gameCanvas, 8, "Concrete"));
+		levels.add(new Level(gameCanvas, 9, "Concrete", "Steel"));
+		levels.add(new Level(gameCanvas, 10, "Steel"));
 		return levels;
 	}
 	
@@ -254,7 +259,9 @@ public class Game {
 	 */
 	private void initializeGame() {
 		player = Player.getPlayer().initializePlayer();
-		resetPaddleBall();
+		paddle = new Paddle(150, 10);
+		ball = new RubberBall();
+		resetPaddleBallPosition();
 		levels = generateLevels();
 		level = levels.get(0);
 	}

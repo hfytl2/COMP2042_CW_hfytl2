@@ -18,73 +18,79 @@
 
 package main.model;
 
-import java.util.Random;
+import java.util.ArrayList;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 /**
- * The {@code SteelBrick} class represents a type of brick entity that has a {@code 40%} chance of not getting damaged on impact and a maximum durability of {@code 1} 
- * and gives a score of {@code 50} when destroyed.
+ * The {@code ConcreteBrick} class represents a type of brick entity that is crackable, has a max durability of {@code 3} and gives a score of {@code 30} when destroyed.
  * Note: Refactored class hierarchy and structure, removed unused constant and converted to JavaFX.
  * 
  * @author Lim Tze Yang
  */
-public class SteelBrick extends Brick {
+public class ConcreteBrick extends Brick implements Crackable {
 	
-	private static final Color FILL_COLOR = Color.rgb(136, 139, 141);
-    private static final Color BORDER_COLOR = Color.rgb(67, 70, 75);
-    private static final int SCORE = 50;
-    private static final int DURABILITY = 1;
-    private static final double PROBABILITY = 0.4;
+	private static final Color FILL_COLOR = Color.rgb(185, 180, 171);
+	private static final Color BORDER_COLOR = Color.rgb(213, 207, 207);
+    private static final int SCORE = 30;
+    private static final int DURABILITY = 3;
     
-    private Random rng = new Random();
+    private ArrayList<Crack> cracks = new ArrayList<Crack>();
     
     /**
-     * Creates a new instance of SteelBrick with the given position and size.
+     * Creates a new instance of CementBrick with the given position and size.
      * @param position The coordinates of the upper-left corner of the brick.
      * @param size The size of the brick.
      */
-    public SteelBrick(Point2D position, Dimension2D size) {
+    public ConcreteBrick(Point2D position, Dimension2D size) {
     	super(position, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
     }
     
     /**
-     * Creates a new instance of SteelBrick with the given position and size.
+     * Creates a new instance of ConcreteBrick with the given position and size.
      * @param x The x-coordinate of the upper-left corner of the brick.
      * @param y The y-coordinate of the upper-left corner of the brick.
      * @param size The size of the brick.
      */
-    public SteelBrick(double x, double y, Dimension2D size) {
+    public ConcreteBrick(double x, double y, Dimension2D size) {
 		super(x, y, size, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
     
     /**
-     * Creates a new instance of SteelBrick with the given position, width and height.
+     * Creates a new instance of ConcreteBrick with the give positon, width and height.
      * @param position The coordinates of the upper-left corner of the brick.
      * @param width The width of the brick.
      * @param height The height of the brick.
      */
-    public SteelBrick(Point2D position, double width, double height) {
+    public ConcreteBrick(Point2D position, double width, double height) {
 		super(position, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}	
 	
     /**
-     * Creates a new instance of SteelBrick with the given position, width and height.
+     * Creates a new instance of ConcreteBrick with the given position.
      * @param x The x-coordinate of the upper-left corner of the brick.
      * @param y The y-coordinate of the upper-left corner of the brick.
      * @param width The width of the brick.
      * @param height The height of the brick.
      */
-	public SteelBrick(double x, double y, double width, double height) {
+	public ConcreteBrick(double x, double y, double width, double height) {
 		super(x, y, width, height, BORDER_COLOR, FILL_COLOR, SCORE, DURABILITY);
 	}
 	
-	/**
-	 * Gets whether or not the impact damaged the brick.
-	 * @return damaged Defines whether or not the brick is damaged.
-	 */
-	public boolean isDamaged() {
-		return rng.nextDouble() < PROBABILITY;
+	@Override
+	public ArrayList<Crack> getCracks() {
+		return cracks;
+	}
+
+	@Override
+	public void addCrack(Point2D impact, String direction) {
+		Crack crack = new Crack(this, CRACK_DEPTH, CRACK_STEPS, impact, direction);
+		cracks.add(crack);
+	}
+
+	@Override
+	public void removeCracks() {
+		cracks.clear();
 	}
 }

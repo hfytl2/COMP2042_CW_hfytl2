@@ -148,6 +148,7 @@ public class Level {
 		switch (type) {
 			case "Clay" -> brick = new ClayBrick(position, size);
 			case "Cement" -> brick = new CementBrick(position, size);
+			case "Concrete" -> brick = new ConcreteBrick(position, size);
 			case "Steel" -> brick = new SteelBrick(position, size);
 			default -> throw new IllegalArgumentException("Unknown brick type: " + type);
 		}

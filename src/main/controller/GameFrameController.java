@@ -295,7 +295,7 @@ public class GameFrameController {
     				}
     			}
     			
-    			if (brickHitBox.contains(upperLeft.midpoint(upperRight))) { 
+    			if (brickHitBox.contains(upperLeft.midpoint(upperRight)) || brickHitBox.contains(upperLeft) || brickHitBox.contains(upperRight)) { 
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -306,7 +306,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(upperLeft.midpoint(upperRight), "Up");
         				}
     				}
-    			} else if (brickHitBox.contains(upperRight.midpoint(lowerRight))) {
+    			} else if (brickHitBox.contains(upperRight.midpoint(lowerRight)) || brickHitBox.contains(upperRight) || brickHitBox.contains(lowerRight)) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -316,7 +316,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(upperRight.midpoint(lowerRight), "Right");
         				}
     				}
-    			} else if (brickHitBox.contains(lowerLeft.midpoint(lowerRight))) {
+    			} else if (brickHitBox.contains(lowerLeft.midpoint(lowerRight)) || brickHitBox.contains(lowerLeft) || brickHitBox.contains(lowerRight)) {
     				ball.inverseVerticalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -326,7 +326,7 @@ public class GameFrameController {
         					((Crackable) brick).addCrack(lowerLeft.midpoint(lowerRight), "Down");
         				}
     				}
-    			} else if (brickHitBox.contains(upperLeft.midpoint(lowerLeft))) {
+    			} else if (brickHitBox.contains(upperLeft.midpoint(lowerLeft))  || brickHitBox.contains(upperLeft) || brickHitBox.contains(lowerLeft)) {
     				ball.inverseHorizontalVelocity();
     				
     				if (brick.isDestroyed()) {
@@ -340,9 +340,8 @@ public class GameFrameController {
     		}
     		
     		if (bricks.size() == 0) {
-    			if (game.getCurrentLevel().getLevel() < Game.MAX_LEVELS) {
+    			if (game.getCurrentLevel().getLevel() < game.getMaxLevels()) {
     				game.nextLevel();
-    				game.resetPaddleBall();
     			} else {
     				gameOver();
     			}
@@ -404,7 +403,7 @@ public class GameFrameController {
     		player.loseLife();
     		
     		if (player.getLives() != 0) {
-    			game.resetPaddleBall();
+    			game.resetPaddleBallPosition();
     		} else {
     			gameOver();
     		}
