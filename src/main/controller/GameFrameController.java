@@ -19,6 +19,7 @@
 package main.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,8 +65,8 @@ public class GameFrameController {
 	private GraphicsContext graphicsContext;
 	private AnimationTimer timer;
 	private long lastNanoTime;
-	private AudioClip ballBounceSFX = new AudioClip(getClass().getResource("../assets/ballbounce.mp3").toString());
-	private AudioClip loseBallSFX = new AudioClip(getClass().getResource("../assets/loseball.mp3").toString());
+	private AudioClip ballBounceSFX = null;
+	private AudioClip loseBallSFX = null;
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -82,7 +83,9 @@ public class GameFrameController {
     public GameFrameController() {}
     
     @FXML
-    private void initialize() {
+    private void initialize() throws URISyntaxException {
+    	ballBounceSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/ballbounce.mp3").toURI().toString());
+    	loseBallSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/loseball.mp3").toURI().toString());
     	game = Game.getGame(gameCanvas);
     	Player player = game.getPlayer();
     	updateGameInfo();
@@ -159,7 +162,7 @@ public class GameFrameController {
 					ball.move(elapsedtime);
 					paddle.move(elapsedtime);
 					
-					if (ball.handleBoundaryCollision(gameCanvas)) {
+					if (ball.handleBoundaryCollision(gameCanvas.getBoundsInLocal())) {
 				    	if (ball.getHitBox().getMaxY() >= gameCanvas.getBoundsInLocal().getMaxY()) {
 				    		loseBallSFX.play();
 				    		player.loseLife();
@@ -176,7 +179,7 @@ public class GameFrameController {
 					
 					handleBrickCollision();
 			    	if (ball.handleCollision(paddle) && game.hasStarted()) ballBounceSFX.play();
-					paddle.handleBoundaryCollision(gameCanvas);
+					paddle.handleBoundaryCollision(gameCanvas.getBoundsInLocal());
 					graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 					renderLevel();
 					renderBall();
@@ -353,7 +356,7 @@ public class GameFrameController {
     	Parent pauseRoot = null;
     	
     	try {
-    		pauseRoot = FXMLLoader.load(getClass().getResource("../view/fxml/PauseMenu.fxml"));
+    		pauseRoot = FXMLLoader.load(getClass().getClassLoader().getResource("main/view/fxml/PauseMenu.fxml"));
     	} catch(Exception e) {
     		e.printStackTrace();
     	}        	
@@ -390,7 +393,7 @@ public class GameFrameController {
     private void showGameOverMenu() {
     	Parent root = null;
     	try {
-			root = FXMLLoader.load(getClass().getResource("../view/fxml/GameOverMenu.fxml"));
+			root = FXMLLoader.load(getClass().getClassLoader().getResource("main/view/fxml/GameOverMenu.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

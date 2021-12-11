@@ -37,8 +37,7 @@ import javafx.util.Duration;
  */
 public class HelpMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
-	String homeFXML = "../view/fxml/HomeMenu.fxml";
+	AudioClip buttonPressedSFX = null;
 	double fadetime = 250;
 	
 	@FXML private URL location;	
@@ -52,14 +51,20 @@ public class HelpMenuController {
     public HelpMenuController() {}
     
     @FXML
-    private void initialize() {}
+    private void initialize() {
+    	try {
+    		buttonPressedSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/buttonpress.mp3").toURI().toString());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
 	
     /**
      * Switches to the HomeMenu when back button is pressed.
      */
 	@FXML
     private void backButtonPressed() {
-		buttonPressedSFX.play();
+		buttonPressedSFX.play();		
     	Scene scene = back.getScene();
     	StackPane parentContainer = (StackPane)scene.getRoot();
     	GridPane homeRoot = (GridPane)parentContainer.lookup("#homeRoot");

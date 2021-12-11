@@ -18,6 +18,7 @@
 
 package main.controller;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -35,7 +36,7 @@ import javafx.scene.media.AudioClip;
  */
 public class PauseMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
+	AudioClip buttonPressedSFX = null;
 	
 	@FXML private URL location;	
     @FXML private ResourceBundle resources;
@@ -49,6 +50,11 @@ public class PauseMenuController {
     
     @FXML
     private void initialize() {
+    	try {
+			buttonPressedSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/buttonpress.mp3").toURI().toString());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
     	resume.focusedProperty().addListener((observableVal, oldVal, newVal) -> {
     		if (newVal) {
     			buttonOnFocusHover(resume);

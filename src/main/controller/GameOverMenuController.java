@@ -48,9 +48,9 @@ import main.model.Player;
  * 
  * @author Lim Tze Yang
  */
-public class GameOverMenuController {
+public class GameOverMenuController {	
 	
-	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
+	AudioClip buttonPressedSFX = null;
 	
 	@FXML private URL location;
     @FXML private ResourceBundle resources;
@@ -68,6 +68,12 @@ public class GameOverMenuController {
     
     @FXML
     private void initialize() {
+    	try {
+    		buttonPressedSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/buttonpress.mp3").toURI().toString());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	
     	subtitle.setText("Your score: " + Player.getPlayer().getScore());
     }
     
@@ -75,11 +81,11 @@ public class GameOverMenuController {
      * Save player score and name from input to {@code highscore.txt} and show HighScoreMenu when submit button is pressed.
      */
     @FXML
-    private void submitButtonPressed() throws URISyntaxException {
+    private void submitButtonPressed() throws URISyntaxException {    	
     	buttonPressedSFX.play();
     	Player.getPlayer().setName(inputField.getText());
     	Parent root = null;
-    	File highScoreFile = new File("src/main/highscore.txt");
+    	File highScoreFile = new File("highscore.txt");
     	
     	try {    		    	
     		if (highScoreFile.createNewFile()) {
@@ -122,7 +128,7 @@ public class GameOverMenuController {
 	    		}
     		}
     		
-    		root = FXMLLoader.load(getClass().getResource("../view/fxml/HighScoreMenu.fxml"));
+    		root = FXMLLoader.load(getClass().getClassLoader().getResource("main/view/fxml/HighScoreMenu.fxml"));
     	} catch (Exception e) {
     		e.printStackTrace();
     	}

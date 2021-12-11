@@ -19,6 +19,7 @@
 package main.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -43,10 +44,10 @@ import javafx.scene.Parent;
  */
 public class HomeMenuController {
 	
-	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
-	String homeFXML = "../view/fxml/HomeMenu.fxml";
-	String helpFXML = "../view/fxml/HelpMenu.fxml";
-	String gameFXML = "../view/fxml/GameFrame.fxml";
+	AudioClip buttonPressedSFX = null;	
+	String homeFXML = "main/view/fxml/HomeMenu.fxml";
+	String helpFXML = "main/view/fxml/HelpMenu.fxml";
+	String gameFXML = "main/view/fxml/GameFrame.fxml";
 	static final double FADE_TIME = 250;	
 	
 	@FXML private URL location;	
@@ -61,18 +62,24 @@ public class HomeMenuController {
     public HomeMenuController() {}
     
     @FXML
-    private void initialize() {}
+    private void initialize() {
+    	try {
+    		buttonPressedSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/buttonpress.mp3").toURI().toString());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
     
     /**
      * Switches to the GameFrame when play button is pressed.
      */
     @FXML
-    private void playButtonPressed(ActionEvent event) {
-    	buttonPressedSFX.play();
+    private void playButtonPressed(ActionEvent event) {    	
     	Parent gameRoot = null;
     	
     	try {
-	    	gameRoot = FXMLLoader.load(getClass().getResource(gameFXML));
+    		buttonPressedSFX.play();
+	    	gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource(gameFXML));
 	    	FadeTransition fadeGame = new FadeTransition(Duration.millis(FADE_TIME), gameRoot);
 	    	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
 	    	gameRoot.setOpacity(0);
@@ -99,11 +106,12 @@ public class HomeMenuController {
      * Switches to the HelpMenu when the help button is pressed.
      * 
      * @throws IOException
+     * @throws URISyntaxException
      */
     @FXML
-    private void helpButtonPressed() throws IOException {
+    private void helpButtonPressed() throws IOException, URISyntaxException {
     	buttonPressedSFX.play();
-    	Parent helpRoot = FXMLLoader.load(getClass().getResource(helpFXML));
+    	Parent helpRoot = FXMLLoader.load(getClass().getClassLoader().getResource(helpFXML));
     	FadeTransition fadeHelp = new FadeTransition(Duration.millis(FADE_TIME), helpRoot);
     	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
     	
@@ -152,7 +160,7 @@ public class HomeMenuController {
      */
     @FXML
     private void exitButtonPressed() {
-    	buttonPressedSFX.play();
+    	buttonPressedSFX.play();    	
     	System.out.println("Goodbye " + System.getProperty("user.name"));
     	Platform.exit();
     }    

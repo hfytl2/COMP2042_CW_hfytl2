@@ -19,9 +19,9 @@
 package main.model;
 
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -119,7 +119,7 @@ public abstract class Brick extends Entity implements Collidable {
 	}
 	
 	@Override
-	public boolean handleBoundaryCollision(Canvas gameCanvas) {
+	public boolean handleBoundaryCollision(Bounds boundary) {
 		return false;
 	}
 	

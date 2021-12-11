@@ -45,10 +45,9 @@ import main.model.Game;
  * @author Lim Tze Yang
  */
 public class HighScoreMenuController {
-	
-	AudioClip buttonPressedSFX = new AudioClip(getClass().getResource("../assets/buttonpress.mp3").toString());
-	String gameFXML = "../view/fxml/GameFrame.fxml";
-	String homeFXML = "../view/fxml/HomeMenu.fxml";
+		
+	AudioClip buttonPressedSFX = null;
+	String gameFXML = "main/view/fxml/GameFrame.fxml";
 	static final double FADE_TIME = 250;
 	
 	@FXML private URL location;	
@@ -66,7 +65,7 @@ public class HighScoreMenuController {
     
     @FXML
     private void initialize() {
-    	File highScoreFile = new File("src/main/highscore.txt"); 	
+    	File highScoreFile = new File("highscore.txt"); 	
     	
     	try (Scanner fscanner = new Scanner(highScoreFile)) {    		
     		Text ranking, name, score;
@@ -86,6 +85,12 @@ public class HighScoreMenuController {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+    	
+    	try {
+    		buttonPressedSFX = new AudioClip(getClass().getClassLoader().getResource("main/assets/buttonpress.mp3").toURI().toString());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
     
     /**
@@ -97,8 +102,8 @@ public class HighScoreMenuController {
     	Parent gameRoot = null;
     	Game.getGame().restartGame();
     	
-    	try {
-    		gameRoot = FXMLLoader.load(getClass().getResource(gameFXML));
+    	try {    		
+    		gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource(gameFXML));
     		FadeTransition fadeGame = new FadeTransition(Duration.millis(FADE_TIME), gameRoot);
     		FadeTransition fadeHighScore = new FadeTransition(Duration.millis(FADE_TIME), highScoreRoot);
     		gameRoot.setOpacity(0);
@@ -122,8 +127,8 @@ public class HighScoreMenuController {
      * Brings player back to main menu after main menu button is pressed.
      */
     @FXML
-    private void mainMenuButtonPressed(ActionEvent event) {
-    	buttonPressedSFX.play();
+    private void mainMenuButtonPressed(ActionEvent event) {    	
+    	buttonPressedSFX.play();    	
     	GridPane homeRoot = (GridPane)highScoreRoot.getParent().lookup("#homeRoot");    	
     	FadeTransition fadeHome = new FadeTransition(Duration.millis(FADE_TIME), homeRoot);
 		FadeTransition fadeHighScore = new FadeTransition(Duration.millis(FADE_TIME), highScoreRoot);

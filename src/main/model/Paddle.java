@@ -22,7 +22,6 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
@@ -136,8 +135,7 @@ public class Paddle extends Entity implements Collidable, Movable {
 	}
 	
 	@Override
-	public boolean handleBoundaryCollision(Canvas gameCanvas) {
-		Bounds boundary = gameCanvas.getBoundsInLocal();
+	public boolean handleBoundaryCollision(Bounds boundary) {
 		boolean rightBoundary = hitBox.getMaxX() >= boundary.getMaxX();
     	boolean leftBoundary = hitBox.getMinX() <= boundary.getMinX();
     	boolean collide = rightBoundary || leftBoundary;
