@@ -118,8 +118,6 @@ public class GameFrameController {
     				if (key.isAltDown() && key.isShiftDown()) {    					
     					DebugConsole debugconsole = new DebugConsole((Stage)gameRoot.getScene().getWindow());
     					debugconsole.show();
-    				} else {
-    					gameOver();
     				}
     			}
     			default -> {
@@ -407,7 +405,8 @@ public class GameFrameController {
     /**
      * Prompts the player to enter their name and shows the game over screen.
      */
-    private void gameOver() {    
+    private void gameOver() {
+    	game.getPlayer().setScore(game.getPlayer().getScore() + game.getPlayer().getLives() * 100);
     	game.end();
     	timer.stop();
     	showGameOverMenu();
