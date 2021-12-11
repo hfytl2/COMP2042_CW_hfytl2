@@ -16,6 +16,28 @@ class CementBrickTest {
 	Point2D left = new Point2D(brick.getPosition().getX(), brick.getPosition().getY() + (brick.getHeight()/2));
 
 	@Test
+	final void testAddCrack() {
+		assertAll(
+			() -> {
+				brick.addCrack(top, "Down");
+				assertNotEquals(brick.getCracks().size(), 0);
+			},
+			() -> {
+				brick.addCrack(right, "Left");
+				assertNotEquals(brick.getCracks().size(), 0);
+			},
+			() -> {
+				brick.addCrack(bottom, "Up");
+				assertNotEquals(brick.getCracks().size(), 0);
+			},
+			() -> {
+				brick.addCrack(left, "Right");
+				assertNotEquals(brick.getCracks().size(), 0);
+			}
+		);		
+	}
+	
+	@Test
 	final void testHandleCollision() {
 		RubberBall ball = new RubberBall();
 		
@@ -26,22 +48,18 @@ class CementBrickTest {
 			() -> {
 				ball.moveTo(top);
 				assertTrue(brick.handleCollision(ball));
-				assertEquals(brick.getCracks().size(), 1);
 			},
 			() -> {
 				ball.moveTo(right);
 				assertTrue(brick.handleCollision(ball));
-				assertEquals(brick.getCracks().size(), 1);
 			},
 			() -> {
 				ball.moveTo(bottom);
 				assertTrue(brick.handleCollision(ball));
-				assertEquals(brick.getCracks().size(), 1);
 			},
 			() -> {
 				ball.moveTo(left);
 				assertTrue(brick.handleCollision(ball));
-				assertEquals(brick.getCracks().size(), 1);
 			}
 		);
 	}
