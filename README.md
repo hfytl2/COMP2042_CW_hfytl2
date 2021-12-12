@@ -32,7 +32,7 @@
 >- Added a help screen which display the instructions of the game and its controls.
 >- Added background music, button pressed sound effects, ball impact sound effects and ball lost sound effects.
 >- Modified ball impact with paddle behaviour to normalize the speed of the ball and allow players to have better control on the direction of the ball and express their skill at the game.
->- Added a score system that calculates the score based on the number of bricks destroyed and the type of bricks destroyed.
+>- Added a score system that calculates the score based on the number of bricks destroyed and the type of bricks destroyed as well as the number of balls remaining.
 >- Added a permanent high score leaderboard that shows when the player loses all their balls or beats the game by destroying all the bricks.
 >- Added an additional brick type (concrete) that is a stronger cement brick to make use of the crack class more.
 >- Added 6 additional playable levels with both new and existing brick type combinations to provide more variations and scoring opportunities.
