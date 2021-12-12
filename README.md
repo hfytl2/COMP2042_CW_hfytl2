@@ -2,6 +2,7 @@
 
 >## How to run
 > Add the `javafx:run` goal when running Maven.
+> 
 > Example: `mvn javafx:run` when running Maven from a command line interface.
 
 
@@ -11,9 +12,9 @@
 >
 >---
 >
->- Fully converted to JavaFX instead of Swing in favour of its MVC friendliness, growing and >more flexible toolkit as well as faster UI development with the use of FXML.
->- Used FXML files in conjunction with controller classes for all menu interfaces to adhere to >MVC pattern 
->- Extracted properties and methods from the `Wall` class and split it into the `Game` and >`Level` classes, following SOLID principles
+>- Fully converted to JavaFX instead of Swing in favour of its MVC friendliness, growing and more flexible toolkit as well as faster UI development with the use of FXML.
+>- Used FXML files in conjunction with controller classes for all menu interfaces to adhere to MVC pattern 
+>- Extracted properties and methods from the `Wall` class and split it into the `Game` and `Level` classes, following SOLID principles
 >- Created an abstract class (`Entity`) to allow classes with common properties and methods(`Brick`, `Ball`, `Paddle`) to extend from, following the Liskov substitution and dependency inversion principles.
 >- Removed redundant constants and methods in `Brick` class as they are not used.
 >- Extracted properties and methods from the `Player` class that are related to the in-game paddle entity to its own `Paddle` class so that there is a distinction between the player and the in-game entity that the player controls, improving encapsulation.
