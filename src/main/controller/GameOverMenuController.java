@@ -98,7 +98,7 @@ public class GameOverMenuController {
     			try (Scanner fscanner = new Scanner(highScoreFile)) {	    			
 	    			while (fscanner.hasNextLine()) {
 	    				String[] rawdata = fscanner.nextLine().split(",");
-	    				flines.add(new Pair<String, Integer>(rawdata[0], Integer.parseInt(rawdata[1])));
+	    				flines.add(new Pair<String, Integer>(rawdata[0], Integer.parseInt(rawdata[1].stripLeading())));
 	    			}
     			} catch (Exception e) {
     				e.printStackTrace();
