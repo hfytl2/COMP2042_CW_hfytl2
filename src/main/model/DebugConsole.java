@@ -19,6 +19,7 @@
 package main.model;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,6 +50,7 @@ public class DebugConsole extends Stage {
 		setTitle("Debug Console");
 		Parent root = null;
 		Game game = Game.getGame();
+		Ball ball = game.getBall();
 		
 		try {
 			root = FXMLLoader.load(getClass().getResource("../view/fxml/DebugMenu.fxml"));
@@ -66,9 +68,10 @@ public class DebugConsole extends Stage {
 			game.getPlayer().resetLives();
 		});
 		sliderBallSpeed = (Slider)root.lookup("#sliderBallSpeed");
-		sliderBallSpeed.setValue(game.getBall().getSpeed());
+		sliderBallSpeed.setValue(ball.getSpeed());
 		sliderBallSpeed.valueProperty().addListener((observableVal, oldVal, newVal) -> {
 			game.getBall().setSpeed((double)newVal);
+			game.getBall().setVelocity(new Point2D(ball.getVelocity().getX() * (double)newVal / (double)oldVal, ball.getVelocity().getY() * (double)newVal / (double)oldVal));
 		});
 	}
 }
