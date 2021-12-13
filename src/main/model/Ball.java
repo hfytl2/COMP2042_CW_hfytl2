@@ -149,7 +149,7 @@ public abstract class Ball extends Entity implements Collidable, Movable {
     		if (rightBoundary) {
     			moveTo(new Point2D(boundary.getMaxX() - hitBox.getWidth(), hitBox.getMinY()));
     		} else {
-    			moveTo(new Point2D(boundary.getMinX() + hitBox.getWidth(), hitBox.getMinY()));
+    			moveTo(new Point2D(boundary.getMinX(), hitBox.getMinY()));
     		} 
     		
     		inverseHorizontalVelocity();

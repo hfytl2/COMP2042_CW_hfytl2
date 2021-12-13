@@ -32,8 +32,8 @@ import javafx.scene.canvas.Canvas;
 public class Level {
 	
 	private static final int BRICK_COUNT = 30;
-	private static final int BRICK_SIZE_RATIO = 6/2;
-	private static final int LINES = 3;
+	private static final int BRICK_SIZE_RATIO = 4;
+	private static final int LINES = 4;
 	
 	private Canvas gameCanvas;
 	private int level;
